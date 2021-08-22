@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  app:
+    build:
+      target: production
+    command:
+      [
+        './wait-for-it.sh',
+        'mysqldb:3306',
+        '-t',
+        '0',
+        '--strict',
+        '--',
+        'npm',
+        'run',
+        'start:prod',
+      ]

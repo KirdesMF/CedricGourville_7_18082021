@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
 FROM node:16-alpine as base
-ENV NODE_ENV development
 
 WORKDIR /app
 
@@ -10,20 +9,22 @@ RUN chmod +x ./wait-for-it.sh
 
 COPY package*.json ./
 COPY prisma ./prisma/
-RUN npm ci
 
 COPY . .
 
 
-FROM base as test
-ENV NODE_ENV test
+FROM base as development
+ENV NODE_ENV development
+RUN npm install
 
 FROM base as production
 ENV NODE_ENV production
-ENV NODE_PATH=./dist
+RUN npm install --production
 
 
-FROM base as migrate
+
+
+
 
 
 

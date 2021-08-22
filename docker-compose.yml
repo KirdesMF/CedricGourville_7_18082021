@@ -1,94 +1,34 @@
 version: '3.9'
 services:
-   mysql:
-      image: mysql:latest
-      container_name: mysqlprisma
-      restart: always
-      env_file: .env
-      environment:
-         MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-         MYSQL_DATABASE: $MYSQL_DATABASE
-      ports:
-         - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
-      volumes:
-         - mysql:/var/lib/mysql
+  mysql:
+    image: mysql:latest
+    container_name: mysqldb
+    restart: always
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes:
+      - db-data:/var/lib/mysql
 
-   dev:
-      build:
-         context: .
-         dockerfile: Dockerfile
-         target: base
-      container_name: node-app-dev
-      env_file: .env
-      profiles: ['dev']
-      volumes:
-         - ./src:/app/src
-      restart: on-failure
-      expose:
-         - '3000'
-      ports:
-         - 3000:3000
-      depends_on:
-         - mysql
-      command:
-         [
-            './wait-for-it.sh',
-            'mysqlprisma:3306',
-            '-t',
-            '0',
-            '--strict',
-            '--',
-            'npm',
-            'run',
-            'start:dev',
-         ]
-   prod:
-      build:
-         context: .
-         dockerfile: Dockerfile
-         target: production
-      container_name: node-app-prod
-      profiles: ['prod']
-      env_file: .env
-      volumes:
-         - ./src:/app/src
-      restart: always
-      expose:
-         - '3000'
-      ports:
-         - 3000:3000
-      depends_on:
-         - mysql
-      command:
-         [
-            './wait-for-it.sh',
-            'mysqlprisma:3306',
-            '-t',
-            '0',
-            '--strict',
-            '--',
-            'npm',
-            'run',
-            'start:prod',
-         ]
-
-   studio:
-      build:
-         context: prisma
-         dockerfile: Dockerfile
-         target: base
-      container_name: prisma-studio
-      profiles: ['dev']
-      env_file: ./.env
-      command: npx prisma studio
-      volumes:
-         - /app/prisma
-      expose:
-         - '5555'
-      ports:
-         - 5555:5555
-      depends_on:
-         - mysql
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    image: node-mysql-app
+    container_name: node-app
+    restart: on-failure
+    expose:
+      - '3000'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - mysql
 
 volumes:
-   mysql:
+  db-data:

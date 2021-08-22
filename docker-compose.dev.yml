@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  app:
+    build:
+      target: development
+    command:
+      [
+        './wait-for-it.sh',
+        'mysqldb:3306',
+        '-t',
+        '0',
+        '--strict',
+        '--',
+        'npm',
+        'run',
+        'start:dev',
+      ]
+
+  studio:
+    build:
+      context: prisma
+      dockerfile: Dockerfile
+    container_name: prisma-studio
+    command: npx prisma studio
+    expose:
+      - '5555'
+    ports:
+      - 5555:5555
+    volumes:
+      - ./prisma:/app/prisma
+    depends_on:
+      - db-data
