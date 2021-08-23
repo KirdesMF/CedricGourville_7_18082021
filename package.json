@@ -6,8 +6,9 @@
     "prisma:studio": "npx prisma studio",
     "prisma:migrate": "npx prisma migrate dev init --skip-generate",
     "ts:dev": "ts-node-dev --respawn --transpile-only --exit-child --cache-directory src/.cache src/app.ts --watch",
-    "start:dev": "concurrently \"npm run prisma:migrate\"  \"npm run ts:dev \"",
-    "start:prod": "concurrently \"npm run prisma:migrate\" \"ts-node src/app.ts\"",
+    "ts:prod": "rm -rf dist && tsc",
+    "start:dev": "concurrently \"npm run prisma:migrate\"  \"npm run ts:dev\"",
+    "start:prod": "concurrently \"npm run prisma:migrate\" \"node dist/app.js\"",
     "start:test": ""
   },
   "repository": {
