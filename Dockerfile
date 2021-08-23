@@ -1,21 +1,40 @@
 # syntax=docker/dockerfile:1
-FROM node:16-alpine AS base
+FROM node:16-alpine as base
 
+WORKDIR /app
+COPY package*.json wait-for-it.sh prisma /app/
+RUN apk update && apk add bash && rm -rf /var/cache/apk/* 
+
+# development
+FROM base as development
 ENV NODE_ENV development
 WORKDIR /app
 
-RUN apk update && apk add bash && rm -rf /var/cache/apk/*
-
-COPY wait-for-it.sh ./wait-for-it.sh
-COPY package*.json ./
-
 RUN npm install
-
 COPY . .
+RUN npm run build
+CMD ./wait-for-it.sh mysqldb:3306 -t 0 -- npm run start:dev
 
+# prisma studio
+FROM development as studio
+CMD npx prisma studio
+
+FROM base as builder
+WORKDIR /app
+RUN npm prune --production
+
+#production 
 FROM base as production
-
 ENV NODE_ENV production
+
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=development /app/dist ./dist
+CMD ./wait-for-it.sh mysqldb:3306 -t 0 -- npm run start:prod
+
+
+
+
 
 
 
