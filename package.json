@@ -9,7 +9,11 @@
     "build": "rm -rf dist && tsc",
     "start:dev": "npm run prisma:migrate && npm run dev",
     "start:prod": "prisma generate && node dist/src/app.js",
-    "start:test": ""
+    "docker:dev:start": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d",
+    "docker:dev:stop": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down",
+    "docker:build:start": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
+    "docker:build:stop": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml down",
+    "docker:clean": "docker system prune --volumes -f"
   },
   "repository": {
     "type": "git",
