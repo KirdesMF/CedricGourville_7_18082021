@@ -20,17 +20,19 @@ const setHeaders = (req: Request, res: Response, next: NextFunction) => {
 
 const prisma = new PrismaClient();
 const app = express();
-
+const requestSizeLimit = '1kb';
 app.use(express.json());
 app.use(setHeaders);
+app.use(express.urlencoded({ extended: true, limit: requestSizeLimit }));
+app.use(express.json({ limit: requestSizeLimit }));
 
 app.get('/', (req, res) => res.send('home'));
 
-app.get('/users', async (req, res) => {
+app.post('/users', async (req, res) => {
   const user = await prisma.user.create({
     data: {
-      email: 'ced@prisma.io',
-      name: 'ced Prisma',
+      email: req.body.email,
+      name: req.body.name,
     },
   });
   res.json(user);
