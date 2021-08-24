@@ -19,10 +19,9 @@ services:
       dockerfile: Dockerfile
     container_name: node-app
     env_file: .env
-    expose:
-      - '3000'
+    restart: on-failure
     ports:
-      - 3000:3000
+      - 1234:1234
     volumes:
       - ./src:/app/src
     depends_on:
