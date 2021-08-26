@@ -13,7 +13,7 @@ WORKDIR /app
 RUN npm install
 COPY . .
 RUN npm run build
-CMD ./wait-for-it.sh mysqldb:3306 -t 0 -- npm run start:dev
+CMD ./wait-for-it.sh mysql-host:3306 -t 0 -- npm run start:dev
 
 # prisma studio
 FROM development as studio
@@ -30,7 +30,7 @@ ENV NODE_ENV production
 WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=development /app/dist ./dist
-CMD ./wait-for-it.sh mysqldb:3306 -t 0 -- npm run start:prod
+CMD ./wait-for-it.sh mysql-host:3306 -t 0 -- npm run start:prod
 
 
 

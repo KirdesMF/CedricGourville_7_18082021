@@ -1,14 +1,15 @@
 version: '3.9'
 services:
-  app:
+  api:
     build:
       target: development
-    image: dev-app
+    image: dev-api
 
   studio:
     build:
       target: studio
     container_name: prisma-studio
+    image: studio
     env_file: .env
     expose:
       - '5555'
@@ -17,4 +18,4 @@ services:
     volumes:
       - ./prisma:/app/prisma
     depends_on:
-      - mysqldb
+      - mysql

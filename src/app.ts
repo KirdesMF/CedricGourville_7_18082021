@@ -46,6 +46,6 @@ app.get('/all', async (req, res) => {
 
 app.listen(process.env.API_PORT, () => {
   console.log(
-    `server is listenning here : http://${process.env.API_HOST}:${process.env.API_PORT}`
+    `server is listenning here : http://${process.env.MYSQL_DB}:${process.env.API_PORT}`
   );
 });
