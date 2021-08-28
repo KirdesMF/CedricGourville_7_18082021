@@ -4,6 +4,9 @@ services:
     build:
       target: development
     image: dev-api
+    depends_on:
+      - studio
+      - mysql
 
   studio:
     build:
@@ -17,5 +20,3 @@ services:
       - 5555:5555
     volumes:
       - ./prisma:/app/prisma
-    depends_on:
-      - mysql

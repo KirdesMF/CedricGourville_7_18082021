@@ -9,7 +9,6 @@ RUN apk update && apk add bash && rm -rf /var/cache/apk/*
 FROM base as development
 ENV NODE_ENV development
 WORKDIR /app
-
 RUN npm install
 COPY . .
 RUN npm run build
@@ -19,6 +18,7 @@ CMD ./wait-for-it.sh mysql-host:3306 -t 0 -- npm run start:dev
 FROM development as studio
 CMD npx prisma studio
 
+# builder for prod
 FROM base as builder
 WORKDIR /app
 RUN npm prune --production

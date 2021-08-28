@@ -4,15 +4,18 @@
   "description": "P7 OpenclassRoom Backend",
   "scripts": {
     "prisma:studio": "npx prisma studio",
-    "prisma:migrate": "npx prisma migrate dev init",
+    "prisma:dev": "prisma db push",
+    "prisma:prod": "prisma migrate deploy",
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --cache-directory src/.cache src/app.ts --watch",
     "build": "rm -rf dist && tsc",
-    "start:dev": "npm run prisma:migrate && npm run dev",
-    "start:prod": "prisma generate && node dist/src/app.js",
-    "docker:dev:start": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d",
-    "docker:dev:stop": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml down",
-    "docker:build:start": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
-    "docker:build:stop": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml down",
+    "start:dev": "npm run prisma:dev &&  npm run dev",
+    "start:prod": "npm run prisma:prod && node dist/src/app.js",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml",
+    "docker:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml",
+    "docker:dev:start": "npm run docker:dev -- up -d  && dotenv -e .env.development -- npx prisma migrate dev",
+    "docker:dev:stop": "npm run docker:dev -- down",
+    "docker:build:start": "npm run docker:build -- up -d",
+    "docker:build:stop": "npm run docker:build -- down",
     "docker:clean": "docker system prune --volumes -f"
   },
   "repository": {
@@ -27,22 +30,27 @@
   },
   "homepage": "https://github.com/KirdesMF/CedricGourville_7_18082021_backend#readme",
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^16.6.1",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "concurrently": "^6.2.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.0",
-    "prisma": "^2.29.1",
+    "prisma": "^2.30.0",
     "ts-node": "^10.2.0",
     "ts-node-dev": "^1.1.8",
-    "concurrently": "^6.2.1",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "@prisma/client": "^2.29.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.0.0",
     "express": "^4.17.1"
   }
 }
