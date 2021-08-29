@@ -2,6 +2,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import { Header } from './modules/Header';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import './app.css';
 
 function App() {
   return (
