@@ -7,7 +7,7 @@ async function registerUser(req: Request, res: Response) {
     const user = await RegisterServices.createUser(req.body);
     res.status(httpStatus.OK).json(user);
   } catch (error) {
-    res.status(httpStatus.forbidden).json({ message: error.message });
+    res.status(httpStatus.forbidden).send({ message: error.message });
   }
 }
 
