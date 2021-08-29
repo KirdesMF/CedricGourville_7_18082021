@@ -1,3 +1,5 @@
+import { className } from './Input.css';
+
 export function Input() {
-  return <input />;
+  return <input className={className} />;
 }
