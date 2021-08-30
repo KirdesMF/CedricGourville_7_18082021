@@ -15,4 +15,4 @@ export const httpStatus = {
   locked: 423,
   tooManyRequests: 429,
   serverError: 500,
-};
+} as const;

@@ -8,5 +8,10 @@ export function ExpressLoader(app: Application) {
   app.use(cookieParser());
   app.use(cors());
 
+  app.get('/', (req, res, next) => {
+    res.send('🔥 API is ready');
+    next();
+  });
+
   return app;
 }
