@@ -16,6 +16,8 @@ export function NavHeader() {
   return (
     <div>
       <p>Welcome {user.firstName}</p>
+      <Link to="/profil">Profil</Link>
+      <Link to="/">Feed</Link>
       <button onClick={() => logout(user.id)}>Log out</button>
     </div>
   );

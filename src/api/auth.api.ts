@@ -13,6 +13,12 @@ async function login(payload: {
     credentials: 'include',
   });
 
+  if (!res.ok) {
+    return res.json().then((json) => {
+      throw json;
+    });
+  }
+
   const json = await res.json();
   return json;
 }

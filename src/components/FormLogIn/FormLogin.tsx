@@ -9,7 +9,7 @@ const initialState = {
 
 export function FormLogIn() {
   const [inputsUser, setInputsUser] = useState(initialState);
-  const { login } = useAuth();
+  const { login, error } = useAuth();
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -24,6 +24,7 @@ export function FormLogIn() {
   };
   return (
     <form className={formLogInStyle.form} onSubmit={handleOnSubmit}>
+      {error && <p>{error.error}</p>}
       <input
         onChange={handleOnChange}
         id="email"

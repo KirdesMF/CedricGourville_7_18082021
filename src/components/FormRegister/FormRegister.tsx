@@ -29,6 +29,7 @@ export function FormRegister() {
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     register(inputsUser);
+    console.log(inputsUser);
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +45,8 @@ export function FormRegister() {
         <input
           onChange={handleOnChange}
           key={element.id}
+          id={element.id}
+          name={element.name}
           type={element.type}
           placeholder={element.placeholder}
           autoComplete={element.autocomplete}

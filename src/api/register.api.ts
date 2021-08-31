@@ -1,7 +1,7 @@
-import { User } from '../types';
+import { Data, User } from '../types';
 const headers = new Headers({ 'Content-Type': 'application/json' });
 
-async function register(payload: User): Promise<User> {
+async function register(payload: User): Promise<Data> {
   const res = await fetch(`http://localhost:1234/register`, {
     method: 'POST',
     body: JSON.stringify(payload),

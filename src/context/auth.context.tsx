@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AuthAPI } from '../api/auth.api';
 import { RegisterAPI } from '../api/register.api';
 import { User } from '../types';
@@ -13,43 +13,52 @@ import { User } from '../types';
 type AuthContextType = {
   user?: User;
   setUser: (p: User) => void;
-  error?: Record<string, string>;
+  error?: Record<string, string> | null;
   isLoading: boolean;
-  login: (p: { email: string; password: string }) => Promise<void>;
+  login: (payload: { email: string; password: string }) => Promise<void>;
   logout: (id: string) => Promise<void>;
-  register: (p: User) => Promise<void>;
+  register: (payload: User) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>();
-  const [error, setError] = useState<Record<string, string>>();
+  const [error, setError] = useState<Record<string, string> | null>();
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     AuthAPI.checkUserLogged()
       .then((data) => {
         data.user && setUser(data.user);
-        history.push('/');
+        history.push(pathname);
       })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   }, []);
 
+  useEffect(() => {
+    setError(null);
+  }, [pathname]);
+
   const register = async (payload: User) => {
-    await RegisterAPI.register(payload).then((res) => {
-      setUser(res);
-      history.push('/');
-    });
+    await RegisterAPI.register(payload)
+      .then((data) => {
+        data.user && setUser(data.user);
+        history.push('/');
+      })
+      .catch((err) => setError(err));
   };
 
   const login = async (payload: { email: string; password: string }) => {
-    await AuthAPI.login(payload).then((data) => {
-      data.user && setUser(data.user);
-      history.push('/');
-    });
+    await AuthAPI.login(payload)
+      .then((data) => {
+        data.user && setUser(data.user);
+        history.push('/');
+      })
+      .catch((err) => setError(err));
   };
 
   const logout = async (id: string) => {
