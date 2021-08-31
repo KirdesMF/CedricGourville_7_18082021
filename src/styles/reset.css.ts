@@ -8,7 +8,6 @@ globalStyle('body', {
   minHeight: '100vh',
   textRendering: 'optimizeSpeed',
   lineHeight: 1.5,
-  background: 'black',
 });
 
 globalStyle('img, picture', {

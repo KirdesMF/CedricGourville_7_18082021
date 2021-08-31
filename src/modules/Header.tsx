@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import { NavHeader } from '../components/NavHeader/NavHeader';
+import { panel, wrapper } from '../styles/composition.css';
 
 export function Header() {
   return (
-    <header>
-      <nav>
-        <Link to="/login">Log in Here Please </Link>
-        <Link to="/register">Sign in</Link>
-      </nav>
+    <header className={wrapper}>
+      <div className={panel}>
+        <NavHeader />
+      </div>
     </header>
   );
 }

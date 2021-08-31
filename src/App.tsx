@@ -1,7 +1,7 @@
 import { Header } from './modules/Header';
 import { AuthProvider } from './context/auth.context';
 import { Routes } from './routes/Routes';
-import './app.css';
+import './styles/reset.css';
 
 function App() {
   return (

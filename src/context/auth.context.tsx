@@ -5,11 +5,13 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthAPI } from '../api/auth.api';
 import { User } from '../types';
 
 type AuthContextType = {
   user?: User;
+  setUser: (p: User) => void;
   error?: Record<string, string>;
   isLoading: boolean;
 };
@@ -20,18 +22,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>();
   const [error, setError] = useState<Record<string, string>>();
   const [isLoading, setIsLoading] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     AuthAPI.checkUserLogged()
-      .then((user) => setUser(user))
+      .then((data) => {
+        data.user && setUser(data.user);
+        history.push('/');
+      })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   }, []);
-  console.log(error?.error);
-  console.log(isLoading);
 
   return (
-    <AuthContext.Provider value={{ user, error, isLoading }}>
+    <AuthContext.Provider value={{ user, setUser, error, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
