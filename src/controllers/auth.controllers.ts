@@ -61,9 +61,10 @@ async function logout(req: Request, res: Response, next: NextFunction) {
       throw new ErrorHandler(500, `❌ We did not find the user`);
     }
 
-    res.cookie('jwt', 'logged-out');
-
-    res.status(httpStatus.OK).json({ success: '👋 Successfully logged out' });
+    res
+      .clearCookie('jwt')
+      .status(httpStatus.OK)
+      .json({ success: '👋 Successfully logged out' });
   } catch (error) {
     next(error);
   }
