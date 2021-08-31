@@ -1,10 +1,17 @@
 import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
-import { sign } from 'jsonwebtoken';
+import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { AuthServices } from '../services/auth.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
+
+const options = {
+  maxAge: 5000 * 5000,
+  httpOnly: true,
+  secure: true,
+  sameSite: 'lax',
+} as const;
 
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, email } = req.body as User;
@@ -35,14 +42,10 @@ async function login(req: Request, res: Response, next: NextFunction) {
       expiresIn: '12h',
     });
 
-    res.cookie('jwt', token, {
-      sameSite: 'none',
-      secure: true,
-      httpOnly: true,
-      maxAge: 120, // 2min
-    });
-
-    res.status(httpStatus.OK).json({ success: `🎉 Successfully connected` });
+    res
+      .cookie('jwt', token, options)
+      .status(httpStatus.OK)
+      .send({ success: `🎉 Successfully connected`, user, token });
   } catch (error) {
     next(error);
   }
@@ -58,17 +61,46 @@ async function logout(req: Request, res: Response, next: NextFunction) {
       throw new ErrorHandler(500, `❌ We did not find the user`);
     }
 
-    res.cookie('jwt', 'logged-out', {
-      httpOnly: true,
-      maxAge: 30,
-    });
+    res.cookie('jwt', 'logged-out');
+
     res.status(httpStatus.OK).json({ success: '👋 Successfully logged out' });
   } catch (error) {
     next(error);
   }
 }
 
+async function checkUserLogged(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.cookies.jwt || req.headers.cookie) {
+    const token = req.cookies.jwt as string;
+    const { id } = verify(
+      token,
+      process.env.SECRET || ('secret' as string)
+    ) as JwtPayload;
+    const user = await AuthServices.findUserById(id);
+
+    if (user) {
+      // TODO make an utils
+      // remove password from response
+      const removeProp = 'password';
+      const { [removeProp]: remove, ...safe } = user;
+      return res.status(httpStatus.OK).json({ user: safe });
+    }
+  }
+
+  return next(
+    new ErrorHandler(
+      httpStatus.unauthorized,
+      '❌ Session expired or User not logged in'
+    )
+  );
+}
+
 export const AuthControllers = {
   login,
   logout,
+  checkUserLogged,
 };

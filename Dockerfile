@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM node:alpine3.11 as base
-ENV TZ Europe/London
+ENV TZ Europe/Paris
 WORKDIR /app
 COPY package*.json wait-for-it.sh prisma /app/
 RUN apk update && apk add bash && rm -rf /var/cache/apk/* 

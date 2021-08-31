@@ -5,18 +5,15 @@ import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
 async function registerUser(req: Request, res: Response, next: NextFunction) {
-  const { password, email } = req.body as User;
+  try {
+    const { password, email } = req.body as User;
 
-  if (!password || !email) {
-    next(
-      new ErrorHandler(
+    if (!password || !email) {
+      throw new ErrorHandler(
         httpStatus.unauthorized,
         '❌ Please provide a password and email'
-      )
-    );
-  }
-
-  try {
+      );
+    }
     const user = await RegisterServices.createUser(req.body);
 
     if (user) {

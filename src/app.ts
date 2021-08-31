@@ -17,6 +17,19 @@ function startServer() {
   app.use(ErrorsMiddleWare.logger);
   app.use(ErrorsMiddleWare.responder);
 
+  app.get('/setcookie', (req, res) => {
+    res.cookie(`Cookie token name`, `encrypted cookie string Value`, {
+      maxAge: 5000 * 5000,
+    });
+    console.log(req.cookies);
+    res.json('Cookie have been saved successfully');
+  });
+
+  app.get('/getcookie', (req, res) => {
+    console.log(req.cookies);
+    res.send(req.cookies);
+  });
+
   app.listen(process.env.API_PORT, () => {
     console.log(`🔥 Server is running on: http://${localhost}:${port}`);
   });
