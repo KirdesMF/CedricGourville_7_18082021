@@ -3,7 +3,7 @@ import { useAuth } from '../../context/auth.context';
 import { navHeaderStyle } from './nav-header.css';
 
 export function NavHeader() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   if (!user) {
     return (
       <nav className={navHeaderStyle.container}>
@@ -13,5 +13,10 @@ export function NavHeader() {
     );
   }
 
-  return <p>Welcome {user.firstName}</p>;
+  return (
+    <div>
+      <p>Welcome {user.firstName}</p>
+      <button onClick={() => logout(user.id)}>Log out</button>
+    </div>
+  );
 }

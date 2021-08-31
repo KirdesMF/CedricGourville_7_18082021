@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthAPI } from '../api/auth.api';
+import { RegisterAPI } from '../api/register.api';
 import { User } from '../types';
 
 type AuthContextType = {
@@ -14,6 +15,9 @@ type AuthContextType = {
   setUser: (p: User) => void;
   error?: Record<string, string>;
   isLoading: boolean;
+  login: (p: { email: string; password: string }) => Promise<void>;
+  logout: (id: string) => Promise<void>;
+  register: (p: User) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -34,8 +38,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .finally(() => setIsLoading(false));
   }, []);
 
+  const register = async (payload: User) => {
+    await RegisterAPI.register(payload).then((res) => {
+      setUser(res);
+      history.push('/');
+    });
+  };
+
+  const login = async (payload: { email: string; password: string }) => {
+    await AuthAPI.login(payload).then((data) => {
+      data.user && setUser(data.user);
+      history.push('/');
+    });
+  };
+
+  const logout = async (id: string) => {
+    await AuthAPI.logout(id).then(() => {
+      history.push('/login');
+      setUser(undefined);
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, error, isLoading }}>
+    <AuthContext.Provider
+      value={{ user, setUser, error, isLoading, login, logout, register }}
+    >
       {children}
     </AuthContext.Provider>
   );

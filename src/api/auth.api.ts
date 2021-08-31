@@ -1,4 +1,4 @@
-import { Data, User } from '../types';
+import { Data } from '../types';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 

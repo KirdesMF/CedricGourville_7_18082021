@@ -28,7 +28,7 @@ function AuthRoute(props: RouteProps) {
   if (isLoading) return <div>Loading ...</div>;
   if (!user) return <Redirect to="/login" />;
 
-  return <Route {...props} component={() => <Feed />} />;
+  return <Route {...props} component={Feed} />;
 }
 export function Routes() {
   return (

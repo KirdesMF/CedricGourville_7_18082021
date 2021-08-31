@@ -1,21 +1,34 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { RegisterAPI } from '../../api/register.api';
 import { useAuth } from '../../context/auth.context';
 import { User } from '../../types';
 import { formRegisterStyle } from './form-register.css';
 
+const inputs = [
+  {
+    name: 'firstName',
+    type: 'text',
+    id: 'firstName',
+    placeholder: 'First Name',
+  },
+  { name: 'lastName', type: 'text', id: 'lastName', placeholder: 'Last Name' },
+  { name: 'email', type: 'text', id: 'email', placeholder: 'Email' },
+  { name: 'bio', type: 'text', id: 'bio', placeholder: 'Bio' },
+  {
+    name: 'password',
+    type: 'password',
+    id: 'password',
+    placeholder: 'Password',
+    autocomplete: 'on',
+  },
+];
+
 export function FormRegister() {
   const [inputsUser, setInputsUser] = useState<User>({} as User);
-  const { setUser } = useAuth();
-  const history = useHistory();
+  const { register } = useAuth();
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await RegisterAPI.register(inputsUser).then((res) => {
-      setUser(res);
-      history.push('/');
-    });
+    register(inputsUser);
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,44 +37,18 @@ export function FormRegister() {
       [e.target.id]: e.target.value,
     }));
   };
+
   return (
     <form className={formRegisterStyle.form} onSubmit={handleOnSubmit}>
-      <input
-        onChange={handleOnChange}
-        type="text"
-        name="firstName"
-        id="firstName"
-        placeholder="firstName"
-      />
-      <input
-        onChange={handleOnChange}
-        type="text"
-        name="lastName"
-        id="lastName"
-        placeholder="lastName"
-      />
-      <input
-        onChange={handleOnChange}
-        type="text"
-        name="email"
-        id="email"
-        placeholder="email"
-      />
-      <input
-        onChange={handleOnChange}
-        type="text"
-        name="password"
-        id="password"
-        placeholder="password"
-        autoComplete="current-password"
-      />
-      <input
-        onChange={handleOnChange}
-        type="text"
-        name="bio"
-        id="bio"
-        placeholder="bio"
-      />
+      {inputs.map((element) => (
+        <input
+          onChange={handleOnChange}
+          key={element.id}
+          type={element.type}
+          placeholder={element.placeholder}
+          autoComplete={element.autocomplete}
+        />
+      ))}
       <button>Submit</button>
     </form>
   );

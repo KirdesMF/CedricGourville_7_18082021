@@ -1,24 +1,19 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { AuthAPI } from '../../api/auth.api';
 import { useAuth } from '../../context/auth.context';
 import { formLogInStyle } from './form-login.css';
 
+const initialState = {
+  email: '',
+  password: '',
+};
+
 export function FormLogIn() {
-  const [inputsUser, setInputsUser] = useState({
-    email: '',
-    password: '',
-  });
-  const { setUser } = useAuth();
-  const history = useHistory();
+  const [inputsUser, setInputsUser] = useState(initialState);
+  const { login } = useAuth();
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { email, password } = inputsUser;
-    await AuthAPI.login({ email, password }).then((res) => {
-      res.user && setUser(res.user);
-      history.push('/');
-    });
+    login(inputsUser);
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +36,7 @@ export function FormLogIn() {
         id="password"
         name="password"
         type="password"
+        autoComplete="on"
         placeholder="password"
       />
       <button>Submit</button>
