@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAuth } from '../../context/auth.context';
+import { useAuth } from '../context/auth.context';
 
 const initialState = {
   email: '',

@@ -1,4 +1,4 @@
-import { FormRegister } from '../components/FormRegister/FormRegister';
+import { FormRegister } from '../modules/FormRegister';
 
 export function Register() {
   return (

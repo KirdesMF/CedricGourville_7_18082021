@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAuth } from '../../context/auth.context';
-import { User } from '../../types';
+import { useAuth } from '../context/auth.context';
+import { User } from '../types';
 
 const inputs = [
   {
