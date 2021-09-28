@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuth } from '../../context/auth.context';
-import { formLogInStyle } from './form-login.css';
 
 const initialState = {
   email: '',
@@ -22,8 +21,9 @@ export function FormLogIn() {
       [e.target.id]: e.target.value,
     }));
   };
+
   return (
-    <form className={formLogInStyle.form} onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit}>
       {error && <p>{error.error}</p>}
       <input
         onChange={handleOnChange}
@@ -31,6 +31,7 @@ export function FormLogIn() {
         name="email"
         type="text"
         placeholder="email"
+        required
       />
       <input
         onChange={handleOnChange}
@@ -39,6 +40,7 @@ export function FormLogIn() {
         type="password"
         autoComplete="on"
         placeholder="password"
+        required
       />
       <button>Submit</button>
     </form>

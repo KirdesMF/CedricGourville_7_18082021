@@ -1,15 +1,19 @@
-import { Header } from './modules/Header';
+import { resetCSS } from './styles/reset';
 import { AuthProvider } from './context/auth.context';
 import { Routes } from './routes/Routes';
-import './styles/reset.css';
+import { Header } from './modules/Header';
+import { Flex } from './components/Flex';
+import { Grid } from './components/Grid';
 
-function App() {
+export default function App() {
+  resetCSS();
+
   return (
     <AuthProvider>
-      <Header />
-      <Routes />
+      <Grid css={{ minHeight: '100vh', gridTemplateRows: 'min-content 1fr' }}>
+        <Header />
+        <Routes />
+      </Grid>
     </AuthProvider>
   );
 }
-
-export default App;

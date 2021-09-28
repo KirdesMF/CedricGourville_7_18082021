@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuth } from '../../context/auth.context';
 import { User } from '../../types';
-import { formRegisterStyle } from './form-register.css';
 
 const inputs = [
   {
@@ -40,7 +39,7 @@ export function FormRegister() {
   };
 
   return (
-    <form className={formRegisterStyle.form} onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit}>
       {inputs.map((element) => (
         <input
           onChange={handleOnChange}
