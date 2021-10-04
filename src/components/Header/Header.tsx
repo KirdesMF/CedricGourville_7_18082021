@@ -1,11 +1,14 @@
+import * as styles from './header.css';
 import { panel, wrapper } from '../../styles/utilities.css';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
-import * as styles from './header.css';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { cx } from '../../utils/classname.utils';
+import { useMatchMedia } from '../../hooks/useMatchMedia';
+import { useTheme } from '../../hooks/useTheme';
 
 const links = [
   { name: 'home', href: '/' },
@@ -13,40 +16,24 @@ const links = [
   { name: 'register', href: '/register' },
 ];
 
-export function Nav() {
-  return (
-    <nav className={styles.nav}>
-      {links.map((element) => (
-        <Anchor
-          key={element.href}
-          href={element.href}
-          variant={{ text: 'menu' }}
-        >
-          {element.name}
-        </Anchor>
-      ))}
-    </nav>
-  );
-}
-
 const variants: Variants = {
-  initial: {
-    x: '-100%',
-  },
   open: {
     x: 0,
+    y: 0,
   },
-  close: {
-    x: '-100%',
-  },
+  close: (isDesktop: boolean) => ({
+    x: isDesktop ? '-100%' : 0,
+    y: isDesktop ? 0 : '-100%',
+  }),
 };
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const isDesktop = useMatchMedia(makeBreakpoint('md'));
+  const [mode, setMode] = useTheme();
 
   const handleTheme = () => {
-    const root = document.documentElement;
-    root.classList.toggle('dark');
+    mode === 'dark' ? setMode('light') : setMode('dark');
   };
 
   const handleMenu = (state: boolean) => setIsOpen(state);
@@ -72,19 +59,36 @@ export function Header() {
         </div>
       </header>
 
-      <motion.div
-        variants={variants}
-        animate={isOpen ? 'open' : 'close'}
-        initial="initial"
-        className={styles.menu}
-      >
-        <aside className={styles.aside}>
-          <Button onClick={() => handleMenu(false)}>
-            <Icon name="Cross2Icon" variant={{ size: 'small' }} />
-          </Button>
-          <Nav />
-        </aside>
-      </motion.div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            variants={variants}
+            animate="open"
+            exit="close"
+            initial="close"
+            className={styles.menu}
+            custom={isDesktop}
+          >
+            <aside className={styles.aside}>
+              <Button onClick={() => handleMenu(false)}>
+                <Icon name="Cross2Icon" variant={{ size: 'small' }} />
+              </Button>
+
+              <nav className={styles.nav}>
+                {links.map((element) => (
+                  <Anchor
+                    key={element.href}
+                    href={element.href}
+                    variant={{ text: 'menu' }}
+                  >
+                    {element.name}
+                  </Anchor>
+                ))}
+              </nav>
+            </aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

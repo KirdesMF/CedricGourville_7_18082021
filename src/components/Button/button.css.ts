@@ -5,11 +5,11 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 export const button = recipe({
   base: {
     all: 'revert',
-    background: vars.color.grayBg,
+    background: vars.color.graySubtle,
     color: vars.color.appText,
     display: 'flex',
     padding: vars.spaces.sp8,
-    border: `1px solid ${vars.color.grayBorder}`,
+    border: `1.5px solid ${vars.color.grayBg}`,
     borderRadius: '0.5rem',
   },
   variants: {

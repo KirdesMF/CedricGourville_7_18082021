@@ -17,7 +17,7 @@ export const inner = style([
 ]);
 
 export const buttons = style([
-  utilities({ display: 'flex', gap: 'sp16' }),
+  utilities({ display: 'flex', gap: 'sp8' }),
   {
     alignItems: 'center',
   },
@@ -45,7 +45,15 @@ export const aside = style([
   {
     placeItems: 'center',
     background: vars.color.grayBg,
-    boxShadow: vars.color.boxShadowThin,
+    '::before': {
+      position: 'absolute',
+      content: '',
+      right: '-50px',
+      background: 'inherit',
+      height: '100%',
+      width: '100px',
+      clipPath: 'polygon(0 0, 100% 0%, 60% 100%, 0 100%)',
+    },
   },
 ]);
 
