@@ -5,11 +5,14 @@ globalStyle('html, body, *, *::before, *::after', {
   boxSizing: 'border-box',
 });
 
+globalStyle('html, body, #root', {
+  height: '100%',
+});
+
 globalStyle('body', {
   margin: 0,
   padding: 0,
   background: vars.color.graySubtle,
-  width: vars.spaces.large,
 });
 
 globalStyle('h1, h2, h3', {
@@ -22,4 +25,8 @@ globalFontFace('Anaheim', {
 
 globalFontFace('RobotoSlab', {
   src: 'url(/fonts/RobotoSlab-Bold.ttf)',
+});
+
+globalFontFace('Lemon', {
+  src: 'url(/fonts/LemonMilkBold-gx2B3.otf)',
 });

@@ -40,11 +40,18 @@ export const vars = createThemeContract({
 
     // error
     warning: null,
+    boxShadowThin: null,
   },
   spaces: {
-    small: null,
-    medium: null,
-    large: null,
+    sp2: null,
+    sp4: null,
+    sp6: null,
+    sp8: null,
+    sp10: null,
+    sp12: null,
+    sp14: null,
+    sp16: null,
+    sp18: null,
   },
   font: {
     title: null,
@@ -53,6 +60,30 @@ export const vars = createThemeContract({
   fontSizes: {
     small: null,
     large: null,
+  },
+  lineHeights: {
+    small: null,
+  },
+  radius: {
+    thin: null,
+    rounded: null,
+    pills: null,
+  },
+  zIndexes: {
+    z0: null,
+    z10: null,
+    z20: null,
+    z30: null,
+    z40: null,
+    z50: null,
+  },
+  widths: {
+    sm: null,
+    md: null,
+    lg: null,
+    xl: null,
+    xxl: null,
+    full: null,
   },
 });
 
@@ -84,6 +115,7 @@ createGlobalTheme(':root', vars.color, {
   appTextContrast: indigo.indigo12,
 
   warning: red.red10,
+  boxShadowThin: `0 0 6px ${slate.slate11}`,
 });
 
 // dark theme
@@ -114,6 +146,7 @@ createGlobalTheme(':root.dark', vars.color, {
   appTextContrast: indigoDark.indigo12,
 
   warning: redDark.red10,
+  boxShadowThin: `0 0 0px ${slate.slate11}`,
 });
 
 // fonts
@@ -121,16 +154,45 @@ createGlobalTheme(
   ':root',
   { ...vars.font, ...vars.fontSizes },
   {
-    small: '1.5rem',
-    large: '3rem',
-    title: 'RobotoSlab',
+    small: 'clamp(1rem, 1vw + 1rem, 1.5rem)',
+    large: 'clam(3rem, 1vw + 1rem, 4.5rem)',
+
+    title: 'Lemon',
     text: 'Anaheim',
   }
 );
 
-// spaces
-createGlobalTheme(':root', vars.spaces, {
-  small: '0.75rem',
-  medium: '2.5rem',
-  large: '3.5rem',
-});
+// fixed
+createGlobalTheme(
+  ':root',
+  { ...vars.spaces, ...vars.zIndexes, ...vars.widths, ...vars.radius },
+  {
+    sp2: '0.125rem',
+    sp4: '0.25rem',
+    sp6: '0.375rem',
+    sp8: '0.5rem',
+    sp10: '0.625rem',
+    sp12: '0.75rem',
+    sp14: '0.875rem',
+    sp16: '1rem',
+    sp18: '1.125rem',
+
+    z0: '0',
+    z10: '10',
+    z20: '20',
+    z30: '30',
+    z40: '40',
+    z50: '50',
+
+    sm: '40rem',
+    md: '48rem',
+    lg: '64rem',
+    xl: '80rem',
+    xxl: '96rem',
+    full: '100%',
+
+    thin: '0.3125rem',
+    rounded: '50%',
+    pills: '999px',
+  }
+);

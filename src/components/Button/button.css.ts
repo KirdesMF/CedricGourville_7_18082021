@@ -1,5 +1,6 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { vars } from '../../styles/vars.css';
+import { makeBreakpoint } from '../../utils/breakpoints.utils';
 
 export const button = recipe({
   base: {
@@ -7,7 +8,7 @@ export const button = recipe({
     background: vars.color.grayBg,
     color: vars.color.appText,
     display: 'flex',
-    padding: vars.spaces.small,
+    padding: vars.spaces.sp8,
     border: `1px solid ${vars.color.grayBorder}`,
     borderRadius: '0.5rem',
   },
@@ -19,5 +20,19 @@ export const button = recipe({
         },
       },
     },
+    menu: {
+      true: {
+        '@media': {
+          [makeBreakpoint('md')]: {
+            display: 'none',
+          },
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    discret: true,
   },
 });
+
+export type ButtonVariants = RecipeVariants<typeof button>;

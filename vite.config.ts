@@ -11,5 +11,5 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  plugins: [reactRefresh(), vanillaExtractPlugin()],
+  plugins: [reactRefresh(), vanillaExtractPlugin({ identifiers: 'debug' })],
 });
