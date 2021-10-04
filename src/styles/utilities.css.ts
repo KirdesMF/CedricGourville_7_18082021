@@ -1,22 +1,41 @@
-import { style } from '@vanilla-extract/css';
 import { vars } from './vars.css';
 import { defineProperties, createSprinkles } from '@vanilla-extract/sprinkles';
-
-export const wrapper = style({
-  margin: '0 auto',
-  width: `min(100%, ${vars.widths.xxl})`,
-});
-
-export const panel = style({
-  padding: vars.spaces.sp18,
-});
+import { makeBreakpoint } from '../utils/breakpoints.utils';
 
 const properties = defineProperties({
+  conditions: {
+    sm: {},
+    md: { '@media': makeBreakpoint('md') },
+    lg: { '@media': makeBreakpoint('lg') },
+  },
+  defaultCondition: 'sm',
   properties: {
-    display: ['flex', 'grid'],
+    all: ['revert', 'unset'],
+    display: ['flex', 'grid', 'inline-flex', 'none', 'initial'],
     position: ['relative', 'absolute', 'sticky', 'fixed'],
+    justifyContent: ['space-between', 'flex-start', 'flex-end'],
+    alignItems: ['center'],
+    placeItems: ['center'],
     gap: vars.spaces,
+    padding: vars.spaces,
+    paddingInline: vars.spaces,
+    paddingBlock: vars.spaces,
+    borderRadius: vars.radius,
+    fontFamily: vars.font,
+    zIndex: vars.zIndexes,
   },
 });
 
-export const utilities = createSprinkles(properties);
+const colorsProperties = defineProperties({
+  conditions: {
+    default: {},
+    '@hover': { selector: '&:hover' },
+  },
+  defaultCondition: 'default',
+  properties: {
+    color: vars.color,
+    background: vars.color,
+  },
+});
+
+export const utilities = createSprinkles(properties, colorsProperties);

@@ -1,5 +1,4 @@
 import * as styles from './header.css';
-import { panel, wrapper } from '../../styles/utilities.css';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
@@ -9,6 +8,8 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { cx } from '../../utils/classname.utils';
 import { useMatchMedia } from '../../hooks/useMatchMedia';
 import { useTheme } from '../../hooks/useTheme';
+import { textAnchor } from '../Anchor/anchor.css';
+import { composition } from '../../styles/composition.css';
 
 const links = [
   { name: 'home', href: '/' },
@@ -40,14 +41,25 @@ export function Header() {
 
   return (
     <>
-      <header className={cx([styles.header, panel])}>
-        <div className={cx([styles.inner, wrapper])}>
-          <Anchor href="/" variant={{ text: true, gap: true }}>
-            <Icon name="Groupomania" variant={{ size: 'medium' }} />
-            <span>Groupomania</span>
-          </Anchor>
+      <header className={cx([styles.header, composition.panel])}>
+        <div className={cx([styles.inner, composition.wrapper])}>
+          <div className={styles.items({ item: 'first' })}>
+            <Anchor href="/login" variant={{ content: 'icon' }}>
+              <Icon name="PersonIcon" variant={{ size: 'medium' }} />
+            </Anchor>
+          </div>
 
-          <div className={styles.buttons}>
+          <div className={styles.items()}>
+            <Anchor
+              href="/"
+              variant={{ content: 'text', gap: true, fonts: 'normal' }}
+            >
+              <Icon name="Groupomania" variant={{ size: 'medium' }} />
+              <span className={textAnchor}>Groupomania</span>
+            </Anchor>
+          </div>
+
+          <div className={styles.items({ item: 'last', gap: true })}>
             <Button onClick={() => handleMenu(true)}>
               <Icon name="HamburgerMenuIcon" variant={{ size: 'small' }} />
             </Button>
@@ -77,9 +89,11 @@ export function Header() {
               <nav className={styles.nav}>
                 {links.map((element) => (
                   <Anchor
+                    navLink
                     key={element.href}
                     href={element.href}
-                    variant={{ text: 'menu' }}
+                    variant={{ content: 'text', fonts: 'big' }}
+                    onClick={() => handleMenu(false)}
                   >
                     {element.name}
                   </Anchor>

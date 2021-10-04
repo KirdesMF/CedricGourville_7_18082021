@@ -2,6 +2,7 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
 
 export const layout = recipe({
+  base: utilities({ background: 'graySubtle' }),
   variants: {
     full: {
       true: [

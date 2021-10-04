@@ -1,16 +1,25 @@
-import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { MouseEventHandler, ReactNode } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import * as styles from './anchor.css';
 
 type AnchorProps = {
   children: ReactNode;
-  blank?: boolean;
+  extern?: boolean;
   href: string;
   variant?: styles.AnchorVariants;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  navLink?: boolean;
 };
 
-export function Anchor({ children, blank, href, variant }: AnchorProps) {
-  if (blank) {
+export function Anchor({
+  children,
+  extern,
+  href,
+  variant,
+  onClick,
+  navLink,
+}: AnchorProps) {
+  if (extern) {
     return (
       <a className={styles.anchor(variant)} href={href}>
         {children}
@@ -18,8 +27,22 @@ export function Anchor({ children, blank, href, variant }: AnchorProps) {
     );
   }
 
+  if (navLink) {
+    return (
+      <NavLink
+        exact
+        activeClassName={styles.activeClassName}
+        onClick={onClick}
+        className={styles.anchor(variant)}
+        to={href}
+      >
+        {children}
+      </NavLink>
+    );
+  }
+
   return (
-    <Link className={styles.anchor(variant)} to={href}>
+    <Link onClick={onClick} className={styles.anchor(variant)} to={href}>
       {children}
     </Link>
   );

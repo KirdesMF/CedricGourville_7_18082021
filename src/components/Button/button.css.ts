@@ -1,33 +1,24 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
-import { makeBreakpoint } from '../../utils/breakpoints.utils';
 
 export const button = recipe({
-  base: {
-    all: 'revert',
-    background: vars.color.graySubtle,
-    color: vars.color.appText,
-    display: 'flex',
-    padding: vars.spaces.sp8,
-    border: `1.5px solid ${vars.color.grayBg}`,
-    borderRadius: '0.5rem',
-  },
+  base: [
+    utilities({
+      all: 'revert',
+      display: 'flex',
+      color: 'appText',
+      background: 'graySubtle',
+      padding: 'sp8',
+      borderRadius: 'thin',
+    }),
+    {
+      border: `1.5px solid ${vars.color.grayBg}`,
+    },
+  ],
   variants: {
     discret: {
-      true: {
-        ':hover': {
-          background: vars.color.grayBgHover,
-        },
-      },
-    },
-    menu: {
-      true: {
-        '@media': {
-          [makeBreakpoint('md')]: {
-            display: 'none',
-          },
-        },
-      },
+      true: [utilities({ background: { '@hover': 'grayBgHover' } })],
     },
   },
   defaultVariants: {
