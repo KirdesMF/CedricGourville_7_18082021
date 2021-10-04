@@ -1,4 +1,5 @@
 import { globalStyle } from '@vanilla-extract/css';
+import { vars } from './vars.css';
 
 const reducedMotion = `(prefers-reduced-motion: reduce)`;
 // Box Sizing rules
@@ -37,6 +38,7 @@ globalStyle('html:focus-within', {
 globalStyle('body', {
   textRendering: 'optimizeSpeed',
   lineHeight: 1.5,
+  background: vars.color.graySubtle,
 });
 
 globalStyle('a:not([class])', {

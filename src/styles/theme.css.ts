@@ -98,6 +98,9 @@ createGlobalTheme(
     sp14: '0.875rem',
     sp16: '1rem',
     sp18: '1.125rem',
+    sp32: '2rem',
+    sp48: '3rem',
+    sp50: '3.125rem',
 
     z0: '0',
     z10: '10',

@@ -34,12 +34,14 @@ export const items = recipe({
 });
 
 export const menu = style([
-  utilities({ display: 'grid', position: 'fixed' }),
-  {
-    width: '100%',
+  utilities({
+    display: 'grid',
+    position: 'fixed',
     height: '100%',
+    width: '100%',
+  }),
+  {
     gridTemplateColumns: '1fr',
-
     '@media': {
       [makeBreakpoint('md')]: {
         gridTemplateColumns: '0.5fr 1fr',

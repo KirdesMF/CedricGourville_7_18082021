@@ -2,14 +2,27 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
 
 export const layout = recipe({
-  base: utilities({ background: 'graySubtle' }),
+  base: {
+    background: 'inherit',
+  },
   variants: {
     full: {
       true: [
-        utilities({ display: 'grid' }),
+        utilities({ minHeight: '100%' }),
         {
-          minHeight: '100%',
+          display: 'grid',
           gridTemplateRows: 'min-content 1fr',
+        },
+      ],
+    },
+    home: {
+      true: [
+        utilities({
+          height: '100%',
+        }),
+        {
+          display: 'grid',
+          gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 350px), 1fr))`,
         },
       ],
     },

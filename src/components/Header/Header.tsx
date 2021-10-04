@@ -41,8 +41,8 @@ export function Header() {
 
   return (
     <>
-      <header className={cx([styles.header, composition.panel])}>
-        <div className={cx([styles.inner, composition.wrapper])}>
+      <header className={cx([styles.header, composition.panel()])}>
+        <div className={cx([styles.inner, composition.wrapper()])}>
           <div className={styles.items({ item: 'first' })}>
             <Anchor href="/login" variant={{ content: 'icon' }}>
               <Icon name="PersonIcon" variant={{ size: 'medium' }} />
