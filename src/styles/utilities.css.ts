@@ -16,6 +16,8 @@ const properties = defineProperties({
     justifyContent: ['space-between', 'flex-start', 'flex-end'],
     alignItems: ['center'],
     placeItems: ['center'],
+    placeContent: ['center'],
+    gridAutoRows: ['min-content'],
     height: ['100%'],
     minHeight: ['100%'],
     width: ['100%'],

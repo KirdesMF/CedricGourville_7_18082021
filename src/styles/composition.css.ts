@@ -11,6 +11,11 @@ const wrapper = recipe({
     height: {
       full: utilities({ height: '100%' }),
     },
+    width: {
+      content: {
+        width: `min(100%, ${vars.widths.xl})`,
+      },
+    },
   },
 });
 
@@ -19,7 +24,7 @@ const panel = recipe({
   variants: {
     size: {
       small: utilities({ padding: 'sp14' }),
-      big: utilities({ padding: 'sp48' }),
+      big: utilities({ padding: { sm: 'sp32', md: 'sp48' } }),
     },
   },
 });

@@ -4,6 +4,8 @@ import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 const localReset = style({
+  display: 'inline-flex',
+  alignItems: 'center',
   textDecoration: 'none',
   textTransform: 'capitalize',
   whiteSpace: 'nowrap',
@@ -15,11 +17,10 @@ export const anchor = recipe({
     localReset,
     utilities({
       all: 'revert',
-      display: 'inline-flex',
-      alignItems: 'center',
       borderRadius: 'thin',
       color: { default: 'appText', '@hover': 'accentSolidHover' },
       background: { '@hover': 'grayBgHover' },
+      fontFamily: 'text',
     }),
   ],
   variants: {

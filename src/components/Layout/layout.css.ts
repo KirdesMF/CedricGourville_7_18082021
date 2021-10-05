@@ -22,7 +22,7 @@ export const layout = recipe({
         }),
         {
           display: 'grid',
-          gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 350px), 1fr))`,
+          gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 375px), 1fr))`,
         },
       ],
     },
