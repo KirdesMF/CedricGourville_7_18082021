@@ -1,6 +1,8 @@
 import { Anchor } from '../components/Anchor/Anchor';
+import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Layout } from '../components/Layout/Layout';
+import { Paragraph } from '../components/Paragraph/Paragraph';
 import { composition } from '../styles/composition.css';
 import { utilities } from '../styles/utilities.css';
 
@@ -16,47 +18,38 @@ export function Home() {
               display: 'grid',
               placeContent: 'center',
               gridAutoRows: 'min-content',
-              gap: 'sp32',
-              padding: { sm: 'sp32', md: 'sp48' },
+              gap: 'md',
+              padding: { sm: 'lg', md: 'xl' },
             })}
           >
-            <div>
-              <h1
-                className={utilities({
-                  fontFamily: 'title',
-                  color: 'appTextContrast',
-                })}
-              >
-                Connect with your friends
-              </h1>
-            </div>
+            <Heading>
+              Connect <span>with</span> your colleagues
+            </Heading>
 
-            <div>
-              <p
-                className={utilities({
-                  fontFamily: 'text',
-                  color: 'appTextContrast',
-                })}
-              >
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe
-                minus doloremque explicabo natus, asperiores odio suscipit
-                necessitatibus reprehenderit consequuntur sed unde architecto
-                consequatur exercitationem iusto dolore incidunt alias ullam.
-                Itaque!
-              </p>
-            </div>
+            <Paragraph>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe
+              minus doloremque explicabo natus, asperiores odio suscipit
+              necessitatibus reprehenderit consequuntur sed unde architecto
+              consequatur exercitationem iusto dolore incidunt alias ullam.
+              Itaque!
+            </Paragraph>
 
-            <div>
-              <Anchor variant={{ content: 'text' }} href="/login">
+            <div className={utilities({ display: 'flex', gap: 'lg' })}>
+              <Anchor variant={{ fonts: 'medium' }} href="/login">
                 Login
+              </Anchor>
+
+              <Anchor variant={{ fonts: 'medium' }} href="/register">
+                Register
               </Anchor>
             </div>
           </section>
+
           <div
             className={utilities({
-              display: 'grid',
+              display: { sm: 'none', md: 'grid' },
               placeItems: 'center',
-              padding: { sm: 'sp32', md: 'sp48' },
+              padding: { sm: 'lg', md: 'xl' },
             })}
           >
             <Illustration />

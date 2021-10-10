@@ -5,7 +5,7 @@ import { vars } from './vars.css';
 const wrapper = recipe({
   base: {
     margin: '0 auto',
-    width: `min(100%, ${vars.widths.xxl})`,
+    width: `min(100%, ${vars.sizes['2xl']})`,
   },
   variants: {
     height: {
@@ -13,18 +13,18 @@ const wrapper = recipe({
     },
     width: {
       content: {
-        width: `min(100%, ${vars.widths.xl})`,
+        width: `min(100%, ${vars.sizes.xl})`,
       },
     },
   },
 });
 
 const panel = recipe({
-  base: utilities({ padding: 'sp18' }),
+  base: utilities({ padding: 'lg' }),
   variants: {
     size: {
-      small: utilities({ padding: 'sp14' }),
-      big: utilities({ padding: { sm: 'sp32', md: 'sp48' } }),
+      small: utilities({ padding: 'sm' }),
+      big: utilities({ padding: { sm: 'xl', md: '2xl' } }),
     },
   },
 });

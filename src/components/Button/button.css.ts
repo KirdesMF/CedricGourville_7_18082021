@@ -4,26 +4,18 @@ import { vars } from '../../styles/vars.css';
 
 export const button = recipe({
   base: [
-    utilities({
-      all: 'revert',
-      display: 'flex',
-      color: 'appText',
-      background: 'graySubtle',
-      padding: 'sp8',
-      borderRadius: 'thin',
-    }),
     {
-      border: `1.5px solid ${vars.color.grayBg}`,
+      display: 'flex',
+      alignItems: 'center',
+      border: 'none',
+      padding: vars.spaces.sm,
     },
+    utilities({
+      color: 'on-base-high-contrast',
+      borderRadius: 'sm',
+      background: { default: 'bg-base', '@hover': 'bg-base-subtle' },
+    }),
   ],
-  variants: {
-    discret: {
-      true: [utilities({ background: { '@hover': 'grayBgHover' } })],
-    },
-  },
-  defaultVariants: {
-    discret: true,
-  },
 });
 
 export type ButtonVariants = RecipeVariants<typeof button>;

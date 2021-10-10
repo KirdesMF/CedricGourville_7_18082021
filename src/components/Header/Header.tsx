@@ -50,10 +50,7 @@ export function Header() {
           </div>
 
           <div className={styles.items()}>
-            <Anchor
-              href="/"
-              variant={{ content: 'text', gap: true, fonts: 'normal' }}
-            >
+            <Anchor href="/" variant={{ fonts: 'medium' }}>
               <Icon name="Groupomania" variant={{ size: 'medium' }} />
               <span className={textAnchor}>Groupomania</span>
             </Anchor>
@@ -92,7 +89,7 @@ export function Header() {
                     navLink
                     key={element.href}
                     href={element.href}
-                    variant={{ content: 'text', fonts: 'big' }}
+                    variant={{ fonts: 'big' }}
                     onClick={() => handleMenu(false)}
                   >
                     {element.name}

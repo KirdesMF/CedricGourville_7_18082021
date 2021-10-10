@@ -1,6 +1,4 @@
 import './styles/reset.css';
-import './styles/fonts.css';
-import './styles/theme.css';
 
 import { Header } from './components/Header/Header';
 import { Layout } from './components/Layout/Layout';

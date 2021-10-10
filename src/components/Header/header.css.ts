@@ -5,14 +5,17 @@ import { vars } from '../../styles/vars.css';
 import { makeBreakpoint } from '../../utils/breakpoints.utils';
 
 export const header = style([
-  utilities({ background: 'graySubtle' }),
   {
-    borderBottom: `1px solid ${vars.color.grayLine}`,
+    borderBottom: `1px solid ${vars.colors['border-base']}`,
   },
 ]);
 
 export const inner = style([
-  utilities({ display: 'flex', justifyContent: 'space-between' }),
+  utilities({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }),
 ]);
 
 const flexHelper = style({
@@ -28,7 +31,7 @@ export const items = recipe({
       last: [utilities({ justifyContent: 'flex-end' }), flexHelper],
     },
     gap: {
-      true: utilities({ gap: 'sp10' }),
+      true: utilities({ gap: 'sm' }),
     },
   },
 });
@@ -56,7 +59,7 @@ export const aside = style([
     display: 'grid',
     position: 'relative',
     placeItems: 'center',
-    background: 'grayBg',
+    background: 'bg-base',
   }),
   {
     '::before': {
@@ -73,8 +76,8 @@ export const aside = style([
 
 globalStyle(`${aside} > button`, {
   position: 'absolute',
-  top: vars.spaces.sp18,
-  left: vars.spaces.sp18,
+  top: vars.spaces.md,
+  left: vars.spaces.md,
 });
 
 export const nav = style([utilities({ display: 'grid' })]);

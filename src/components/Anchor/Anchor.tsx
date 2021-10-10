@@ -1,5 +1,6 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { activeClassName } from '../../styles/helpers.css';
 import * as styles from './anchor.css';
 
 type AnchorProps = {
@@ -15,7 +16,7 @@ export function Anchor({
   children,
   extern,
   href,
-  variant,
+  variant = {},
   onClick,
   navLink,
 }: AnchorProps) {
@@ -31,7 +32,7 @@ export function Anchor({
     return (
       <NavLink
         exact
-        activeClassName={styles.activeClassName}
+        activeClassName={activeClassName}
         onClick={onClick}
         className={styles.anchor(variant)}
         to={href}

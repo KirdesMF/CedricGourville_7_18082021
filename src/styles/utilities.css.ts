@@ -26,8 +26,8 @@ const properties = defineProperties({
     paddingInline: vars.spaces,
     paddingBlock: vars.spaces,
     borderRadius: vars.radius,
-    fontFamily: vars.font,
-    zIndex: vars.zIndexes,
+    fontFamily: vars.fonts.family,
+    fontSize: vars.fonts.sizes,
   },
 });
 
@@ -38,8 +38,8 @@ const colorsProperties = defineProperties({
   },
   defaultCondition: 'default',
   properties: {
-    color: vars.color,
-    background: vars.color,
+    color: vars.colors,
+    background: vars.colors,
   },
 });
 

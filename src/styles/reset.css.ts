@@ -37,8 +37,8 @@ globalStyle('html:focus-within', {
 // Set body defaults
 globalStyle('body', {
   textRendering: 'optimizeSpeed',
-  lineHeight: 1.5,
-  background: vars.color.grayBase,
+  lineHeight: vars['line-heights'].reset,
+  background: vars.colors['bg-base'],
 });
 
 globalStyle('a:not([class])', {

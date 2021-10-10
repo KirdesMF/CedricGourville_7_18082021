@@ -1,5 +1,6 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
+import { vars } from '../../styles/vars.css';
 
 export const layout = recipe({
   base: {
@@ -12,6 +13,7 @@ export const layout = recipe({
         {
           display: 'grid',
           gridTemplateRows: 'min-content 1fr',
+          background: `radial-gradient(circle at 15% 50%, ${vars.colors['brand-primary']}, rgba(255, 255, 255, 0) 15%), radial-gradient(circle at 85% 30%, ${vars.colors['bg-base-subtle']}, rgba(255, 255, 255, 0) 15%)`,
         },
       ],
     },
@@ -22,7 +24,7 @@ export const layout = recipe({
         }),
         {
           display: 'grid',
-          gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 375px), 1fr))`,
+          gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 30vmin), 1fr))`,
         },
       ],
     },
