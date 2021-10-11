@@ -1,17 +1,14 @@
-import { globalStyle } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from '../../styles/vars.css';
 
 export const heading = recipe({
   base: {
-    fontFamily: vars.fonts.family.heading,
-    fontSize: '3rem',
+    fontSize: vars.fonts.sizes[10],
+    fontVariationSettings: vars.fonts.variations[850],
     color: vars.colors['on-base-high-contrast'],
-    paddingInline: vars.spaces.md,
-    paddingBlock: vars.spaces.md,
+    paddingBlockEnd: vars.spaces.lg,
+    lineHeight: 1.1,
+    width: 'min(100%, 15ch)',
+    textTransform: 'uppercase',
   },
-});
-
-globalStyle(`${heading()} > span`, {
-  color: vars.colors['brand-secondary'],
 });

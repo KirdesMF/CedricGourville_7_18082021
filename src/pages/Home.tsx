@@ -1,60 +1,66 @@
 import { Anchor } from '../components/Anchor/Anchor';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
-import { Layout } from '../components/Layout/Layout';
 import { Paragraph } from '../components/Paragraph/Paragraph';
-import { composition } from '../styles/composition.css';
+import { Span } from '../components/Span/Span';
+import { container, panel } from '../styles/helpers.css';
+import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
+import { cx } from '../utils/classname.utils';
 
 export function Home() {
   return (
-    <main className={composition.panel({ size: 'big' })}>
+    <main className={panel['2xl']}>
       <div
-        className={composition.wrapper({ height: 'full', width: 'content' })}
+        className={cx([
+          container({ width: 'lg', padding: '2xl' }),
+          flex({ template: 'base' }),
+        ])}
       >
-        <Layout variant={{ home: true }}>
-          <section
-            className={utilities({
-              display: 'grid',
-              placeContent: 'center',
-              gridAutoRows: 'min-content',
-              gap: 'md',
-              padding: { sm: 'lg', md: 'xl' },
-            })}
-          >
-            <Heading>
-              Connect <span>with</span> your colleagues
-            </Heading>
+        <section
+          className={utilities({
+            display: 'grid',
+            gridAutoRows: 'min-content',
+          })}
+        >
+          <Heading>
+            Connect{' '}
+            <Span variant={{ size: 'inherit', color: 'primary' }}>with</Span>{' '}
+            your colleagues
+          </Heading>
 
-            <Paragraph>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe
-              minus doloremque explicabo natus, asperiores odio suscipit
-              necessitatibus reprehenderit consequuntur sed unde architecto
-              consequatur exercitationem iusto dolore incidunt alias ullam.
-              Itaque!
-            </Paragraph>
-
-            <div className={utilities({ display: 'flex', gap: 'lg' })}>
-              <Anchor variant={{ fonts: 'medium' }} href="/login">
-                Login
-              </Anchor>
-
-              <Anchor variant={{ fonts: 'medium' }} href="/register">
-                Register
-              </Anchor>
-            </div>
-          </section>
+          <Paragraph>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe
+            minus doloremque explicabo natus, asperiores odio suscipit
+            necessitatibus reprehenderit consequuntur sed unde architecto
+            consequatur exercitationem iusto dolore incidunt alias ullam.
+            Itaque!
+          </Paragraph>
 
           <div
             className={utilities({
-              display: { sm: 'none', md: 'grid' },
-              placeItems: 'center',
-              padding: { sm: 'lg', md: 'xl' },
+              display: 'flex',
+              gap: 'md',
             })}
           >
-            <Illustration />
+            <Anchor variant={{ size: 'lg', color: 'base' }} href="/login">
+              <span>Login</span>
+            </Anchor>
+
+            <Anchor variant={{ size: 'lg', color: 'base' }} href="/register">
+              <span>Register</span>
+            </Anchor>
           </div>
-        </Layout>
+        </section>
+
+        <div
+          className={utilities({
+            display: { sm: 'none', md: 'grid' },
+            placeItems: 'center',
+          })}
+        >
+          <Illustration />
+        </div>
       </div>
     </main>
   );

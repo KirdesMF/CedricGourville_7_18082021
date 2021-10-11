@@ -1,55 +1,46 @@
 import { Anchor } from '../components/Anchor/Anchor';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
-import { Layout } from '../components/Layout/Layout';
 import { Paragraph } from '../components/Paragraph/Paragraph';
+import { Span } from '../components/Span/Span';
 import { FormLogIn } from '../modules/FormLogin';
-import { composition } from '../styles/composition.css';
+import { container, panel } from '../styles/helpers.css';
+import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
+import { cx } from '../utils/classname.utils';
 
 export function Login() {
   return (
-    <main className={composition.panel({ size: 'big' })}>
+    <main className={panel.lg}>
       <div
-        className={composition.wrapper({ height: 'full', width: 'content' })}
+        className={cx([
+          container({ width: 'lg', padding: 'lg' }),
+          flex({ template: 'base' }),
+        ])}
       >
-        <Layout variant={{ home: true }}>
-          <section
-            className={utilities({
-              display: 'grid',
-              placeContent: 'center',
-              gridAutoRows: 'min-content',
-              gap: 'lg',
-              padding: { sm: 'lg', md: 'xl' },
-            })}
-          >
-            <Heading>
-              Connect to your <span>profile</span>
-            </Heading>
+        <section className={utilities({ display: 'grid' })}>
+          <Heading>
+            Connect to your{' '}
+            <Span variant={{ color: 'secondary' }}>profile</Span>
+          </Heading>
 
-            <FormLogIn />
+          <FormLogIn />
 
-            <Paragraph>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            </Paragraph>
+          <Paragraph>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          </Paragraph>
 
-            <div>
-              <Anchor variant={{ fonts: 'medium' }} href="/register">
-                New here ? Create your account
-              </Anchor>
-            </div>
-          </section>
+          <Anchor href="/register">Create your account</Anchor>
+        </section>
 
-          <div
-            className={utilities({
-              display: { sm: 'none', md: 'grid' },
-              placeItems: 'center',
-              padding: { sm: 'lg', md: 'xl' },
-            })}
-          >
-            <Illustration />
-          </div>
-        </Layout>
+        <div
+          className={utilities({
+            display: { sm: 'none', md: 'grid' },
+            placeItems: 'center',
+          })}
+        >
+          <Illustration />
+        </div>
       </div>
     </main>
   );

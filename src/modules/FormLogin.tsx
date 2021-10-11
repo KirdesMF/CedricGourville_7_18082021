@@ -1,5 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Input } from '../components/Input/Input';
 import { useAuth } from '../context/auth.context';
+import { utilities } from '../styles/utilities.css';
+import { cx } from '../utils/classname.utils';
 
 const initialState = {
   email: '',
@@ -23,7 +26,16 @@ export function FormLogIn() {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form
+      onSubmit={handleOnSubmit}
+      className={cx([
+        utilities({
+          display: 'grid',
+          gap: 'md',
+          maxWidth: '50ch',
+        }),
+      ])}
+    >
       {error && <p>{error.error}</p>}
       <input
         onChange={handleOnChange}
@@ -33,6 +45,7 @@ export function FormLogIn() {
         placeholder="email"
         required
       />
+      <Input />
       <input
         onChange={handleOnChange}
         id="password"

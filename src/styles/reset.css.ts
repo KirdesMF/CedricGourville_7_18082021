@@ -2,6 +2,7 @@ import { globalStyle } from '@vanilla-extract/css';
 import { vars } from './vars.css';
 
 const reducedMotion = `(prefers-reduced-motion: reduce)`;
+
 // Box Sizing rules
 globalStyle('html, body', {
   boxSizing: 'border-box',
@@ -39,12 +40,19 @@ globalStyle('body', {
   textRendering: 'optimizeSpeed',
   lineHeight: vars['line-heights'].reset,
   background: vars.colors['bg-base'],
+  fontFamily: vars.fonts.family.global,
 });
 
+// anchors
 globalStyle('a:not([class])', {
   textDecorationSkipInk: 'auto',
 });
 
+globalStyle('a', {
+  textDecoration: 'none',
+});
+
+// images
 globalStyle('img, picture', {
   maxWidth: '100%',
   display: 'block',

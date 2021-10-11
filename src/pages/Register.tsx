@@ -1,54 +1,45 @@
 import { Anchor } from '../components/Anchor/Anchor';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
-import { Layout } from '../components/Layout/Layout';
 import { Paragraph } from '../components/Paragraph/Paragraph';
+import { Span } from '../components/Span/Span';
 import { FormRegister } from '../modules/FormRegister';
-import { composition } from '../styles/composition.css';
+import { container, panel } from '../styles/helpers.css';
+import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
+import { cx } from '../utils/classname.utils';
 
 export function Register() {
   return (
-    <main className={composition.panel({ size: 'big' })}>
+    <main className={panel.md}>
       <div
-        className={composition.wrapper({ height: 'full', width: 'content' })}
+        className={cx([
+          container({ width: 'lg', padding: 'lg' }),
+          flex({ template: 'base' }),
+        ])}
       >
-        <Layout variant={{ home: true }}>
-          <section
-            className={utilities({
-              display: 'grid',
-              placeContent: 'center',
-              gridAutoRows: 'min-content',
-              gap: 'xl',
-              padding: { sm: 'xl', md: '2xl' },
-            })}
-          >
-            <Heading>
-              Create a new <span>user account</span>
-            </Heading>
+        <section className={utilities({ display: 'grid' })}>
+          <Heading>
+            Create a new user{' '}
+            <Span variant={{ color: 'secondary' }}>account</Span>
+          </Heading>
 
-            <FormRegister />
+          <FormRegister />
 
-            <Paragraph>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque!
-            </Paragraph>
+          <Paragraph>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque!
+          </Paragraph>
 
-            <div>
-              <Anchor variant={{ fonts: 'medium' }} href="/login">
-                Already an account ? Log here
-              </Anchor>
-            </div>
-          </section>
-          <div
-            className={utilities({
-              display: { sm: 'none', md: 'grid' },
-              placeItems: 'center',
-              padding: { sm: 'xl', md: '2xl' },
-            })}
-          >
-            <Illustration />
-          </div>
-        </Layout>
+          <Anchor href="/login">Already an account ? Log here</Anchor>
+        </section>
+        <div
+          className={utilities({
+            display: { sm: 'none', md: 'grid' },
+            placeItems: 'center',
+          })}
+        >
+          <Illustration />
+        </div>
       </div>
     </main>
   );

@@ -61,6 +61,9 @@ export const colorsVars = createGlobalTheme(':root', {
     'bg-base': baseColorVars.colors.slate1,
     'bg-base-subtle': baseColorVars.colors.slate2,
     'ui-base': baseColorVars.colors.slate3,
+    'ui-base-hover': baseColorVars.colors.slate4,
+    'ui-base-focus': baseColorVars.colors.slate4,
+    'ui-base-active': baseColorVars.colors.slate5,
     'border-base': baseColorVars.colors.slate6,
     'on-base-low-contrast': baseColorVars.colors.slate11,
     'on-base-high-contrast': baseColorVars.colors.slate12,
@@ -91,8 +94,8 @@ export const colorsVars = createGlobalTheme(':root', {
     'on-secondary-high-contrast': baseColorVars.colors.red12,
 
     error: baseColorVars.colors.red9,
-    succes: baseColorVars.colors.green9,
-    warning: baseColorVars.colors.orange9,
+    success: baseColorVars.colors.green9,
+    warning: baseColorVars.colors.red9,
     info: baseColorVars.colors.indigo9,
   },
 });

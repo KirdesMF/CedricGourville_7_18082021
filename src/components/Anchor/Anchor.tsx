@@ -1,28 +1,36 @@
 import { MouseEventHandler, ReactNode } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { activeClassName } from '../../styles/helpers.css';
+import { cx } from '../../utils/classname.utils';
 import * as styles from './anchor.css';
+import type { AnchorVariants } from './anchor.css';
 
 type AnchorProps = {
   children: ReactNode;
-  extern?: boolean;
   href: string;
-  variant?: styles.AnchorVariants;
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  extern?: boolean;
   navLink?: boolean;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  className?: string;
+  variant?: AnchorVariants;
 };
 
 export function Anchor({
   children,
-  extern,
   href,
-  variant = {},
-  onClick,
+  extern,
   navLink,
+  onClick,
+  variant,
+  className,
 }: AnchorProps) {
+  const cls = className
+    ? cx([className, styles.anchor(variant)])
+    : styles.anchor(variant);
+
   if (extern) {
     return (
-      <a className={styles.anchor(variant)} href={href}>
+      <a className={cls} href={href}>
         {children}
       </a>
     );
@@ -34,7 +42,7 @@ export function Anchor({
         exact
         activeClassName={activeClassName}
         onClick={onClick}
-        className={styles.anchor(variant)}
+        className={cls}
         to={href}
       >
         {children}
@@ -43,7 +51,7 @@ export function Anchor({
   }
 
   return (
-    <Link onClick={onClick} className={styles.anchor(variant)} to={href}>
+    <Link onClick={onClick} className={cls} to={href}>
       {children}
     </Link>
   );

@@ -9,11 +9,14 @@ export const button = recipe({
       alignItems: 'center',
       border: 'none',
       padding: vars.spaces.sm,
+      ':hover': {
+        boxShadow: `inset 0 0 0 1.5px ${vars.colors['border-primary-hover']}`,
+      },
     },
     utilities({
       color: 'on-base-high-contrast',
       borderRadius: 'sm',
-      background: { default: 'bg-base', '@hover': 'bg-base-subtle' },
+      background: { default: 'bg-base', '@hover': 'ui-base-hover' },
     }),
   ],
 });

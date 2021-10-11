@@ -1,25 +1,14 @@
 import { createGlobalTheme, globalFontFace } from '@vanilla-extract/css';
 
-globalFontFace('Anaheim', {
-  src: 'url(/fonts/Anaheim-Regular.ttf)',
-  fontDisplay: 'swap',
-});
-
-globalFontFace('RobotoSlab', {
-  src: 'url(/fonts/RobotoSlab-Bold.ttf)',
-  fontDisplay: 'swap',
-});
-
-globalFontFace('Lemon', {
-  src: 'url(/fonts/LemonMilkBold-gx2B3.otf)',
+globalFontFace('Lexend Deca', {
+  src: 'url(/fonts/LexendDeca-VariableFont_wght.ttf)',
   fontDisplay: 'swap',
 });
 
 export const fontsVars = createGlobalTheme(':root', {
   fonts: {
     family: {
-      heading: 'Lemon',
-      paragraph: 'Anaheim',
+      global: 'Lexend Deca',
     },
     sizes: {
       1: '0.625rem',
@@ -32,6 +21,13 @@ export const fontsVars = createGlobalTheme(':root', {
       8: '1.75rem',
       9: '2rem',
       10: '2.625rem',
+    },
+    variations: {
+      100: `'wght' 100`,
+      200: `'wght' 200`,
+      700: `'wght' 700`,
+      850: `'wght' 850`,
+      900: `'wght' 900`,
     },
   },
 
