@@ -4,7 +4,7 @@ import * as styles from './input.css';
 
 export function Input({ id, ...props }: JSX.IntrinsicElements['input']) {
   return (
-    <div className={utilities({ display: 'grid', gap: 'sm' })}>
+    <div className={utilities({ display: 'grid', gap: 'xs' })}>
       <label htmlFor={id} className={srOnly}>
         Enter your email
       </label>

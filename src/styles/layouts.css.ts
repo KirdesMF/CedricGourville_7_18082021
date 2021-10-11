@@ -1,3 +1,4 @@
+import { globalStyle } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 import { vars } from './vars.css';
 
@@ -28,4 +29,8 @@ export const flex = recipe({
       },
     },
   },
+});
+
+globalStyle(`${flex()} > *`, {
+  flex: 1,
 });

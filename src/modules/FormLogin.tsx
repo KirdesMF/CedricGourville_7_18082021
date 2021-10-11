@@ -1,4 +1,4 @@
-import { FocusEvent, FormEvent, useEffect, useState } from 'react';
+import { FocusEvent, FormEvent, useState } from 'react';
 import { Input } from '../components/Input/Input';
 import { useAuth } from '../context/auth.context';
 import { utilities } from '../styles/utilities.css';
@@ -24,10 +24,6 @@ export function FormLogIn() {
       [e.target.id]: e.target.value,
     }));
   };
-
-  useEffect(() => {
-    console.log(inputsUser);
-  }, [inputsUser]);
 
   return (
     <form

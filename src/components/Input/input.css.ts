@@ -8,6 +8,7 @@ export const input = style([
     boxShadow: `inset 0 0 2px ${vars.colors['ui-base']}, inset 0 0 2px ${vars.colors['ui-base']}`,
     paddingInline: vars.spaces.md,
     paddingBlock: vars.spaces.sm,
+    appearance: 'none',
 
     '::placeholder': {
       fontStyle: 'italic',

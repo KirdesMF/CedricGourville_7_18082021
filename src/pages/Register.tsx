@@ -11,7 +11,7 @@ import { cx } from '../utils/classname.utils';
 
 export function Register() {
   return (
-    <main className={panel.md}>
+    <main className={panel['2xl']}>
       <div
         className={cx([
           container({ width: 'lg', padding: 'lg' }),
@@ -26,7 +26,7 @@ export function Register() {
 
           <FormRegister />
 
-          <Paragraph>
+          <Paragraph variant={{ size: 'xs' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque!
           </Paragraph>
 

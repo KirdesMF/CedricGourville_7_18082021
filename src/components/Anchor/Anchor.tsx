@@ -5,7 +5,7 @@ import * as styles from './anchor.css';
 import type { AnchorVariants } from './anchor.css';
 
 type ExternalAnchorProps = {
-  variant: AnchorVariants;
+  variant?: AnchorVariants;
 } & JSX.IntrinsicElements['a'];
 
 export function ExternalAnchor({

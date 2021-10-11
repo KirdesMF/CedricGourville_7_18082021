@@ -11,6 +11,7 @@ const base = style({
   textTransform: 'capitalize',
   whiteSpace: 'nowrap',
   textUnderlineOffset: vars.spaces.xs,
+  appearance: 'none',
 
   selectors: {
     [`&:hover:not(${activeClassName})`]: {

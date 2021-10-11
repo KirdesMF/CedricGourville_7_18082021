@@ -1,13 +1,16 @@
-import { ReactNode } from 'react';
 import { cx } from '../../utils/classname.utils';
 import * as styles from './paragraph.css';
+import type { ParagraphVariants } from './paragraph.css';
 
 type ParagraphProps = {
-  children: ReactNode | string;
-  className?: string;
-};
-export function Paragraph({ children, className }: ParagraphProps) {
-  const stylesArr =
-    typeof className === 'undefined' ? [styles.root] : [styles.root, className];
-  return <p className={cx(stylesArr)}>{children}</p>;
+  variant?: ParagraphVariants;
+} & JSX.IntrinsicElements['p'];
+
+export function Paragraph({ children, className, variant }: ParagraphProps) {
+  const cls =
+    typeof className === 'undefined'
+      ? [styles.paragraph(variant)]
+      : [styles.paragraph(variant), className];
+
+  return <p className={cx(cls)}>{children}</p>;
 }
