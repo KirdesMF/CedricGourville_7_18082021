@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Input } from '../components/Input/Input';
 import { useAuth } from '../context/auth.context';
+import { utilities } from '../styles/utilities.css';
 import { User } from '../types';
 
 const inputs = [
@@ -39,19 +41,21 @@ export function FormRegister() {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form
+      onSubmit={handleOnSubmit}
+      className={utilities({ display: 'grid', gap: 'sm' })}
+    >
       {inputs.map((element) => (
-        <input
-          onChange={handleOnChange}
+        <Input
+          onBlur={handleOnChange}
           key={element.id}
           id={element.id}
-          name={element.name}
           type={element.type}
           placeholder={element.placeholder}
           autoComplete={element.autocomplete}
         />
       ))}
-      <button>Submit</button>
+      <Input value="Send" type="submit" />
     </form>
   );
 }

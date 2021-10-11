@@ -1,49 +1,54 @@
-import { MouseEventHandler, ReactNode } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, LinkProps, NavLink, NavLinkProps } from 'react-router-dom';
 import { activeClassName } from '../../styles/helpers.css';
 import { cx } from '../../utils/classname.utils';
 import * as styles from './anchor.css';
 import type { AnchorVariants } from './anchor.css';
 
+type ExternalAnchorProps = {
+  variant: AnchorVariants;
+} & JSX.IntrinsicElements['a'];
+
+export function ExternalAnchor({
+  children,
+  className,
+  variant,
+  ...anchorProps
+}: ExternalAnchorProps) {
+  const cls = className
+    ? cx([className, styles.anchor(variant)])
+    : styles.anchor(variant);
+
+  return (
+    <a className={cls} {...anchorProps}>
+      {children}
+    </a>
+  );
+}
+
 type AnchorProps = {
-  children: ReactNode;
-  href: string;
-  extern?: boolean;
   navLink?: boolean;
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
-  className?: string;
   variant?: AnchorVariants;
-};
+} & LinkProps &
+  NavLinkProps;
 
 export function Anchor({
   children,
-  href,
-  extern,
   navLink,
-  onClick,
   variant,
   className,
+  ...props
 }: AnchorProps) {
   const cls = className
     ? cx([className, styles.anchor(variant)])
     : styles.anchor(variant);
 
-  if (extern) {
-    return (
-      <a className={cls} href={href}>
-        {children}
-      </a>
-    );
-  }
-
   if (navLink) {
     return (
       <NavLink
+        {...props}
         exact
         activeClassName={activeClassName}
-        onClick={onClick}
         className={cls}
-        to={href}
       >
         {children}
       </NavLink>
@@ -51,7 +56,7 @@ export function Anchor({
   }
 
   return (
-    <Link onClick={onClick} className={cls} to={href}>
+    <Link className={cls} {...props}>
       {children}
     </Link>
   );

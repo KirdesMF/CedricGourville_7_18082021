@@ -1,14 +1,16 @@
-import { ReactNode, MouseEventHandler } from 'react';
 import * as styles from './button.css';
 
 type ButtonProps = {
-  children: ReactNode;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
   variant?: styles.ButtonVariants;
 };
-export function Button({ children, onClick, variant }: ButtonProps) {
+
+export function Button({
+  children,
+  variant,
+  ...btnProps
+}: ButtonProps & JSX.IntrinsicElements['button']) {
   return (
-    <button onClick={onClick} className={styles.button(variant)}>
+    <button {...btnProps} className={styles.button(variant)}>
       {children}
     </button>
   );

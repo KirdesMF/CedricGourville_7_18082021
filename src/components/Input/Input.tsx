@@ -2,21 +2,13 @@ import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import * as styles from './input.css';
 
-export function Input() {
+export function Input({ id, ...props }: JSX.IntrinsicElements['input']) {
   return (
     <div className={utilities({ display: 'grid', gap: 'sm' })}>
-      <label htmlFor="email" className={srOnly}>
-        Email
+      <label htmlFor={id} className={srOnly}>
+        Enter your email
       </label>
-      <input
-        className={styles.input}
-        id="email"
-        type="email"
-        name="email"
-        placeholder="Enter your email"
-        required
-      />
-      <small className={styles.small}>Errors</small>
+      <input className={styles.input} {...props} />
     </div>
   );
 }

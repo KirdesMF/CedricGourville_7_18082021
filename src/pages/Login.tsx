@@ -30,7 +30,7 @@ export function Login() {
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           </Paragraph>
 
-          <Anchor href="/register">Create your account</Anchor>
+          <Anchor to="/register">Create your account</Anchor>
         </section>
 
         <div

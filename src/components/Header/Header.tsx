@@ -22,11 +22,11 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <Anchor href="/login">
+          <Anchor to="/login">
             <Icon name="PersonIcon" variant={{ size: 'medium' }} />
           </Anchor>
 
-          <Anchor href="/" variant={{ gap: true }}>
+          <Anchor to="/" variant={{ gap: true }}>
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
             <Span>Groupomania</Span>
           </Anchor>

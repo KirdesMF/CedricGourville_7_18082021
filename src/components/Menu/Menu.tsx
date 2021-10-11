@@ -17,7 +17,7 @@ const variants: Variants = {
   }),
 };
 
-const links = [
+const LINKS = [
   { name: 'home', href: '/' },
   { name: 'login', href: '/login' },
   { name: 'register', href: '/register' },
@@ -41,11 +41,11 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
         </Button>
 
         <nav className={styles.nav}>
-          {links.map((element) => (
+          {LINKS.map((element) => (
             <Anchor
               navLink
               key={element.href}
-              href={element.href}
+              to={element.href}
               variant={{
                 size: '2xl',
                 color: 'primary',

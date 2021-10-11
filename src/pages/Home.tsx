@@ -43,11 +43,11 @@ export function Home() {
               gap: 'md',
             })}
           >
-            <Anchor variant={{ size: 'lg', color: 'base' }} href="/login">
+            <Anchor variant={{ size: 'lg', color: 'base' }} to="/login">
               <span>Login</span>
             </Anchor>
 
-            <Anchor variant={{ size: 'lg', color: 'base' }} href="/register">
+            <Anchor variant={{ size: 'lg', color: 'base' }} to="/register">
               <span>Register</span>
             </Anchor>
           </div>

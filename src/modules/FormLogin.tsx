@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FocusEvent, FormEvent, useEffect, useState } from 'react';
 import { Input } from '../components/Input/Input';
 import { useAuth } from '../context/auth.context';
 import { utilities } from '../styles/utilities.css';
@@ -18,12 +18,16 @@ export function FormLogIn() {
     login(inputsUser);
   };
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
     setInputsUser((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
+
+  useEffect(() => {
+    console.log(inputsUser);
+  }, [inputsUser]);
 
   return (
     <form
@@ -37,25 +41,24 @@ export function FormLogIn() {
       ])}
     >
       {error && <p>{error.error}</p>}
-      <input
-        onChange={handleOnChange}
+
+      <Input
         id="email"
-        name="email"
-        type="text"
-        placeholder="email"
+        type="email"
+        placeholder="Enter your email"
         required
+        onBlur={handleOnBlur}
       />
-      <Input />
-      <input
-        onChange={handleOnChange}
-        id="password"
-        name="password"
+      <Input
+        id="paswword"
         type="password"
-        autoComplete="on"
-        placeholder="password"
+        placeholder="Enter your password"
         required
+        onBlur={handleOnBlur}
+        autoComplete="username"
       />
-      <button>Submit</button>
+
+      <Input value="Send" type="submit" />
     </form>
   );
 }

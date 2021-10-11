@@ -4,7 +4,6 @@ import { makeBreakpoint } from '../utils/breakpoints.utils';
 
 const properties = defineProperties({
   properties: {
-    all: ['revert', 'unset'],
     position: ['relative', 'absolute', 'sticky', 'fixed'],
     height: ['100%'],
     minHeight: ['100%', '100vh'],

@@ -30,7 +30,7 @@ export function Register() {
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque!
           </Paragraph>
 
-          <Anchor href="/login">Already an account ? Log here</Anchor>
+          <Anchor to="/login">Already an account ? Log here</Anchor>
         </section>
         <div
           className={utilities({
