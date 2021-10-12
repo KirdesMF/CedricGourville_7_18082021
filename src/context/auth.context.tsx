@@ -16,7 +16,7 @@ type AuthContextType = {
   error?: Record<string, string> | null;
   isLoading: boolean;
   login: (payload: { email: string; password: string }) => Promise<void>;
-  logout: (id: string) => Promise<void>;
+  logout: () => Promise<void>;
   register: (payload: User) => Promise<void>;
 };
 
@@ -61,8 +61,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch((err) => setError(err));
   };
 
-  const logout = async (id: string) => {
-    await AuthAPI.logout(id).then(() => {
+  const logout = async () => {
+    await AuthAPI.logout().then(() => {
       history.push('/login');
       setUser(undefined);
     });

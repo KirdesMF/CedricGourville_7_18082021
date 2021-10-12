@@ -23,9 +23,9 @@ async function login(payload: {
   return json;
 }
 
-async function logout(id: string): Promise<Data> {
-  const res = await fetch(`http://localhost:1234/auth/${id}`, {
-    method: 'POST',
+async function logout(): Promise<Data> {
+  const res = await fetch(`http://localhost:1234/auth/`, {
+    method: 'DELETE',
     headers,
     credentials: 'include',
   });

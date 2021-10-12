@@ -10,7 +10,7 @@ export const base = style({
 });
 
 export const paragraph = recipe({
-  base: [base],
+  base: base,
   variants: {
     size: {
       xs: { fontSize: vars.fonts.sizes[3] },

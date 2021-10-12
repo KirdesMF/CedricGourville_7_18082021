@@ -1,6 +1,11 @@
 import { useAuth } from '../context/auth.context';
 
 export function Feed() {
-  const { user } = useAuth();
-  return <div>{user?.firstName}</div>;
+  const { user, logout } = useAuth();
+  return (
+    <div>
+      <button onClick={() => logout()}>LOG OUT</button>
+      <span>{user?.firstName}</span>
+    </div>
+  );
 }

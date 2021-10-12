@@ -13,6 +13,7 @@ const INPUTS = [
   },
   { name: 'lastName', type: 'text', id: 'lastName', placeholder: 'Last Name' },
   { name: 'email', type: 'text', id: 'email', placeholder: 'Email' },
+  { name: 'bio', type: 'text', id: 'bio', placeholder: 'Your bio...' },
   {
     name: 'password',
     type: 'password',
@@ -46,8 +47,9 @@ export function FormRegister() {
       {INPUTS.map((element) => (
         <Input
           onBlur={handleOnChange}
-          key={element.id}
+          key={element.name}
           id={element.id}
+          name={element.name}
           type={element.type}
           placeholder={element.placeholder}
           autoComplete={element.autocomplete}

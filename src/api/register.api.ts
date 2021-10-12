@@ -6,6 +6,7 @@ async function register(payload: User): Promise<Data> {
     method: 'POST',
     body: JSON.stringify(payload),
     headers,
+    credentials: 'include',
   });
 
   const json = await res.json();

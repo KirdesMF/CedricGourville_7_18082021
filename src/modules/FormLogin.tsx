@@ -16,6 +16,7 @@ export function FormLogIn() {
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     login(inputsUser);
+    console.log(inputsUser);
   };
 
   const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
@@ -44,14 +45,16 @@ export function FormLogIn() {
         placeholder="Enter your email"
         required
         onBlur={handleOnBlur}
+        label="Email"
       />
       <Input
-        id="paswword"
+        id="password"
         type="password"
         placeholder="Enter your password"
         required
         onBlur={handleOnBlur}
         autoComplete="username"
+        label="Password"
       />
 
       <Input value="Send" type="submit" />
