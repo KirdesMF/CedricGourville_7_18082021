@@ -9,7 +9,6 @@ export const input = style([
     paddingInline: vars.spaces.md,
     paddingBlock: vars.spaces.sm,
     appearance: 'none',
-
     '::placeholder': {
       fontStyle: 'italic',
       fontVariationSettings: vars.fonts.variations[200],
