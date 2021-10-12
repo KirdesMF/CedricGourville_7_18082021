@@ -62,13 +62,6 @@ globalStyle('input, button, textarea, select', {
   font: 'inherit',
 });
 
-// TODO improve autocomplete chrome
-globalStyle('input:-internal-autofill-selected', {
-  backgroundColor: 'transparent',
-  boxShadow: `0 0 0px 1000px ${vars.colors['ui-base']} inset`,
-  color: `${vars.colors['on-base-low-contrast']} !important`,
-});
-
 globalStyle('html, body, #root', {
   height: '100%',
 });

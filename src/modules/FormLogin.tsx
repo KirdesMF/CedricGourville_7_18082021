@@ -19,7 +19,7 @@ export function FormLogIn() {
     console.log(inputsUser);
   };
 
-  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: FocusEvent<HTMLInputElement>) => {
     setInputsUser((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
@@ -44,7 +44,7 @@ export function FormLogIn() {
         type="email"
         placeholder="Enter your email"
         required
-        onBlur={handleOnBlur}
+        onChange={handleOnChange}
         label="Email"
       />
       <Input
@@ -52,7 +52,7 @@ export function FormLogIn() {
         type="password"
         placeholder="Enter your password"
         required
-        onBlur={handleOnBlur}
+        onChange={handleOnChange}
         autoComplete="username"
         label="Password"
       />

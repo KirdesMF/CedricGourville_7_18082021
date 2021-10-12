@@ -46,7 +46,7 @@ export function FormRegister() {
     >
       {INPUTS.map((element) => (
         <Input
-          onBlur={handleOnChange}
+          onChange={handleOnChange}
           key={element.name}
           id={element.id}
           name={element.name}
