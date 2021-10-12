@@ -8,6 +8,6 @@ export function authRouter(app: Application) {
   route.get('/', AuthControllers.checkUserLogged);
   route.get('/check', AuthControllers.checkUserLogged);
   route.post('/', AuthControllers.login);
-  route.post('/:id', AuthControllers.logout);
+  route.delete('/', AuthControllers.logout);
   return app;
 }

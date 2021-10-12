@@ -52,22 +52,12 @@ async function login(req: Request, res: Response, next: NextFunction) {
 }
 
 async function logout(req: Request, res: Response, next: NextFunction) {
-  const { id } = req.params;
+  res
+    .clearCookie('jwt')
+    .status(httpStatus.OK)
+    .json({ success: '👋 Successfully logged out' });
 
-  try {
-    const user = await AuthServices.findUserById(parseInt(id, 10));
-
-    if (!user) {
-      throw new ErrorHandler(500, `❌ We did not find the user`);
-    }
-
-    res
-      .clearCookie('jwt')
-      .status(httpStatus.OK)
-      .json({ success: '👋 Successfully logged out' });
-  } catch (error) {
-    next(error);
-  }
+  next();
 }
 
 async function checkUserLogged(

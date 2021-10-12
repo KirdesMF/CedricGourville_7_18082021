@@ -10,6 +10,7 @@ services:
 
   studio:
     build:
+      context: .
       target: studio
     container_name: prisma-studio
     image: studio
