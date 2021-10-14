@@ -26,7 +26,13 @@
     "no-use-before-define": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-use-before-define": ["error"]
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "controlComponents": ["Input"]
+      }
+    ]
   },
   "globals": {
     "JSX": true

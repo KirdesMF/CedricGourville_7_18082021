@@ -12,7 +12,7 @@ const INPUTS = [
     placeholder: 'First Name',
   },
   { name: 'lastName', type: 'text', id: 'lastName', placeholder: 'Last Name' },
-  { name: 'email', type: 'text', id: 'email', placeholder: 'Email' },
+  { name: 'email', type: 'email', id: 'email', placeholder: 'Email' },
   { name: 'bio', type: 'text', id: 'bio', placeholder: 'Your bio...' },
   {
     name: 'password',

@@ -1,10 +1,12 @@
 export type User = {
   id: string;
+  email: string;
+  password: string;
   firstName: string;
   lastName: string;
-  password: string;
-  bio: string;
-  email: string;
+  username: string;
+  bio?: string;
+  picture?: string;
 };
 
 export type Data = {

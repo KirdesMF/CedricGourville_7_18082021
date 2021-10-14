@@ -11,6 +11,7 @@ globalStyle('input:-webkit-autofill, input:-internal-autofill-selected', {
 export const input = style([
   {
     border: 'none',
+    background: 'none',
     paddingInline: vars.spaces.md,
     paddingBlock: vars.spaces.sm,
     appearance: 'none',

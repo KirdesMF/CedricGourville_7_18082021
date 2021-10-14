@@ -1,9 +1,9 @@
 import { Anchor } from '../components/Anchor/Anchor';
+import { FormRegister } from '../components/forms/FormRegister';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Paragraph } from '../components/Paragraph/Paragraph';
 import { Span } from '../components/Span/Span';
-import { FormRegister } from '../modules/FormRegister';
 import { container, panel } from '../styles/helpers.css';
 import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
