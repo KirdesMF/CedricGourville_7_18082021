@@ -2,16 +2,10 @@ import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import { config } from '../config/config';
 import { AuthServices } from '../services/auth.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
-
-const options = {
-  maxAge: 5000 * 5000,
-  httpOnly: true,
-  secure: true,
-  sameSite: 'lax',
-} as const;
 
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, email } = req.body as User;
@@ -43,7 +37,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
     });
 
     res
-      .cookie('jwt', token, options)
+      .cookie('jwt', token, config.cookies)
       .status(httpStatus.OK)
       .send({ success: `🎉 Successfully connected`, user, token });
   } catch (error) {

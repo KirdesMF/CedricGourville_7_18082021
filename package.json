@@ -4,7 +4,7 @@
   "description": "P7 OpenclassRoom Backend",
   "scripts": {
     "prisma:studio": "npx prisma studio",
-    "prisma:dev": "prisma db push",
+    "prisma:dev": "prisma generate && prisma db push --force-reset",
     "prisma:prod": "prisma migrate deploy",
     "prisma:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev",
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --cache-directory src/.cache src/app.ts --watch",
@@ -14,7 +14,7 @@
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml",
     "docker:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml",
     "docker:dev:start": "npm run docker:dev -- up -d",
-    "docker:dev:stop": "npm run docker:dev -- down",
+    "docker:dev:stop": "npm run docker:dev -- down --rmi local",
     "docker:build:start": "npm run docker:build -- up -d",
     "docker:build:stop": "npm run docker:build -- down",
     "docker:clean": "docker system prune -a --volumes -f"

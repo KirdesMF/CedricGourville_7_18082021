@@ -1,5 +1,7 @@
 import { User } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
+import { sign } from 'jsonwebtoken';
+import { config } from '../config/config';
 import { RegisterServices } from '../services/register.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
@@ -17,7 +19,12 @@ async function registerUser(req: Request, res: Response, next: NextFunction) {
     const user = await RegisterServices.createUser(req.body);
 
     if (user) {
+      const token = sign({ id: user.id }, process.env.SECRET || 'secret', {
+        expiresIn: '12h',
+      });
+
       res
+        .cookie('jwt', token, config.cookies)
         .status(httpStatus.created)
         .json({ success: '✔ User successfully created', user });
     }

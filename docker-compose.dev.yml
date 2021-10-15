@@ -8,6 +8,12 @@ services:
       - studio
       - mysql
 
+  package:
+    build:
+      context: .
+      target: base
+    image: package
+
   studio:
     build:
       context: .
