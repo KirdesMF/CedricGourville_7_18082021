@@ -1,13 +1,13 @@
 import { Application, Router } from 'express';
 import { AuthControllers } from '../controllers/auth.controllers';
 
-export function authRouter(app: Application) {
-  const route = Router();
-  app.use('/auth', route);
+const route = Router();
 
+export function authRouter(app: Application) {
+  app.use('/auth', route);
   route.get('/', AuthControllers.checkUserLogged);
-  route.get('/check', AuthControllers.checkUserLogged);
   route.post('/', AuthControllers.login);
   route.delete('/', AuthControllers.logout);
+
   return app;
 }

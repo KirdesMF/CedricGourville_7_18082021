@@ -3,10 +3,16 @@ import { compare } from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { config } from '../config/config';
-import { AuthServices } from '../services/auth.services';
+import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
+/**
+ * @param req
+ * @param res
+ * @param next
+ * @description log user
+ */
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, email } = req.body as User;
 
@@ -20,7 +26,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 
   try {
-    const user = await AuthServices.findUserByEmail(email);
+    const user = await UserServices.findUserByEmail(email);
 
     if (!user) {
       throw new ErrorHandler(500, `❌ We did not find the user`);
@@ -45,6 +51,13 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @description log out user
+ */
 async function logout(req: Request, res: Response, next: NextFunction) {
   res
     .clearCookie('jwt')
@@ -54,6 +67,14 @@ async function logout(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns
+ * @description
+ */
 async function checkUserLogged(
   req: Request,
   res: Response,
@@ -65,13 +86,11 @@ async function checkUserLogged(
       token,
       process.env.SECRET || ('secret' as string)
     ) as JwtPayload;
-    const user = await AuthServices.findUserById(id);
+
+    const user = await UserServices.findUserById(id);
 
     if (user) {
-      // TODO make an utils
-      // remove password from response
-      const removeProp = 'password';
-      const { [removeProp]: remove, ...safe } = user;
+      const { password: _, ...safe } = user;
       return res.status(httpStatus.OK).json({ user: safe });
     }
   }
@@ -84,6 +103,7 @@ async function checkUserLogged(
   );
 }
 
+// Export
 export const AuthControllers = {
   login,
   logout,

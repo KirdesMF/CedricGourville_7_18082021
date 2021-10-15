@@ -22,7 +22,8 @@ async function createUser(userInput: User) {
 
 /**
  * @param id
- * @description Delete a user
+ * @returns user
+ * @description delete user by id
  */
 async function deleteUserById(id: number) {
   const user = await prisma.user.delete({
@@ -31,7 +32,37 @@ async function deleteUserById(id: number) {
   return user;
 }
 
-export const RegisterServices = {
+async function findUserByEmail(email: string) {
+  const user = prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  return user;
+}
+
+async function findUserByUserName(userName: string) {
+  const user = prisma.user.findUnique({
+    where: {
+      userName,
+    },
+  });
+  return user;
+}
+
+async function findUserById(id: number) {
+  const user = prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+  return user;
+}
+
+export const UserServices = {
   createUser,
   deleteUserById,
+  findUserByEmail,
+  findUserByUserName,
+  findUserById,
 };

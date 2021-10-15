@@ -5,9 +5,9 @@ const route = Router();
 
 export function registerRouter(app: Application) {
   app.use('/register', route);
-
   route.post('/', RegisterControllers.registerUser);
   route.delete('/:id', RegisterControllers.unRegisterUser);
+  route.post('/check', RegisterControllers.checkUniqueValue);
 
   return app;
 }
