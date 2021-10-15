@@ -14,13 +14,10 @@ async function login(payload: {
   });
 
   if (!res.ok) {
-    return res.json().then((json) => {
-      throw json;
-    });
+    throw await res.json();
+  } else {
+    return await res.json();
   }
-
-  const json = await res.json();
-  return json;
 }
 
 async function logout(): Promise<Data> {
@@ -30,8 +27,7 @@ async function logout(): Promise<Data> {
     credentials: 'include',
   });
 
-  const json = res.json();
-  return json;
+  return await res.json();
 }
 
 async function checkUserLogged(): Promise<Data> {
@@ -42,12 +38,10 @@ async function checkUserLogged(): Promise<Data> {
   });
 
   if (!res.ok) {
-    return res.json().then((json) => {
-      throw json;
-    });
+    throw await res.json();
+  } else {
+    return await res.json();
   }
-  const json = await res.json();
-  return json;
 }
 
 export const AuthAPI = {

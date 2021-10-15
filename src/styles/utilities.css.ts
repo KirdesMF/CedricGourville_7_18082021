@@ -13,6 +13,8 @@ const properties = defineProperties({
     placeItems: ['center'],
     placeContent: ['center'],
     gridAutoRows: ['min-content'],
+    gridArea: ['area'],
+    overflow: ['hidden'],
     gap: vars.spaces,
     borderRadius: vars.radius,
     fontSize: vars.fonts.sizes,

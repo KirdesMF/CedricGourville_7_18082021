@@ -9,8 +9,11 @@ async function register(payload: User): Promise<Data> {
     credentials: 'include',
   });
 
-  const json = await res.json();
-  return json;
+  if (!res.ok) {
+    throw await res.json();
+  } else {
+    return await res.json();
+  }
 }
 
 async function unRegister(id: string) {
@@ -22,7 +25,25 @@ async function unRegister(id: string) {
   return res;
 }
 
+async function checkUniqueValue(value: 'username' | 'email', payload: string) {
+  const key = value === 'username' ? 'userName' : 'email';
+
+  const res = await fetch(`http://localhost:1234/register/check`, {
+    method: 'POST',
+    body: JSON.stringify({ [key]: payload }),
+    credentials: 'include',
+    headers,
+  });
+
+  if (!res.ok) {
+    throw await res.json();
+  } else {
+    return res;
+  }
+}
+
 export const RegisterAPI = {
   register,
   unRegister,
+  checkUniqueValue,
 };

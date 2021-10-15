@@ -21,11 +21,13 @@ export function Input<T>({
   ...rest
 }: InputProps<T>) {
   return (
-    <label className={utilities({ display: 'grid', gap: 'xs' })}>
+    <label className={utilities({ display: 'grid', gap: 'sm' })}>
       <span className={srOnly}>{label}</span>
       <input {...register(name, options)} className={styles.input} {...rest} />
       {errors[name] && (
-        <Span variant={{ color: 'secondary' }}>{errors[name]?.message}</Span>
+        <Span variant={{ color: 'secondary', size: 'xs' }}>
+          {errors[name]?.message}
+        </Span>
       )}
     </label>
   );

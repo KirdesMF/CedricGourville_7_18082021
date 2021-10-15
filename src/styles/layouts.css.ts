@@ -12,6 +12,12 @@ export const grid = recipe({
         minHeight: '100%',
         gridTemplateRows: 'min-content 1fr',
       },
+      sameArea: {
+        gridTemplate: `
+          "area" 1fr / 1fr
+        `,
+        minHeight: '25vh',
+      },
     },
   },
 });

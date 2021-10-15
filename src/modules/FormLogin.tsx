@@ -37,7 +37,11 @@ export function FormLogIn() {
         }),
       ])}
     >
-      {error && <p>{error.error}</p>}
+      {error?.error && (
+        <p className={utilities({ color: 'warning', fontSize: 3 })}>
+          {error.error}
+        </p>
+      )}
 
       <BasicInput
         id="email"

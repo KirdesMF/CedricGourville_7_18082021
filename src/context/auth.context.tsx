@@ -18,6 +18,10 @@ type AuthContextType = {
   login: (payload: { email: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
   register: (payload: User) => Promise<void>;
+  checkUniqueValue: (
+    value: 'username' | 'email',
+    payload: string
+  ) => Promise<boolean | void>;
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -32,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     AuthAPI.checkUserLogged()
       .then((data) => {
-        data.user && setUser(data.user);
+        setUser(data.user);
         history.push(pathname);
       })
       .catch((err) => setError(err))
@@ -46,8 +50,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (payload: User) => {
     await RegisterAPI.register(payload)
       .then((data) => {
-        data.user && setUser(data.user);
+        setUser(data.user);
         history.push('/');
+      })
+      .catch((err) => setError(err));
+  };
+
+  const checkUniqueValue = async (
+    value: 'username' | 'email',
+    payload: string
+  ) => {
+    return await RegisterAPI.checkUniqueValue(value, payload)
+      .then((res) => {
+        setError(null);
+        return res.ok;
       })
       .catch((err) => setError(err));
   };
@@ -55,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (payload: { email: string; password: string }) => {
     await AuthAPI.login(payload)
       .then((data) => {
-        data.user && setUser(data.user);
+        setUser(data.user);
         history.push('/');
       })
       .catch((err) => setError(err));
@@ -68,13 +84,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ user, setUser, error, isLoading, login, logout, register }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const values = {
+    user,
+    setUser,
+    error,
+    isLoading,
+    login,
+    logout,
+    register,
+    checkUniqueValue,
+  };
+
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

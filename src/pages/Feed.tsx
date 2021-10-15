@@ -5,7 +5,7 @@ export function Feed() {
   return (
     <div>
       <button onClick={() => logout()}>LOG OUT</button>
-      <span>{user?.firstName}</span>
+      <span>{user?.userName}</span>
     </div>
   );
 }

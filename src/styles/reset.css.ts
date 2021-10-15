@@ -41,6 +41,7 @@ globalStyle('body', {
   lineHeight: vars['line-heights'].reset,
   background: vars.colors['bg-base'],
   fontFamily: vars.fonts.family.global,
+  overflowX: 'hidden',
 });
 
 // anchors
