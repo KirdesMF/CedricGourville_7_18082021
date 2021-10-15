@@ -1,5 +1,5 @@
 import { FocusEvent, FormEvent, useState } from 'react';
-import { Input } from '../components/Input/Input';
+import { BasicInput } from '../components/Input/Input';
 import { useAuth } from '../context/auth.context';
 import { utilities } from '../styles/utilities.css';
 import { cx } from '../utils/classname.utils';
@@ -39,7 +39,7 @@ export function FormLogIn() {
     >
       {error && <p>{error.error}</p>}
 
-      <Input
+      <BasicInput
         id="email"
         type="email"
         placeholder="Enter your email"
@@ -47,7 +47,7 @@ export function FormLogIn() {
         onChange={handleOnChange}
         label="Email"
       />
-      <Input
+      <BasicInput
         id="password"
         type="password"
         placeholder="Enter your password"
@@ -57,7 +57,7 @@ export function FormLogIn() {
         label="Password"
       />
 
-      <Input value="Send" type="submit" />
+      <BasicInput value="Send" type="submit" />
     </form>
   );
 }

@@ -7,6 +7,7 @@ export default defineConfig({
     jsxInject: `import React from 'react'`,
   },
   server: {
+    open: true,
     watch: {
       usePolling: true,
     },

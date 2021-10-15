@@ -1,12 +1,13 @@
+export type Department = 'DIRECTION' | 'TECH' | 'COM' | 'SOCIAL' | 'VISITOR';
+
 export type User = {
-  id: string;
   email: string;
+  userName: string;
   password: string;
   firstName: string;
   lastName: string;
-  username: string;
-  bio?: string;
-  picture?: string;
+  department: Department;
+  bio: string;
 };
 
 export type Data = {

@@ -1,11 +1,10 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { activeClassName } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
-import { makeBreakpoint } from '../../utils/breakpoints.utils';
 
-const base = style({
+export const baseAnchor = style({
   display: 'inline-flex',
   alignItems: 'center',
   textTransform: 'capitalize',
@@ -21,7 +20,7 @@ const base = style({
 });
 
 export const anchor = recipe({
-  base: [base, utilities({ borderRadius: 'sm' })],
+  base: [baseAnchor, utilities({ borderRadius: 'sm' })],
   variants: {
     color: {
       base: utilities({
@@ -64,15 +63,6 @@ export const anchor = recipe({
     color: 'base',
     size: 'inherit',
     weight: 'thin',
-  },
-});
-
-globalStyle(`${base} > span`, {
-  display: 'none',
-  '@media': {
-    [makeBreakpoint('md')]: {
-      display: 'initial',
-    },
   },
 });
 

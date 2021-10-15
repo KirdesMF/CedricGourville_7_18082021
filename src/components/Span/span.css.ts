@@ -1,10 +1,23 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
+import { makeBreakpoint } from '../../utils/breakpoints.utils';
+import { baseAnchor } from '../Anchor/anchor.css';
 
 export const span = recipe({
   base: {
     margin: 0,
     lineHeight: 1,
+
+    selectors: {
+      [`${baseAnchor} &`]: {
+        display: 'none',
+        '@media': {
+          [makeBreakpoint('md')]: {
+            display: 'initial',
+          },
+        },
+      },
+    },
   },
   variants: {
     color: {

@@ -1,18 +1,44 @@
+import { FieldErrors, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
+import { Span } from '../Span/Span';
 import * as styles from './input.css';
 
-export function Input({
+type InputProps<T> = {
+  label: string;
+  register: UseFormRegister<T>;
+  name: keyof T;
+  options?: RegisterOptions;
+  errors: FieldErrors;
+} & JSX.IntrinsicElements['input'];
+
+export function Input<T>({
   label,
-  id,
-  ...props
+  register,
+  name,
+  options,
+  errors,
+  ...rest
+}: InputProps<T>) {
+  return (
+    <label className={utilities({ display: 'grid', gap: 'xs' })}>
+      <span className={srOnly}>{label}</span>
+      <input {...register(name, options)} className={styles.input} {...rest} />
+      {errors[name] && (
+        <Span variant={{ color: 'secondary' }}>{errors[name]?.message}</Span>
+      )}
+    </label>
+  );
+}
+
+export function BasicInput({
+  label,
+  ...rest
 }: { label?: string } & JSX.IntrinsicElements['input']) {
   return (
-    <div className={utilities({ display: 'grid', gap: 'xs' })}>
-      <label htmlFor={id} className={srOnly}>
-        {label}
-      </label>
-      <input id={id} className={styles.input} {...props} />
-    </div>
+    <label className={utilities({ display: 'grid', gap: 'xs' })}>
+      <span className={srOnly}>{label}</span>
+      <input className={styles.input} {...rest} />
+    </label>
   );
 }

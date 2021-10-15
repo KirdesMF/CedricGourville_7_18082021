@@ -2,14 +2,20 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
   useForm,
   UseFormRegister,
-  FieldValues,
   UseFormWatch,
   UseFormGetValues,
+  FieldErrors,
+  UseFormTrigger,
+  UseFormReset,
+  UseFormSetValue,
 } from 'react-hook-form';
+import { useAuth } from '../../context/auth.context';
 import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
+import { User } from '../../types';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
+import { Input } from '../Input/Input';
 import { Span } from '../Span/Span';
 
 // TODO
@@ -18,133 +24,230 @@ import { Span } from '../Span/Span';
 // redesign input components
 // improve types
 
+type Fields = {
+  confirmPassword: string;
+} & User;
+
 type StepProps = {
   setStep: Dispatch<SetStateAction<number>>;
-  register: UseFormRegister<FieldValues>;
-  watch?: UseFormWatch<FieldValues>;
-  getValues?: UseFormGetValues<FieldValues>;
-  errors: {
-    [x: string]: any;
-  };
+  register: UseFormRegister<Fields>;
+  watch: UseFormWatch<Fields>;
+  getValues: UseFormGetValues<Fields>;
+  trigger: UseFormTrigger<Fields>;
+  errors: FieldErrors<Fields>;
+  reset: UseFormReset<Fields>;
+  setValue: UseFormSetValue<Fields>;
 };
 
-const STEP1_FIELDS = ['email', 'password', 'confirm-password'] as const;
+const Step1 = ({
+  setStep,
+  register,
+  errors,
+  watch,
+  trigger,
+}: Pick<
+  StepProps,
+  'setStep' | 'register' | 'errors' | 'watch' | 'trigger'
+>) => {
+  const password = useRef<string>();
+  password.current = watch('password', '');
 
-const Step1 = ({ setStep, register, errors, watch, getValues }: StepProps) => {
-  const password = useRef(null);
-  password.current = watch && watch('password', '');
-
-  const values = getValues && getValues(STEP1_FIELDS);
-  const isEmpty = values?.some((v) => typeof v === 'undefined');
-  const hasErrors = Object.keys(errors).length !== 0;
-
-  const handleNextStep = () => {
-    if (isEmpty || hasErrors) return;
-    setStep((step) => step + 1);
+  const handleNextStep = async () => {
+    const isValid = await trigger();
+    isValid && setStep((step) => step + 1);
   };
 
   return (
     <>
-      {/** Email */}
-      <label className={utilities({ display: 'grid', gap: 'sm' })}>
-        <span className={srOnly}>Email</span>
-        <input
-          type="email"
-          placeholder="Email"
-          {...register(STEP1_FIELDS[0], {
-            required: 'Please enter an email',
-          })}
-        />
-        {errors.email && (
-          <Span variant={{ color: 'secondary' }}>{errors?.email?.message}</Span>
-        )}
-      </label>
+      <Input
+        type="email"
+        label="Email"
+        name="email"
+        placeholder="Email"
+        register={register}
+        options={{ required: 'Please enter an email address' }}
+        errors={errors}
+      />
 
-      {/* Password */}
-      <label className={utilities({ display: 'grid', gap: 'sm' })}>
-        <span className={srOnly}>Password</span>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register(STEP1_FIELDS[1], {
-            required: 'Please enter your password',
-            minLength: { value: 8, message: 'At least 8 characters required' },
-          })}
-        />
-        {errors.password && (
-          <Span variant={{ color: 'secondary' }}>
-            {errors?.password?.message}
-          </Span>
-        )}
-      </label>
+      <Input
+        type="password"
+        name="password"
+        placeholder="Password"
+        label="Password"
+        autoComplete="new-password"
+        register={register}
+        options={{
+          required: 'Please enter your password',
+          minLength: { value: 8, message: 'At least 8 characters required' },
+        }}
+        errors={errors}
+      />
 
-      {/* Confirm password */}
-      <label className={utilities({ display: 'grid', gap: 'sm' })}>
-        <span className={srOnly}>Confirm password</span>
-        <input
-          type="password"
-          placeholder="Confirm password"
-          {...register(STEP1_FIELDS[2], {
-            required: 'Please confirm your password',
-            validate: (value) =>
-              value === password.current || 'Password does not match',
-          })}
-        />
-        {errors['confirm-password'] && (
-          <Span variant={{ color: 'secondary' }}>
-            {errors?.['confirm-password']?.message}
-          </Span>
-        )}
-      </label>
+      <Input
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm your password"
+        label="Confirm password"
+        autoComplete="new-password"
+        register={register}
+        options={{
+          required: 'Please confirm your password',
+          validate: (value) =>
+            value === password.current || 'Password does not match',
+        }}
+        errors={errors}
+      />
 
       {/* Next step btn */}
-      <Button onClick={handleNextStep}>Next step</Button>
+      <Button type="button" onClick={handleNextStep}>
+        Next step
+      </Button>
     </>
   );
 };
 
-const Step2 = ({ setStep }: StepProps) => {
+const Step2 = ({
+  setStep,
+  register,
+  errors,
+  trigger,
+}: Pick<StepProps, 'setStep' | 'register' | 'errors' | 'trigger'>) => {
+  const handleNextStep = async () => {
+    const isValid = await trigger();
+    isValid && setStep((step) => step + 1);
+  };
+
   return (
     <>
-      <label>
-        <span className={srOnly}>Firstname</span>
-        <input type="text" placeholder="First name" />
-      </label>
-
-      <label>
-        <span className={srOnly}>Last name</span>
-        <input type="text" placeholder="Last name" />
-      </label>
-
-      <label>
+      <label className={utilities({ display: 'grid', gap: 'xs' })}>
         <span className={srOnly}>Username</span>
-        <input type="text" placeholder="Username" />
+        <input
+          type="text"
+          placeholder="Username"
+          {...register('userName', { required: 'Username required' })}
+        />
+        {errors.userName && (
+          <Span variant={{ color: 'secondary' }}>
+            {errors.userName?.message}
+          </Span>
+        )}
+      </label>
+
+      <label className={utilities({ display: 'grid', gap: 'xs' })}>
+        <span className={srOnly}>Department</span>
+        <select
+          defaultValue=""
+          {...register('department', {
+            required: 'Please select your department',
+          })}
+        >
+          <option value="" disabled>
+            Select your dpt
+          </option>
+          <option value="DIRECTION">Direction</option>
+          <option value="TECH">Technique</option>
+          <option value="COM">Community</option>
+          <option value="SOCIAL">Social</option>
+          <option value="VISITOR">Visitor</option>
+        </select>
+
+        {errors.department && (
+          <Span variant={{ color: 'secondary' }}>
+            {errors.department?.message}
+          </Span>
+        )}
       </label>
 
       <div className={utilities({ display: 'flex', gap: 'sm' })}>
-        <Button onClick={() => setStep((step) => step - 1)}>Prev step</Button>
-        <Button onClick={() => setStep((step) => step + 1)}>Next step</Button>
+        <Button type="button" onClick={() => setStep((step) => step - 1)}>
+          Prev step
+        </Button>
+        <Button type="button" onClick={handleNextStep}>
+          Next step
+        </Button>
       </div>
     </>
   );
 };
 
-const Step3 = ({ setStep }: StepProps) => {
+const Step3 = ({
+  setStep,
+  errors,
+  register,
+  trigger,
+  setValue,
+}: Pick<
+  StepProps,
+  'setStep' | 'register' | 'errors' | 'trigger' | 'setValue'
+>) => {
+  const handleNextStep = async () => {
+    const isValid = await trigger();
+    isValid && setStep((step) => step + 1);
+  };
+
+  const handleSkipStep = () => {
+    (['firstName', 'lastName', 'bio'] as const).forEach((e) => setValue(e, ''));
+    setStep((step) => step + 1);
+  };
+
   return (
     <>
-      <label>
-        <span className={srOnly}>Profil picture</span>
-        <input type="file" placeholder="Your profil picture" />
+      <label className={utilities({ display: 'grid', gap: 'xs' })}>
+        <span className={srOnly}>Firstname</span>
+        <input
+          type="text"
+          placeholder="First name"
+          {...register('firstName', {
+            minLength: { value: 2, message: 'Min 2 chars' },
+          })}
+        />
+        {errors.firstName && (
+          <Span variant={{ color: 'secondary' }}>
+            {errors.firstName?.message}
+          </Span>
+        )}
       </label>
 
-      <label>
+      <label className={utilities({ display: 'grid', gap: 'xs' })}>
+        <span className={srOnly}>Last name</span>
+        <input
+          type="text"
+          placeholder="Last name"
+          {...register('lastName', {
+            minLength: { value: 2, message: 'Min 2 chars' },
+          })}
+        />
+        {errors.lastName && (
+          <Span variant={{ color: 'secondary' }}>
+            {errors.lastName?.message}
+          </Span>
+        )}
+      </label>
+
+      <label className={utilities({ display: 'grid', gap: 'xs' })}>
         <span className={srOnly}>Bio</span>
-        <textarea name="" id="" placeholder="Your bio..."></textarea>
+        <textarea
+          placeholder="Your bio..."
+          {...register('bio', {
+            minLength: { value: 3, message: 'At least 3 characters' },
+            maxLength: { value: 100, message: 'No more than 100 chars pls' },
+          })}
+        ></textarea>
+        {errors?.bio && (
+          <Span variant={{ color: 'secondary' }}>{errors?.bio?.message}</Span>
+        )}
       </label>
 
       <div className={utilities({ display: 'flex', gap: 'sm' })}>
-        <Button onClick={() => setStep((step) => step - 1)}>Prev step</Button>
-        <Button onClick={() => setStep((step) => step + 1)}>
+        <Button type="button" onClick={() => setStep((step) => step - 1)}>
+          Prev step
+        </Button>
+
+        <Button type="button" onClick={handleNextStep}>
+          Next step
+        </Button>
+
+        <Button type="button" onClick={handleSkipStep}>
           Skip this step
         </Button>
       </div>
@@ -152,26 +255,32 @@ const Step3 = ({ setStep }: StepProps) => {
   );
 };
 
-const Step4 = ({ setStep }: StepProps) => {
+const Summary = ({
+  setStep,
+  getValues,
+}: Pick<StepProps, 'setStep' | 'getValues'>) => {
   return (
     <>
       <ul>
-        <li>First name:</li>
-        <li>Last name:</li>
-        <li>Email:</li>
-        <li>Picture:</li>
-        <li>Bio:</li>
+        <li>Username: {getValues('userName')}</li>
+        <li>Email: {getValues('email')}</li>
+        <li>Service: {getValues('department')}</li>
+        <li>First name: {getValues('firstName')}</li>
+        <li>Last name: {getValues('lastName')}</li>
+        <li>Bio: {getValues('bio')}</li>
       </ul>
 
       <div className={utilities({ display: 'flex', gap: 'sm' })}>
-        <Button onClick={() => setStep((step) => step - 1)}>Prev step</Button>
+        <Button type="button" onClick={() => setStep((step) => step - 1)}>
+          Prev step
+        </Button>
         <input type="submit" value="Create user account" />
       </div>
     </>
   );
 };
 
-const Step5 = () => {
+const Success = () => {
   return (
     <>
       <p>
@@ -187,33 +296,33 @@ const Step5 = () => {
 };
 
 export function FormRegister() {
-  const [step, setStep] = useState(1);
+  const { register: registerApi, error } = useAuth();
+  const [step, setStep] = useState<number>(1);
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
     getValues,
-  } = useForm();
+    trigger,
+    setValue,
+  } = useForm<Fields>({ mode: 'onChange' });
+
+  const commonProps = { setStep, register, errors, trigger };
 
   const STEPS = {
-    1: (
-      <Step1
-        watch={watch}
-        setStep={setStep}
-        register={register}
-        errors={errors}
-        getValues={getValues}
-      />
-    ),
-    2: <Step2 setStep={setStep} register={register} errors={errors} />,
-    3: <Step3 setStep={setStep} register={register} errors={errors} />,
-    4: <Step4 setStep={setStep} register={register} errors={errors} />,
-    5: <Step5 />,
+    1: <Step1 {...commonProps} watch={watch} />,
+    2: <Step2 {...commonProps} />,
+    3: <Step3 {...commonProps} setValue={setValue} />,
+    4: <Summary setStep={setStep} getValues={getValues} />,
+    5: <Success />,
   };
 
-  const handleOnSubmit = () => {
-    console.log(errors);
+  const handleOnSubmit = (data: Fields) => {
+    const { confirmPassword: _, ...user } = data;
+    registerApi(user);
+
+    if (error) console.log(error);
   };
 
   return (
@@ -227,6 +336,9 @@ export function FormRegister() {
       >
         {STEPS[step as keyof typeof STEPS]}
       </div>
+      <small className={utilities({ color: 'info' })}>
+        {step} of {Object.keys(STEPS).length}
+      </small>
     </form>
   );
 }
