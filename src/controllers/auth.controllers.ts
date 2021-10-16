@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
@@ -14,9 +13,9 @@ import { httpStatus } from '../utils/http-status';
  * @description log user
  */
 async function login(req: Request, res: Response, next: NextFunction) {
-  const { password, email } = req.body as User;
+  const { password, log } = req.body as Record<string, string>;
 
-  if (!password || !email) {
+  if (!password || !log) {
     next(
       new ErrorHandler(
         httpStatus.unauthorized,
@@ -26,7 +25,13 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 
   try {
-    const user = await UserServices.findUserByEmail(email);
+    let user;
+
+    if (log.includes('@')) {
+      user = await UserServices.findUserByEmail(log);
+    } else {
+      user = await UserServices.findUserByUserName(log);
+    }
 
     if (!user) {
       throw new ErrorHandler(500, `❌ We did not find the user`);

@@ -52,10 +52,8 @@ async function checkUniqueValue(
   const username = req.body?.userName;
 
   try {
-    let user;
-
     if (email) {
-      user = await UserServices.findUserByEmail(email);
+      const user = await UserServices.findUserByEmail(email);
 
       if (user) {
         throw new ErrorHandler(
@@ -68,7 +66,7 @@ async function checkUniqueValue(
     }
 
     if (username) {
-      user = await UserServices.findUserByUserName(username);
+      const user = await UserServices.findUserByUserName(username);
 
       if (user) {
         throw new ErrorHandler(
