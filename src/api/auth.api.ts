@@ -3,7 +3,7 @@ import { Data } from '../types';
 const headers = new Headers({ 'Content-Type': 'application/json' });
 
 async function login(payload: {
-  email: string;
+  log: string;
   password: string;
 }): Promise<Data> {
   const res = await fetch(`http://localhost:1234/auth/`, {

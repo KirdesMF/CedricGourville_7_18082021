@@ -1,4 +1,6 @@
 import { createGlobalTheme, globalFontFace } from '@vanilla-extract/css';
+// TODO
+// add fluid font size
 
 globalFontFace('Lexend Deca', {
   src: 'url(/fonts/LexendDeca-VariableFont_wght.ttf)',

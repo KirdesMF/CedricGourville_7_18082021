@@ -1,9 +1,9 @@
 import { Anchor } from '../components/Anchor/Anchor';
+import { FormLogIn } from '../components/forms/FormLogin';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Paragraph } from '../components/Paragraph/Paragraph';
 import { Span } from '../components/Span/Span';
-import { FormLogIn } from '../modules/FormLogin';
 import { container, panel } from '../styles/helpers.css';
 import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
@@ -26,7 +26,7 @@ export function Login() {
 
           <FormLogIn />
 
-          <Paragraph>
+          <Paragraph variant={{ size: 'xs' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           </Paragraph>
 

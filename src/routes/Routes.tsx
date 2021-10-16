@@ -7,6 +7,9 @@ import { Register } from '../pages/Register';
 import { Home } from '../pages/Home';
 import { Loader } from '../modules/Loader';
 
+// TODO
+// improve Protected routes
+
 export function Routes() {
   const { user, isLoading } = useAuth();
 

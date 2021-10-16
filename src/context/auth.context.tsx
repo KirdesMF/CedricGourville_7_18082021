@@ -15,7 +15,7 @@ type AuthContextType = {
   setUser: (p: User) => void;
   error?: Record<string, string> | null;
   isLoading: boolean;
-  login: (payload: { email: string; password: string }) => Promise<void>;
+  login: (payload: { log: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
   register: (payload: User) => Promise<void>;
   checkUniqueValue: (
@@ -33,6 +33,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const history = useHistory();
   const { pathname } = useLocation();
 
+  // TODO
+  // need to be improve
+  // actually error message is displayed all time
   useEffect(() => {
     AuthAPI.checkUserLogged()
       .then((data) => {
@@ -68,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch((err) => setError(err));
   };
 
-  const login = async (payload: { email: string; password: string }) => {
+  const login = async (payload: { log: string; password: string }) => {
     await AuthAPI.login(payload)
       .then((data) => {
         setUser(data.user);

@@ -23,8 +23,6 @@ import { grid } from '../../styles/layouts.css';
 import { cx } from '../../utils/classname.utils';
 
 // TODO
-// check unique email on step 1
-// check unique username on step 2
 // redesign input components
 // improve types
 
@@ -61,15 +59,16 @@ const Step1 = ({
   email.current = watch('email', '');
 
   const handleNextStep = async () => {
-    const isUniqueMail = await checkUniqueValue('email', email.current);
     const isValid = await trigger();
+    const isUniqueMail = await checkUniqueValue('email', email.current);
 
-    if (isUniqueMail && isValid) return setStep((step) => step + 1);
+    if (isValid && isUniqueMail) return setStep((step) => step + 1);
   };
 
   return (
     <>
       <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
+
       <Input
         type="email"
         label="Email"
@@ -132,13 +131,13 @@ const Step2 = ({
   const { checkUniqueValue, error } = useAuth();
 
   const handleNextStep = async () => {
+    const isValid = await trigger();
     const isUniqueUserName = await checkUniqueValue(
       'username',
       userName.current
     );
-    const isValid = await trigger();
 
-    if (isUniqueUserName && isValid) return setStep((step) => step + 1);
+    if (isValid && isUniqueUserName) return setStep((step) => step + 1);
   };
 
   return (
@@ -352,7 +351,7 @@ const variants: Variants = {
 };
 
 export function FormRegister() {
-  const { register: registerApi, error } = useAuth();
+  const { register: registerApi } = useAuth();
   const [step, setStep] = useState<number>(1);
   const {
     handleSubmit,
@@ -374,11 +373,12 @@ export function FormRegister() {
     5: <Success />,
   };
 
-  const handleOnSubmit = (data: Fields) => {
+  const handleOnSubmit = async (data: Fields) => {
     const { confirmPassword: _, ...user } = data;
-    registerApi(user);
 
-    if (error) console.log(error);
+    // does not work because of routes
+    setStep((step) => step + 1);
+    await registerApi(user);
   };
 
   return (
