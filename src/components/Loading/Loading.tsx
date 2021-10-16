@@ -1,11 +1,11 @@
-import { container } from '../styles/helpers.css';
-import { utilities } from '../styles/utilities.css';
+import { container } from '../../styles/helpers.css';
+import { utilities } from '../../styles/utilities.css';
 
 // TODO
 // move file to component folder
 // add animation + design
 
-export function Loader() {
+export function Loading() {
   return (
     <div className={container({ width: 'lg', padding: 'lg' })}>
       <div className={utilities({ color: 'warning' })}>

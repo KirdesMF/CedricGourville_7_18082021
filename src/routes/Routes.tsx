@@ -5,9 +5,9 @@ import { Login } from '../pages/Login';
 import { Profil } from '../pages/Profil';
 import { Register } from '../pages/Register';
 import { Home } from '../pages/Home';
-import { Loader } from '../modules/Loader';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
+import { Loading } from '../components/Loading/Loading';
 
 // TODO
 // improve Protected routes
@@ -15,7 +15,7 @@ import { Page404 } from '../pages/Page404';
 export function Routes() {
   const { isLoading } = useAuth();
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loading />;
 
   return (
     <Switch>
