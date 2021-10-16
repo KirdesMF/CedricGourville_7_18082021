@@ -1,4 +1,5 @@
 import { motion, Variants } from 'framer-motion';
+import { useAuth } from '../../context/auth.context';
 import { useMatchMedia } from '../../hooks/useMatchMedia';
 import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { Anchor } from '../Anchor/Anchor';
@@ -23,8 +24,16 @@ const LINKS = [
   { name: 'register', href: '/register' },
 ];
 
+const LOG_LINKS = [
+  { name: 'home', href: '/' },
+  { name: 'profil', href: '/profil' },
+  { name: 'feed', href: '/feed' },
+];
+
 export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
   const isDesktop = useMatchMedia(makeBreakpoint('md'));
+  const { user } = useAuth();
+  const mapLinks = user ? LOG_LINKS : LINKS;
 
   return (
     <motion.div
@@ -41,7 +50,7 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
         </Button>
 
         <nav className={styles.nav}>
-          {LINKS.map((element) => (
+          {mapLinks.map((element) => (
             <Anchor
               navLink
               key={element.href}

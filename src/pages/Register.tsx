@@ -1,15 +1,21 @@
+import { Redirect } from 'react-router';
 import { Anchor } from '../components/Anchor/Anchor';
 import { FormRegister } from '../components/forms/FormRegister';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Paragraph } from '../components/Paragraph/Paragraph';
 import { Span } from '../components/Span/Span';
+import { useAuth } from '../context/auth.context';
 import { container, panel } from '../styles/helpers.css';
 import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
 import { cx } from '../utils/classname.utils';
 
 export function Register() {
+  const { user } = useAuth();
+
+  if (user) return <Redirect to="/feed" />;
+
   return (
     <main className={panel['2xl']}>
       <div

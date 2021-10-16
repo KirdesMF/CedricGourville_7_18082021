@@ -7,6 +7,7 @@ import { Register } from '../pages/Register';
 import { Home } from '../pages/Home';
 import { Loader } from '../modules/Loader';
 import { PrivateRoute } from './PrivateRoute';
+import { Page404 } from '../pages/Page404';
 
 // TODO
 // improve Protected routes
@@ -23,6 +24,7 @@ export function Routes() {
       <Route path="/register" component={Register} />
       <PrivateRoute path="/feed" component={Feed} />
       <PrivateRoute path="/profil" component={Profil} />
+      <Route component={Page404} />
     </Switch>
   );
 }
