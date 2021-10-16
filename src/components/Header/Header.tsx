@@ -7,10 +7,14 @@ import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
+import { useAuth } from '../../context/auth.context';
 
+// TODO
+// handle user logged in case
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useTheme();
+  const { user } = useAuth();
 
   const handleTheme = () => {
     mode === 'dark' ? setMode('light') : setMode('dark');
@@ -22,11 +26,11 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <Anchor to="/login">
+          <Anchor to={user ? '/profil' : '/login'}>
             <Icon name="PersonIcon" variant={{ size: 'medium' }} />
           </Anchor>
 
-          <Anchor to="/" variant={{ gap: true }}>
+          <Anchor to={user ? '/feed' : '/'} variant={{ gap: true }}>
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
             <Span>Groupomania</Span>
           </Anchor>

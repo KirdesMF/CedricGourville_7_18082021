@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await RegisterAPI.register(payload)
       .then((data) => {
         setUser(data.user);
-        history.push('/');
+        history.push('/feed');
       })
       .catch((err) => setError(err));
   };
@@ -75,7 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await AuthAPI.login(payload)
       .then((data) => {
         setUser(data.user);
-        history.push('/');
+        history.push('/feed');
       })
       .catch((err) => setError(err));
   };

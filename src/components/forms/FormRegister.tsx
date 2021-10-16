@@ -25,6 +25,7 @@ import { cx } from '../../utils/classname.utils';
 // TODO
 // redesign input components
 // improve types
+// improve animation
 
 type Fields = {
   confirmPassword: string;

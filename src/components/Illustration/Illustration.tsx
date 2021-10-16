@@ -1,4 +1,7 @@
 import { utilities } from '../../styles/utilities.css';
+// TODO
+// add other illustration
+// animation
 
 const Home = () => (
   <svg

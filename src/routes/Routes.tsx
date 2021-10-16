@@ -6,39 +6,23 @@ import { Profil } from '../pages/Profil';
 import { Register } from '../pages/Register';
 import { Home } from '../pages/Home';
 import { Loader } from '../modules/Loader';
+import { PrivateRoute } from './PrivateRoute';
 
 // TODO
 // improve Protected routes
 
 export function Routes() {
-  const { user, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
   if (isLoading) return <Loader />;
 
-  if (!user) {
-    return (
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-      </Switch>
-    );
-  }
-
   return (
     <Switch>
-      <Route exact path="/">
-        <Feed />
-      </Route>
-      <Route path="/profil">
-        <Profil />
-      </Route>
+      <Route exact path="/" component={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <PrivateRoute path="/feed" component={Feed} />
+      <PrivateRoute path="/profil" component={Profil} />
     </Switch>
   );
 }
