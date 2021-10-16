@@ -4,6 +4,9 @@ import { cx } from '../../utils/classname.utils';
 import * as styles from './anchor.css';
 import type { AnchorVariants } from './anchor.css';
 
+// TODO
+// add constraints to links via ts
+
 type ExternalAnchorProps = {
   variant?: AnchorVariants;
 } & JSX.IntrinsicElements['a'];
