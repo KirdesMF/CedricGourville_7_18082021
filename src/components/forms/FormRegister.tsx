@@ -29,20 +29,18 @@ import { Paragraph } from '../Paragraph/Paragraph';
 // improve types
 // improve animation
 
-type Fields = {
-  confirmPassword: string;
-} & User;
+type UserFields = User & { confirmPassword: string };
 
 type StepProps = {
   setStep: Dispatch<SetStateAction<number>>;
 
-  register: UseFormRegister<Fields>;
-  watch: UseFormWatch<Fields>;
-  getValues: UseFormGetValues<Fields>;
-  trigger: UseFormTrigger<Fields>;
-  errors: FieldErrors<Fields>;
-  reset: UseFormReset<Fields>;
-  setValue: UseFormSetValue<Fields>;
+  register: UseFormRegister<UserFields>;
+  watch: UseFormWatch<UserFields>;
+  getValues: UseFormGetValues<UserFields>;
+  trigger: UseFormTrigger<UserFields>;
+  errors: FieldErrors<UserFields>;
+  reset: UseFormReset<UserFields>;
+  setValue: UseFormSetValue<UserFields>;
 };
 
 function Step1(
@@ -61,17 +59,17 @@ function Step1(
   email.current = watch('email', '');
 
   const handleNextStep = async () => {
-    const isValidFields = await trigger();
+    const isValidUserFields = await trigger();
     const isUniqueMail = await checkUniqueValue('email', email.current);
 
-    if (isValidFields && isUniqueMail) return setStep((step) => step + 1);
+    if (isValidUserFields && isUniqueMail) return setStep((step) => step + 1);
   };
 
   return (
     <>
       <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
 
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="email"
         name="email"
         label="Email"
@@ -84,7 +82,7 @@ function Step1(
         }}
       />
 
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="password"
         name="password"
         label="Password"
@@ -98,7 +96,7 @@ function Step1(
         }}
       />
 
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="password"
         name="confirmPassword"
         placeholder="Confirm your password"
@@ -136,13 +134,15 @@ function Step2(
   userName.current = watch('userName', '');
 
   const handleNextStep = async () => {
-    const isValidFields = await trigger();
+    const isValidUserFields = await trigger();
     const isUniqueUserName = await checkUniqueValue(
       'username',
       userName.current
     );
 
-    if (isValidFields && isUniqueUserName) return setStep((step) => step + 1);
+    if (isValidUserFields && isUniqueUserName) {
+      return setStep((step) => step + 1);
+    }
   };
 
   return (
@@ -150,7 +150,7 @@ function Step2(
       <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
 
       {/* Username */}
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="text"
         name="userName"
         label="username"
@@ -203,6 +203,8 @@ function Step2(
   );
 }
 
+const OPTIONAL_FIEDLS = ['firstName', 'lastName', 'bio'] as const;
+
 function Step3(
   props: Pick<
     StepProps,
@@ -217,14 +219,14 @@ function Step3(
   };
 
   const handleSkipStep = () => {
-    (['firstName', 'lastName', 'bio'] as const).forEach((e) => setValue(e, ''));
+    OPTIONAL_FIEDLS.forEach((e) => setValue(e, ''));
     setStep((step) => step + 1);
   };
 
   return (
     <>
       {/* First name */}
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="text"
         name="firstName"
         label="FirstName"
@@ -238,7 +240,7 @@ function Step3(
       />
 
       {/* Last name */}
-      <CustomInput<Fields>
+      <CustomInput<UserFields>
         type="text"
         name="lastName"
         label="lastname"
@@ -345,7 +347,7 @@ export function FormRegister() {
     getValues,
     trigger,
     setValue,
-  } = useForm<Fields>({ mode: 'onChange' });
+  } = useForm<UserFields>({ mode: 'onChange' });
 
   const common = { setStep, register, errors, trigger };
 
@@ -359,7 +361,7 @@ export function FormRegister() {
 
   const currentStep = STEPS[step as keyof typeof STEPS];
 
-  const handleOnSubmit = async (data: Fields) => {
+  const handleOnSubmit = async (data: UserFields) => {
     const { confirmPassword: _, ...user } = data;
     await registerApi(user);
     setStep((step) => step + 1);
