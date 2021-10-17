@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 import type {
   UseFormRegister,
@@ -9,18 +10,19 @@ import type {
   UseFormReset,
   UseFormSetValue,
 } from 'react-hook-form';
-import type { Dispatch, SetStateAction } from 'react';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import type { User } from '../../types';
 import { useAuth } from '../../context/auth.context';
-import { srOnly } from '../../styles/helpers.css';
-import { utilities } from '../../styles/utilities.css';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
+import { CustomInput } from '../Input/Input';
 import { Span } from '../Span/Span';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { grid } from '../../styles/layouts.css';
 import { cx } from '../../utils/classname.utils';
+import { srOnly } from '../../styles/helpers.css';
+import { utilities } from '../../styles/utilities.css';
+import { Heading } from '../Heading/Heading';
+import { Paragraph } from '../Paragraph/Paragraph';
 
 // TODO
 // redesign input components
@@ -33,6 +35,7 @@ type Fields = {
 
 type StepProps = {
   setStep: Dispatch<SetStateAction<number>>;
+
   register: UseFormRegister<Fields>;
   watch: UseFormWatch<Fields>;
   getValues: UseFormGetValues<Fields>;
@@ -42,103 +45,104 @@ type StepProps = {
   setValue: UseFormSetValue<Fields>;
 };
 
-const Step1 = ({
-  setStep,
-  register,
-  errors,
-  watch,
-  trigger,
-}: Pick<
-  StepProps,
-  'setStep' | 'register' | 'errors' | 'watch' | 'trigger'
->) => {
+function Step1(
+  props: Pick<
+    StepProps,
+    'setStep' | 'register' | 'errors' | 'watch' | 'trigger'
+  >
+) {
+  const { setStep, register, errors, watch, trigger } = props;
+
+  const { checkUniqueValue, error } = useAuth();
   const password = useRef<string>();
   const email = useRef<string>('');
-  const { checkUniqueValue, error } = useAuth();
 
   password.current = watch('password', '');
   email.current = watch('email', '');
 
   const handleNextStep = async () => {
-    const isValid = await trigger();
+    const isValidFields = await trigger();
     const isUniqueMail = await checkUniqueValue('email', email.current);
 
-    if (isValid && isUniqueMail) return setStep((step) => step + 1);
+    if (isValidFields && isUniqueMail) return setStep((step) => step + 1);
   };
 
   return (
     <>
       <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
 
-      <Input
+      <CustomInput<Fields>
         type="email"
-        label="Email"
         name="email"
+        label="Email"
         placeholder="Email"
         register={register}
-        options={{ required: '❌ Please enter an email address ⤴ ' }}
         errors={errors}
+        options={{
+          required: '❌ Please enter an email address ⤴ ',
+          pattern: { value: /.+@.+/, message: 'Provide a valid email' },
+        }}
       />
 
-      <Input
+      <CustomInput<Fields>
         type="password"
         name="password"
-        placeholder="Password"
         label="Password"
+        placeholder="Password"
         autoComplete="new-password"
         register={register}
+        errors={errors}
         options={{
           required: '❌ Please enter your password ⤴',
           minLength: { value: 8, message: 'At least 8 characters required' },
         }}
-        errors={errors}
       />
 
-      <Input
+      <CustomInput<Fields>
         type="password"
         name="confirmPassword"
         placeholder="Confirm your password"
         label="Confirm password"
         autoComplete="new-password"
         register={register}
+        errors={errors}
         options={{
           required: '❌ Please confirm your password ⤴',
           validate: (value) =>
             value === password.current || 'Password does not match',
         }}
-        errors={errors}
       />
 
-      {/* Next step btn */}
       <Button type="button" onClick={handleNextStep}>
         Next step
       </Button>
     </>
   );
-};
+}
 
-const Step2 = ({
-  setStep,
-  register,
-  errors,
-  trigger,
-  watch,
-}: Pick<
-  StepProps,
-  'setStep' | 'register' | 'errors' | 'trigger' | 'watch'
->) => {
-  const userName = useRef<string>('');
-  userName.current = watch('userName', '');
+const DEPARTMENT = ['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR'];
+
+function Step2(
+  props: Pick<
+    StepProps,
+    'setStep' | 'register' | 'errors' | 'trigger' | 'watch'
+  >
+) {
+  const { setStep, register, errors, trigger, watch } = props;
+
   const { checkUniqueValue, error } = useAuth();
+  const userName = useRef<string>('');
+
+  userName.current = watch('userName', '');
 
   const handleNextStep = async () => {
-    const isValid = await trigger();
+    const isValidFields = await trigger();
     const isUniqueUserName = await checkUniqueValue(
       'username',
       userName.current
     );
 
-    if (isValid && isUniqueUserName) return setStep((step) => step + 1);
+    if (isValidFields && isUniqueUserName) return setStep((step) => step + 1);
   };
 
   return (
@@ -146,19 +150,18 @@ const Step2 = ({
       <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
 
       {/* Username */}
-      <label className={utilities({ display: 'grid', gap: 'xs' })}>
-        <span className={srOnly}>Username</span>
-        <input
-          type="text"
-          placeholder="Username"
-          {...register('userName', { required: 'Username required' })}
-        />
-        {errors.userName && (
-          <Span variant={{ color: 'secondary', size: 'sm' }}>
-            {errors.userName?.message}
-          </Span>
-        )}
-      </label>
+      <CustomInput<Fields>
+        type="text"
+        name="userName"
+        label="username"
+        placeholder="Enter a username"
+        register={register}
+        errors={errors}
+        options={{
+          required: '❌ Please enter your a username ⤴',
+          minLength: { value: 2, message: 'At least 2 characters required' },
+        }}
+      />
 
       {/* Department */}
       <label className={utilities({ display: 'grid', gap: 'xs' })}>
@@ -172,9 +175,10 @@ const Step2 = ({
           <option value="" disabled>
             Select your dpt
           </option>
-          {['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR'].map((option) => (
-            <option key={option} value={option}>
-              {option}
+
+          {DEPARTMENT.map((dpt) => (
+            <option key={dpt} value={dpt}>
+              {dpt}
             </option>
           ))}
         </select>
@@ -197,18 +201,16 @@ const Step2 = ({
       </div>
     </>
   );
-};
+}
 
-const Step3 = ({
-  setStep,
-  errors,
-  register,
-  trigger,
-  setValue,
-}: Pick<
-  StepProps,
-  'setStep' | 'register' | 'errors' | 'trigger' | 'setValue'
->) => {
+function Step3(
+  props: Pick<
+    StepProps,
+    'setStep' | 'register' | 'errors' | 'trigger' | 'setValue'
+  >
+) {
+  const { setStep, errors, register, trigger, setValue } = props;
+
   const handleNextStep = async () => {
     const isValid = await trigger();
     isValid && setStep((step) => step + 1);
@@ -222,38 +224,32 @@ const Step3 = ({
   return (
     <>
       {/* First name */}
-      <label className={utilities({ display: 'grid', gap: 'xs' })}>
-        <span className={srOnly}>Firstname</span>
-        <input
-          type="text"
-          placeholder="First name"
-          {...register('firstName', {
-            minLength: { value: 2, message: 'Min 2 chars' },
-          })}
-        />
-        {errors.firstName && (
-          <Span variant={{ color: 'secondary' }}>
-            {errors.firstName?.message}
-          </Span>
-        )}
-      </label>
+      <CustomInput<Fields>
+        type="text"
+        name="firstName"
+        label="FirstName"
+        placeholder="Enter a your first name"
+        register={register}
+        errors={errors}
+        options={{
+          required: '❌ Please enter your first name ⤴',
+          minLength: { value: 2, message: 'At least 2 characters required' },
+        }}
+      />
 
       {/* Last name */}
-      <label className={utilities({ display: 'grid', gap: 'xs' })}>
-        <span className={srOnly}>Last name</span>
-        <input
-          type="text"
-          placeholder="Last name"
-          {...register('lastName', {
-            minLength: { value: 2, message: 'Min 2 chars' },
-          })}
-        />
-        {errors.lastName && (
-          <Span variant={{ color: 'secondary' }}>
-            {errors.lastName?.message}
-          </Span>
-        )}
-      </label>
+      <CustomInput<Fields>
+        type="text"
+        name="lastName"
+        label="lastname"
+        placeholder="Enter a your last name"
+        register={register}
+        errors={errors}
+        options={{
+          required: '❌ Please enter your last name ⤴',
+          minLength: { value: 2, message: 'At least 2 characters required' },
+        }}
+      />
 
       {/* Bio */}
       <label className={utilities({ display: 'grid', gap: 'xs' })}>
@@ -286,27 +282,28 @@ const Step3 = ({
       </div>
     </>
   );
-};
+}
 
-const Summary = ({
-  setStep,
-  getValues,
-}: Pick<StepProps, 'setStep' | 'getValues'>) => {
-  const values = [
-    'userName',
-    'email',
-    'department',
-    'firstName',
-    'lastName',
-    'bio',
-  ] as const;
+const SUMMARY_USER = [
+  'userName',
+  'email',
+  'department',
+  'firstName',
+  'lastName',
+  'bio',
+] as const;
+
+function Summary(props: Pick<StepProps, 'setStep' | 'getValues'>) {
+  const { setStep, getValues } = props;
 
   return (
     <>
       <ul>
-        {values.map((val) => (
+        {SUMMARY_USER.map((val) => (
           <li key={val}>
-            {val}: {getValues(val) || 'Not informed ℹ'}
+            <Paragraph>
+              {val}: {getValues(val) || 'Not informed ℹ'}
+            </Paragraph>
           </li>
         ))}
       </ul>
@@ -319,36 +316,22 @@ const Summary = ({
       </div>
     </>
   );
-};
+}
 
-const Success = () => {
+function Success() {
   return (
     <>
-      <p>
-        <span role="img" aria-label="Part popper emoji">
-          🎉
-        </span>{' '}
-        User successfully created
-      </p>
-
+      <Heading>Welcome</Heading>
+      <Paragraph>User successfully created</Paragraph>
       <Anchor to="/">Go to Feed</Anchor>
     </>
   );
-};
+}
 
 const variants: Variants = {
-  initial: {
-    x: '-100%',
-    opacity: 0,
-  },
-  animate: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: {
-    x: '100%',
-    opacity: 0,
-  },
+  initial: { x: '-100%', opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  exit: { x: '100%', opacity: 0 },
 };
 
 export function FormRegister() {
@@ -364,22 +347,22 @@ export function FormRegister() {
     setValue,
   } = useForm<Fields>({ mode: 'onChange' });
 
-  const commonProps = { setStep, register, errors, trigger };
+  const common = { setStep, register, errors, trigger };
 
   const STEPS = {
-    1: <Step1 {...commonProps} watch={watch} />,
-    2: <Step2 {...commonProps} watch={watch} />,
-    3: <Step3 {...commonProps} setValue={setValue} />,
+    1: <Step1 {...common} watch={watch} />,
+    2: <Step2 {...common} watch={watch} />,
+    3: <Step3 {...common} setValue={setValue} />,
     4: <Summary setStep={setStep} getValues={getValues} />,
     5: <Success />,
   };
 
+  const currentStep = STEPS[step as keyof typeof STEPS];
+
   const handleOnSubmit = async (data: Fields) => {
     const { confirmPassword: _, ...user } = data;
-
-    // does not work because of routes
-    setStep((step) => step + 1);
     await registerApi(user);
+    setStep((step) => step + 1);
   };
 
   return (
@@ -405,7 +388,7 @@ export function FormRegister() {
               paddingBlock: 'sm',
             })}
           >
-            {STEPS[step as keyof typeof STEPS]}
+            {currentStep}
           </motion.div>
         </AnimatePresence>
       </form>

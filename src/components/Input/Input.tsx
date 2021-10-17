@@ -1,32 +1,32 @@
-import { FieldErrors, RegisterOptions, UseFormRegister } from 'react-hook-form';
-import { srOnly } from '../../styles/helpers.css';
-import { utilities } from '../../styles/utilities.css';
+import {
+  FieldErrors,
+  FieldPath,
+  RegisterOptions,
+  UseFormRegister,
+} from 'react-hook-form';
 import { Span } from '../Span/Span';
 import * as styles from './input.css';
+import { srOnly } from '../../styles/helpers.css';
+import { utilities } from '../../styles/utilities.css';
 
-type InputProps<T> = {
+export type TCustomInput<TFields> = {
   label: string;
-  register: UseFormRegister<T>;
-  name: keyof T;
-  options?: RegisterOptions;
+  register: UseFormRegister<TFields>;
+  name: FieldPath<TFields>;
+  options?: RegisterOptions<TFields>;
   errors: FieldErrors;
 } & JSX.IntrinsicElements['input'];
 
-export function Input<T>({
-  label,
-  register,
-  name,
-  options,
-  errors,
-  ...rest
-}: InputProps<T>) {
+export function CustomInput<TFields>(props: TCustomInput<TFields>) {
+  const { label, register, name, options, errors, ...rest } = props;
+
   return (
     <label className={utilities({ display: 'grid', gap: 'sm' })}>
       <span className={srOnly}>{label}</span>
       <input {...register(name, options)} className={styles.input} {...rest} />
-      {errors[name] && (
+      {errors?.[name] && (
         <Span variant={{ color: 'secondary', size: 'xs' }}>
-          {errors[name]?.message}
+          {errors?.[name]?.message}
         </Span>
       )}
     </label>
