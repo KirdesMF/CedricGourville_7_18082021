@@ -31,6 +31,7 @@ import { CustomTextArea } from '../TextArea/TextArea';
 // improve animation
 
 type UserFields = User & { confirmPassword: string };
+type UserFieldsKeys = keyof UserFields;
 
 type StepProps = {
   setStep: Dispatch<SetStateAction<number>>;
@@ -68,7 +69,9 @@ function Step1(
 
   return (
     <>
-      <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
+      {error?.error && (
+        <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
+      )}
 
       <CustomInput<UserFields>
         type="email"
@@ -146,7 +149,9 @@ function Step2(
 
   return (
     <>
-      <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
+      {error?.error && (
+        <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
+      )}
 
       {/* Username */}
       <CustomInput<UserFields>
@@ -188,7 +193,8 @@ function Step2(
   );
 }
 
-const OPTIONAL_FIEDLS = ['firstName', 'lastName', 'bio'] as const;
+const OPTIONAL_FIEDLS: UserFieldsKeys[] = ['firstName', 'lastName', 'bio'];
+
 function Step3(
   props: Pick<
     StepProps,
@@ -268,14 +274,14 @@ function Step3(
   );
 }
 
-const SUMMARY_USER = [
+const SUMMARY_USER: UserFieldsKeys[] = [
   'userName',
   'email',
   'department',
   'firstName',
   'lastName',
   'bio',
-] as const;
+];
 
 function Summary(props: Pick<StepProps, 'setStep' | 'getValues'>) {
   const { setStep, getValues } = props;
@@ -381,6 +387,7 @@ export function FormRegister() {
           </motion.div>
         </AnimatePresence>
       </form>
+
       <small className={utilities({ color: 'info' })}>
         {step} of {Object.keys(STEPS).length}
       </small>

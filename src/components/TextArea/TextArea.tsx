@@ -23,8 +23,8 @@ export function CustomTextArea<TFields>(props: TCustomInput<TFields>) {
     <label className={utilities({ display: 'grid', gap: 'xs' })}>
       <span className={srOnly}>{label}</span>
       <textarea {...register(name, options)} {...rest}></textarea>
-      {errors?.bio && (
-        <Span variant={{ color: 'secondary' }}>{errors?.bio?.message}</Span>
+      {errors?.[name] && (
+        <Span variant={{ color: 'secondary' }}>{errors?.[name]?.message}</Span>
       )}
     </label>
   );
