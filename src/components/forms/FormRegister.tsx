@@ -15,14 +15,15 @@ import type { User } from '../../types';
 import { useAuth } from '../../context/auth.context';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
-import { CustomInput } from '../Input/Input';
+import { BasicInput, CustomInput } from '../Input/Input';
 import { Span } from '../Span/Span';
 import { grid } from '../../styles/layouts.css';
 import { cx } from '../../utils/classname.utils';
-import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { Heading } from '../Heading/Heading';
 import { Paragraph } from '../Paragraph/Paragraph';
+import { CustomSelect } from '../Select/Select';
+import { CustomTextArea } from '../TextArea/TextArea';
 
 // TODO
 // redesign input components
@@ -118,8 +119,6 @@ function Step1(
   );
 }
 
-const DEPARTMENT = ['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR'];
-
 function Step2(
   props: Pick<
     StepProps,
@@ -158,37 +157,23 @@ function Step2(
         register={register}
         errors={errors}
         options={{
-          required: '❌ Please enter your a username ⤴',
+          required: '❌ Please enter a username ⤴',
           minLength: { value: 2, message: 'At least 2 characters required' },
         }}
       />
 
       {/* Department */}
-      <label className={utilities({ display: 'grid', gap: 'xs' })}>
-        <span className={srOnly}>Department</span>
-        <select
-          defaultValue=""
-          {...register('department', {
-            required: 'Please select your department',
-          })}
-        >
-          <option value="" disabled>
-            Select your dpt
-          </option>
-
-          {DEPARTMENT.map((dpt) => (
-            <option key={dpt} value={dpt}>
-              {dpt}
-            </option>
-          ))}
-        </select>
-
-        {errors.department && (
-          <Span variant={{ color: 'secondary' }}>
-            {errors.department?.message}
-          </Span>
-        )}
-      </label>
+      <CustomSelect<UserFields>
+        name="department"
+        label="department"
+        customPlaceholder="Select your department"
+        register={register}
+        errors={errors}
+        choices={['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR']}
+        options={{
+          required: 'Please select your department',
+        }}
+      />
 
       {/* Buttons */}
       <div className={utilities({ display: 'flex', gap: 'sm' })}>
@@ -204,7 +189,6 @@ function Step2(
 }
 
 const OPTIONAL_FIEDLS = ['firstName', 'lastName', 'bio'] as const;
-
 function Step3(
   props: Pick<
     StepProps,
@@ -254,19 +238,17 @@ function Step3(
       />
 
       {/* Bio */}
-      <label className={utilities({ display: 'grid', gap: 'xs' })}>
-        <span className={srOnly}>Bio</span>
-        <textarea
-          placeholder="Your bio..."
-          {...register('bio', {
-            minLength: { value: 3, message: 'At least 3 characters' },
-            maxLength: { value: 100, message: 'No more than 100 chars pls' },
-          })}
-        ></textarea>
-        {errors?.bio && (
-          <Span variant={{ color: 'secondary' }}>{errors?.bio?.message}</Span>
-        )}
-      </label>
+      <CustomTextArea<UserFields>
+        name="bio"
+        label="bio"
+        placeholder="Your bio"
+        register={register}
+        errors={errors}
+        options={{
+          minLength: { value: 3, message: 'At least 3 characters' },
+          maxLength: { value: 100, message: 'No more than 100 chars pls' },
+        }}
+      />
 
       {/* btns */}
       <div className={utilities({ display: 'flex', gap: 'sm' })}>
@@ -314,7 +296,12 @@ function Summary(props: Pick<StepProps, 'setStep' | 'getValues'>) {
         <Button type="button" onClick={() => setStep((step) => step - 1)}>
           Prev step
         </Button>
-        <input type="submit" value="Create user account" />
+
+        <BasicInput
+          type="submit"
+          value="Create user account"
+          label="create user account"
+        />
       </div>
     </>
   );
@@ -325,7 +312,7 @@ function Success() {
     <>
       <Heading>Welcome</Heading>
       <Paragraph>User successfully created</Paragraph>
-      <Anchor to="/">Go to Feed</Anchor>
+      <Anchor to="/feed">Go to Feed</Anchor>
     </>
   );
 }

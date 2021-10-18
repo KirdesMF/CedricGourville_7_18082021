@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { BasicInput, Input } from '../../components/Input/Input';
+import { BasicInput, CustomInput } from '../../components/Input/Input';
 import { useAuth } from '../../context/auth.context';
 import { utilities } from '../../styles/utilities.css';
 import { cx } from '../../utils/classname.utils';
@@ -39,20 +39,20 @@ export function FormLogIn() {
         </p>
       )}
 
-      <Input
+      <CustomInput<LoginFields>
         id="log"
         type="text"
         name="log"
         placeholder="Enter your email or username"
         label="Email"
+        errors={errors}
         register={register}
         options={{
           required: '❌ Please enter an email address or a username ⤴ ',
         }}
-        errors={errors}
       />
 
-      <Input
+      <CustomInput<LoginFields>
         name="password"
         id="password"
         type="password"
@@ -60,10 +60,10 @@ export function FormLogIn() {
         autoComplete="username"
         label="Password"
         register={register}
+        errors={errors}
         options={{
           required: '❌ Please enter your corresponding password ⤴ ',
         }}
-        errors={errors}
       />
 
       <BasicInput value="Send" type="submit" />

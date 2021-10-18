@@ -38,7 +38,7 @@ export function BasicInput({
   ...rest
 }: { label?: string } & JSX.IntrinsicElements['input']) {
   return (
-    <label className={utilities({ display: 'grid', gap: 'xs' })}>
+    <label>
       <span className={srOnly}>{label}</span>
       <input className={styles.input} {...rest} />
     </label>
