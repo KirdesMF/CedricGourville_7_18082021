@@ -4,7 +4,7 @@
   "description": "P7 OpenclassRoom Backend",
   "scripts": {
     "prisma:studio": "npx prisma studio",
-    "prisma:dev": "prisma generate && prisma db push",
+    "prisma:dev": "prisma generate && prisma db push", 
     "prisma:prod": "prisma migrate deploy",
     "prisma:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev",
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --cache-directory src/.cache src/app.ts --watch",

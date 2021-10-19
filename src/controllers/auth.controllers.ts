@@ -6,6 +6,9 @@ import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
+// TODO
+// add validation middleware
+
 /**
  * @param req
  * @param res

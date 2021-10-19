@@ -6,6 +6,9 @@ import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
+// TODO
+// add validation middleware
+
 async function registerUser(req: Request, res: Response, next: NextFunction) {
   try {
     const { password, email } = req.body as User;
