@@ -1,15 +1,19 @@
 import { PrismaClient, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 
+type TUniqueUserField = keyof Pick<User, 'id' | 'username' | 'email'>;
+type TValueGetUser<T> = T extends 'id' ? number : string;
+
 const prisma = new PrismaClient();
 
+// Create
 /**
- * @param userInput
+ * @param data
  * @returns
  * @description create a user and hash the password
  */
-async function createUser(userInput: User) {
-  const { password, ...userData } = userInput;
+async function createUser(data: User) {
+  const { password, ...userData } = data;
   const hashedPassword = await hash(password, 10);
   const user = await prisma.user.create({
     data: {
@@ -20,49 +24,65 @@ async function createUser(userInput: User) {
   return user;
 }
 
+// Find
 /**
- * @param id
- * @returns user
- * @description delete user by id
+ *
+ * @param field unique field "email" | "username" | "password"
+ * @param value string | number depending on field
+ * @returns User as promise
  */
-async function deleteUserById(id: number) {
+async function getUser<T extends TUniqueUserField>(
+  field: T,
+  value: TValueGetUser<T>
+) {
+  const user = prisma.user.findUnique({
+    where: { [field]: value },
+  });
+
+  return user;
+}
+
+// Update
+/**
+ *
+ * @param field
+ * @param value
+ * @param data
+ * @returns
+ */
+async function updateUser<T extends TUniqueUserField>(
+  field: T,
+  value: TValueGetUser<T>,
+  data: Partial<User>
+) {
+  const updatedUser = await prisma.user.update({
+    where: { [field]: value },
+    data,
+  });
+
+  return updatedUser;
+}
+
+// Delete
+/**
+ *
+ * @param field
+ * @param value
+ * @returns
+ */
+async function deleteUser<T extends TUniqueUserField>(
+  field: T,
+  value: TValueGetUser<T>
+) {
   const user = await prisma.user.delete({
-    where: { id },
-  });
-  return user;
-}
-
-async function findUserByEmail(email: string) {
-  const user = prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
-  return user;
-}
-
-async function findUserByUserName(userName: string) {
-  const user = prisma.user.findUnique({
-    where: {
-      userName,
-    },
-  });
-  return user;
-}
-
-async function findUserById(id: number) {
-  const user = prisma.user.findUnique({
-    where: {
-      id,
-    },
+    where: { [field]: value },
   });
   return user;
 }
 
 export const UserServices = {
   createUser,
-  deleteUserById,
-  findUserByEmail,
-  findUserByUserName,
-  findUserById,
+  deleteUser,
+  getUser,
+  updateUser,
 };

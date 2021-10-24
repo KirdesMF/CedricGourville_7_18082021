@@ -21,8 +21,8 @@ function responder(
   next: NextFunction
 ) {
   const status = err.status || httpStatus.serverError;
-  const error = err.message || 'Something went wrong';
-  res.status(status).json({ status, error });
+  const message = err.message || 'Something went wrong';
+  res.status(status).json({ status, message });
 }
 
 export const ErrorsMiddleWare = {

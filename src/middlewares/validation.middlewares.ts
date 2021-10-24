@@ -26,7 +26,7 @@ export const registerValidatorSchema: Schema = {
       options: { min: 8 },
     },
   },
-  userName: {
+  username: {
     in: 'body',
     notEmpty: true,
     trim: true,

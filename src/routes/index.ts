@@ -1,9 +1,9 @@
 import { Application } from 'express';
-import { authRouter } from './auth.route';
-import { registerRouter } from './register.route';
+import { postRouter } from './post.route';
+import { userRouter } from './user.route';
 
 export function Routes(app: Application) {
-  registerRouter(app);
-  authRouter(app);
+  userRouter(app);
+  postRouter(app);
   return app;
 }
