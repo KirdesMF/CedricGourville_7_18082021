@@ -30,11 +30,11 @@ export function Register() {
             <Span variant={{ color: 'secondary' }}>account</Span>
           </Heading>
 
-          <FormRegister />
-
           <Paragraph variant={{ size: 'xs' }}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque!
           </Paragraph>
+
+          <FormRegister />
 
           <Anchor to="/login">Already an account ? Log here</Anchor>
         </section>

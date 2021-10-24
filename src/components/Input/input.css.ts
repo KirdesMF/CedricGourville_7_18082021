@@ -11,6 +11,11 @@ export const input = style([
     appearance: 'none',
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
     width: 'min(100%, 52ch)',
+    borderRadius: vars.radius.sm,
+
+    ':focus': {
+      outline: 'none',
+    },
 
     selectors: {
       [`&:-webkit-autofill, &:-internal-autofill-selected`]: {

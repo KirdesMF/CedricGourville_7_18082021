@@ -6,6 +6,7 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 export const menu = style({
   display: 'grid',
   position: 'fixed',
+  zIndex: 2,
   height: '100%',
   width: '100%',
   gridTemplateColumns: '1fr',

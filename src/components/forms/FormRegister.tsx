@@ -10,9 +10,8 @@ import type {
   UseFormReset,
   UseFormSetValue,
 } from 'react-hook-form';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
 import type { User } from '../../types';
-import { useAuth } from '../../context/auth.context';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
 import { BasicInput, CustomInput } from '../Input/Input';
@@ -24,6 +23,7 @@ import { Heading } from '../Heading/Heading';
 import { Paragraph } from '../Paragraph/Paragraph';
 import { CustomSelect } from '../Select/Select';
 import { CustomTextArea } from '../TextArea/TextArea';
+import { useCheckNotUsed, useCreateUser } from '../../api/user.api';
 
 // TODO
 // redesign input components
@@ -53,27 +53,33 @@ function Step1(
 ) {
   const { setStep, register, errors, watch, trigger } = props;
 
-  const { checkUniqueValue, error } = useAuth();
-  const password = useRef<string>();
-  const email = useRef<string>('');
+  const { error, mutate } = useCheckNotUsed();
+  const passwordRef = useRef<string>();
+  const emailRef = useRef<string>('');
 
-  password.current = watch('password', '');
-  email.current = watch('email', '');
+  let password = passwordRef.current;
+  let email = emailRef.current;
+
+  password = watch('password', '');
+  email = watch('email', '');
 
   const handleNextStep = async () => {
     const isValidUserFields = await trigger();
-    const isUniqueMail = await checkUniqueValue('email', email.current);
-
-    if (isValidUserFields && isUniqueMail) return setStep((step) => step + 1);
+    mutate(
+      { email },
+      {
+        onSuccess: () => {
+          isValidUserFields && setStep((step) => step + 1);
+        },
+      }
+    );
   };
 
   return (
     <>
-      {error?.error && (
-        <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
-      )}
+      {error && <Span variant={{ color: 'secondary' }}>{error.message}</Span>}
 
-      <CustomInput<UserFields>
+      <CustomInput
         type="email"
         name="email"
         label="Email"
@@ -86,7 +92,7 @@ function Step1(
         }}
       />
 
-      <CustomInput<UserFields>
+      <CustomInput
         type="password"
         name="password"
         label="Password"
@@ -100,7 +106,7 @@ function Step1(
         }}
       />
 
-      <CustomInput<UserFields>
+      <CustomInput
         type="password"
         name="confirmPassword"
         placeholder="Confirm your password"
@@ -110,8 +116,7 @@ function Step1(
         errors={errors}
         options={{
           required: '❌ Please confirm your password ⤴',
-          validate: (value) =>
-            value === password.current || 'Password does not match',
+          validate: (value) => value === password || 'Password does not match',
         }}
       />
 
@@ -129,34 +134,32 @@ function Step2(
   >
 ) {
   const { setStep, register, errors, trigger, watch } = props;
+  const { error, mutate } = useCheckNotUsed();
 
-  const { checkUniqueValue, error } = useAuth();
-  const userName = useRef<string>('');
-
-  userName.current = watch('userName', '');
+  const usernameRef = useRef<string>('');
+  let username = usernameRef.current;
+  username = watch('username', '');
 
   const handleNextStep = async () => {
     const isValidUserFields = await trigger();
-    const isUniqueUserName = await checkUniqueValue(
-      'username',
-      userName.current
+    mutate(
+      { username },
+      {
+        onSuccess: () => {
+          isValidUserFields && setStep((step) => step + 1);
+        },
+      }
     );
-
-    if (isValidUserFields && isUniqueUserName) {
-      return setStep((step) => step + 1);
-    }
   };
 
   return (
     <>
-      {error?.error && (
-        <Span variant={{ color: 'secondary' }}>{error?.error}</Span>
-      )}
+      {error && <Span variant={{ color: 'secondary' }}>{error.message}</Span>}
 
       {/* Username */}
-      <CustomInput<UserFields>
+      <CustomInput
         type="text"
-        name="userName"
+        name="username"
         label="username"
         placeholder="Enter a username"
         register={register}
@@ -168,7 +171,7 @@ function Step2(
       />
 
       {/* Department */}
-      <CustomSelect<UserFields>
+      <CustomSelect
         name="department"
         label="department"
         customPlaceholder="Select your department"
@@ -216,7 +219,7 @@ function Step3(
   return (
     <>
       {/* First name */}
-      <CustomInput<UserFields>
+      <CustomInput
         type="text"
         name="firstName"
         label="FirstName"
@@ -230,7 +233,7 @@ function Step3(
       />
 
       {/* Last name */}
-      <CustomInput<UserFields>
+      <CustomInput
         type="text"
         name="lastName"
         label="lastname"
@@ -244,7 +247,7 @@ function Step3(
       />
 
       {/* Bio */}
-      <CustomTextArea<UserFields>
+      <CustomTextArea
         name="bio"
         label="bio"
         placeholder="Your bio"
@@ -275,7 +278,7 @@ function Step3(
 }
 
 const SUMMARY_USER: UserFieldsKeys[] = [
-  'userName',
+  'username',
   'email',
   'department',
   'firstName',
@@ -313,6 +316,13 @@ function Summary(props: Pick<StepProps, 'setStep' | 'getValues'>) {
   );
 }
 
+// TODO
+// fix success step throw error because of routes
+
+/**
+ *
+ * @link src/routes/ - need fix
+ */
 function Success() {
   return (
     <>
@@ -330,7 +340,7 @@ const variants: Variants = {
 };
 
 export function FormRegister() {
-  const { register: registerApi } = useAuth();
+  const { mutate } = useCreateUser();
   const [step, setStep] = useState<number>(1);
   const {
     handleSubmit,
@@ -356,7 +366,7 @@ export function FormRegister() {
 
   const handleOnSubmit = async (data: UserFields) => {
     const { confirmPassword: _, ...user } = data;
-    await registerApi(user);
+    mutate(user);
     setStep((step) => step + 1);
   };
 

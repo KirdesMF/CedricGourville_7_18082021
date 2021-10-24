@@ -2,7 +2,7 @@ export type Department = 'DIRECTION' | 'TECH' | 'COM' | 'SOCIAL' | 'VISITOR';
 
 export type User = {
   email: string;
-  userName: string;
+  username: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -10,9 +10,20 @@ export type User = {
   bio: string;
 };
 
+export type Post = {
+  title: string;
+  content: string;
+};
+
+// TODO
+// type DATA should have more info
+// like createdAt updatedAt
 export type Data = {
   user?: User;
-  success?: Record<string, string>;
-  error?: Record<string, string>;
-  token?: string;
+  message?: string;
+};
+
+export type TError = Error & {
+  status: number;
+  message: string;
 };

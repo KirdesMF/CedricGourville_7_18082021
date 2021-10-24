@@ -1,21 +1,17 @@
-import { Redirect } from 'react-router';
+import { useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
 import { FormLogIn } from '../components/forms/FormLogin';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Paragraph } from '../components/Paragraph/Paragraph';
 import { Span } from '../components/Span/Span';
-import { useAuth } from '../context/auth.context';
 import { container, panel } from '../styles/helpers.css';
 import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
 import { cx } from '../utils/classname.utils';
 
 export function Login() {
-  const { user } = useAuth();
-
-  if (user) return <Redirect to="/feed" />;
-
+  const { error } = useUser();
   return (
     <main className={panel.lg}>
       <div
@@ -29,7 +25,7 @@ export function Login() {
             Connect to your{' '}
             <Span variant={{ color: 'secondary' }}>profile</Span>
           </Heading>
-
+          {error && <p>{error.message}</p>}
           <FormLogIn />
 
           <Paragraph variant={{ size: 'xs' }}>

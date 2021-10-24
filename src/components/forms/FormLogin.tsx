@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
+import { useLogUser } from '../../api/user.api';
 import { BasicInput, CustomInput } from '../../components/Input/Input';
-import { useAuth } from '../../context/auth.context';
 import { utilities } from '../../styles/utilities.css';
 import { cx } from '../../utils/classname.utils';
+import { Span } from '../Span/Span';
 
 type LoginFields = {
   log: string;
@@ -10,7 +11,7 @@ type LoginFields = {
 };
 
 export function FormLogIn() {
-  const { login, error } = useAuth();
+  const { mutate, error } = useLogUser();
   const {
     register,
     handleSubmit,
@@ -18,7 +19,7 @@ export function FormLogIn() {
   } = useForm<LoginFields>({ mode: 'onChange' });
 
   const handleOnSubmit = async (data: LoginFields) => {
-    await login(data);
+    mutate(data);
   };
 
   return (
@@ -33,13 +34,9 @@ export function FormLogIn() {
         }),
       ])}
     >
-      {error?.error && (
-        <p className={utilities({ color: 'warning', fontSize: 3 })}>
-          {error.error}
-        </p>
-      )}
+      {error && <Span>{error.message}</Span>}
 
-      <CustomInput<LoginFields>
+      <CustomInput
         id="log"
         type="text"
         name="log"
@@ -52,7 +49,7 @@ export function FormLogIn() {
         }}
       />
 
-      <CustomInput<LoginFields>
+      <CustomInput
         name="password"
         id="password"
         type="password"
