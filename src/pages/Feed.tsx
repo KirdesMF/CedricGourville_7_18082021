@@ -17,12 +17,12 @@ export function Feed() {
         <Paragraph>
           Welcome{' '}
           <Span variant={{ color: 'secondary' }}> {user?.username}</Span>
-          <div>
-            {posts?.map((p) => (
-              <h2>{p.title}</h2>
-            ))}
-          </div>
         </Paragraph>
+        <div>
+          {posts?.map((p) => (
+            <h2>{p.title}</h2>
+          ))}
+        </div>
         <Anchor to="/profil">Profil</Anchor>
       </div>
     </main>

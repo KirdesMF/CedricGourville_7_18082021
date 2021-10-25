@@ -12,6 +12,7 @@ import { cx } from '../utils/classname.utils';
 
 export function Login() {
   const { error } = useUser();
+
   return (
     <main className={panel.lg}>
       <div
@@ -21,11 +22,13 @@ export function Login() {
         ])}
       >
         <section className={utilities({ display: 'grid' })}>
+          {error && <p>{error.message}</p>}
+
           <Heading>
             Connect to your{' '}
             <Span variant={{ color: 'secondary' }}>profile</Span>
           </Heading>
-          {error && <p>{error.message}</p>}
+
           <FormLogIn />
 
           <Paragraph variant={{ size: 'xs' }}>

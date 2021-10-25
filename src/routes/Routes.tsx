@@ -6,6 +6,7 @@ import { Register } from '../pages/Register';
 import { Home } from '../pages/Home';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
+import { PublicRoute } from './PublicRoute';
 
 // TODO
 // improve Protected routes
@@ -14,8 +15,8 @@ export function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
+      <PublicRoute path="/login" component={Login} />
+      <PublicRoute path="/register" component={Register} />
       <PrivateRoute path="/feed" component={Feed} />
       <PrivateRoute path="/profil" component={Profil} />
       <Route component={Page404} />

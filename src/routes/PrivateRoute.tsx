@@ -1,10 +1,12 @@
 import { Redirect, Route, RouteProps } from 'react-router';
-import { useAuth } from '../context/auth.context';
+import { useUser } from '../api/user.api';
 
 export function PrivateRoute(props: RouteProps) {
-  const { user } = useAuth();
+  const { data: user, isSuccess, isLoading } = useUser();
 
-  if (!user) return <Redirect to="/login" />;
+  if (isLoading) return <p>WAIT</p>;
+
+  if (!isSuccess && !user) return <Redirect to="/login" />;
 
   return <Route {...props} />;
 }
