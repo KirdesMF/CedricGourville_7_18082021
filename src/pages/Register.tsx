@@ -1,5 +1,5 @@
 import { Anchor } from '../components/Anchor/Anchor';
-import { FormRegister } from '../components/forms/FormRegister';
+import { FormRegister } from '../components/forms/register/FormRegister';
 import { Heading } from '../components/Heading/Heading';
 import { Illustration } from '../components/Illustration/Illustration';
 import { Paragraph } from '../components/Paragraph/Paragraph';
