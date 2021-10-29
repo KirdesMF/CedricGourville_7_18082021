@@ -15,7 +15,7 @@ export async function uploadFileToImageKit(
 ) {
   try {
     if (!req.file) {
-      req.body.picture = null;
+      req.body.media = null;
       next();
     }
 
@@ -32,7 +32,40 @@ export async function uploadFileToImageKit(
         // delete tmp file
         await promises.unlink(req.file.path);
         // set post url img
-        req.body.picture = response.url;
+        req.body.media = response.url;
+        next();
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function uploadAvatarToImageKit(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    if (!req.file) {
+      req.body.avatar = null;
+      next();
+    }
+
+    if (req.file) {
+      const file = createReadStream(req.file.path);
+
+      const response = await imagekit.upload({
+        file,
+        fileName: req.file.filename,
+        folder: `avatar`,
+      });
+
+      if (response) {
+        // delete tmp file
+        await promises.unlink(req.file.path);
+        // set post url img
+        req.body.avatar = response.url;
         next();
       }
     }

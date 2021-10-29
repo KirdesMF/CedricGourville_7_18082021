@@ -91,6 +91,19 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function edit(req: Request, res: Response, next: NextFunction) {
+  const userId = parseInt(req?.userId, 10);
+  const body = req.body as User;
+  try {
+    const user = await UserServices.updateUser('id', userId, body);
+    res
+      .status(httpStatus.OK)
+      .json({ message: `🎉 Successfully updated`, user });
+  } catch (error) {
+    next(error);
+  }
+}
+
 /**
  *
  * @param req
@@ -183,6 +196,7 @@ async function logged(req: Request, res: Response, next: NextFunction) {
 
 export const UserControllers = {
   login,
+  edit,
   logout,
   register,
   unRegister,
