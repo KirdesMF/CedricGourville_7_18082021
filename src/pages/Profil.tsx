@@ -1,28 +1,48 @@
+import { useState } from 'react';
 import { useLogOutUser, useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
 import { Button } from '../components/Button/Button';
+import { FormProfile } from '../components/forms/FormProfile';
 import { Heading } from '../components/Heading/Heading';
 import { container, panel } from '../styles/helpers.css';
 import { utilities } from '../styles/utilities.css';
+import { cx } from '../utils/classname.utils';
 
+const notProvided = '❌ Not Provided';
 export function Profil() {
   const { mutate } = useLogOutUser();
   const { data: user } = useUser();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditing = () => setIsEditing((prev) => !prev);
+  const handleLogout = () => mutate();
+
   return (
     <main className={panel['2xl']}>
-      <div className={container({ width: 'lg', padding: '2xl' })}>
-        <Heading>Profil</Heading>
+      <div
+        className={cx([
+          container({ width: 'lg', padding: '2xl' }),
+          utilities({ display: 'grid', gap: 'md' }),
+        ])}
+      >
+        <Heading>Profile</Heading>
+        <Anchor to="/feed">Feed</Anchor>
+
+        {user?.avatar && <img src={user.avatar} alt="avatar" />}
+
         <ul>
-          <li>{user?.firstName || 'Not provided'}</li>
-          <li>{user?.lastName || 'Not provided'}</li>
-          <li>{user?.bio || 'Not provided'}</li>
-          <li>{user?.email || 'Not provided'}</li>
+          <li>Firstname: {user?.firstName || notProvided}</li>
+          <li>Lastname: {user?.lastName || notProvided}</li>
+          <li>Bio: {user?.bio || notProvided}</li>
+          <li>Email: {user?.email || notProvided}</li>
         </ul>
 
         <div className={utilities({ display: 'flex', gap: 'md' })}>
-          <Button onClick={() => mutate()}>Log out</Button>
-          <Anchor to="/feed">Feed</Anchor>
+          <Button onClick={handleEditing}>Edit profile</Button>
+          <Button onClick={handleLogout}>Log out</Button>
         </div>
+
+        {isEditing && <FormProfile />}
       </div>
     </main>
   );

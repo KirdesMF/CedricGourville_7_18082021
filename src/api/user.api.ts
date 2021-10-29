@@ -3,10 +3,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
+import { convertHoursToMilliseconds } from '../utils/utils';
 
 export function useUser() {
   return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
-    staleTime: 1 * 60 * 60 * 1000, // 1 hour
+    staleTime: convertHoursToMilliseconds(1), // 1 hour
     retry: 0,
   });
 }
@@ -54,4 +55,17 @@ export function useLogOutUser() {
       push('/');
     },
   });
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation<FormData, TError, FormData>(
+    (body) => Fetch.postFormData('user/edit', body),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+      },
+    }
+  );
 }

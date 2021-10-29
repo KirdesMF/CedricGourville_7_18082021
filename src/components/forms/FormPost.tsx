@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useCreatePost } from '../../api/post.api';
+import { utilities } from '../../styles/utilities.css';
 import { BasicInput, CustomInput } from '../Input/Input';
 // import { IKUpload } from 'imagekitio-react';
 
@@ -22,19 +23,22 @@ export function FormPost() {
   const handleOnSubmit = (data: PostField) => {
     const form = new FormData();
 
-    for (const key in data) {
-      if (key === 'media') {
-        form.append(key, data[key][0]);
-      }
-      form.append(key, data[key as keyof Omit<PostField, 'media'>]);
-    }
+    Object.entries(data).forEach(([key, value]) => {
+      key === 'media'
+        ? form.append(key, value[0])
+        : form.append(key, value as string);
+    });
 
     mutate(form);
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(handleOnSubmit)} encType="multipart/form-data">
+    <form
+      className={utilities({ display: 'grid', gap: 'md' })}
+      onSubmit={handleSubmit(handleOnSubmit)}
+      encType="multipart/form-data"
+    >
       <CustomInput
         register={register}
         errors={errors}
@@ -42,6 +46,7 @@ export function FormPost() {
         name="title"
         label="title"
         type="text"
+        options={{ required: 'Please provide a title' }}
       />
       <CustomInput
         register={register}
@@ -50,6 +55,7 @@ export function FormPost() {
         placeholder="What's new ?"
         label="title"
         name="content"
+        options={{ required: 'Please provide something to say' }}
       />
       <CustomInput
         type="file"
