@@ -1,3 +1,6 @@
+import { Department } from 'p7_types';
+import { StepProps } from './types';
+
 import { useRef } from 'react';
 import { useCheckNotUsed } from '../../../api/user.api';
 import { utilities } from '../../../styles/utilities.css';
@@ -5,12 +8,13 @@ import { Button } from '../../Button/Button';
 import { CustomInput } from '../../Input/Input';
 import { CustomSelect } from '../../Select/Select';
 import { Span } from '../../Span/Span';
-import { StepProps } from './types';
 
 type Step2Props = Pick<
   StepProps,
   'setStep' | 'register' | 'errors' | 'trigger' | 'watch'
 >;
+
+const CHOICES: Department[] = ['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR'];
 
 export function Step2(props: Step2Props) {
   const { setStep, register, errors, trigger, watch } = props;
@@ -58,7 +62,7 @@ export function Step2(props: Step2Props) {
         customPlaceholder="Select your department"
         register={register}
         errors={errors}
-        choices={['DIRECTION', 'TECH', 'SOCIAL', 'COM', 'VISITOR']}
+        choices={CHOICES}
         options={{
           required: 'Please select your department',
         }}
@@ -69,6 +73,7 @@ export function Step2(props: Step2Props) {
         <Button type="button" onClick={() => setStep((step) => step - 1)}>
           Prev step
         </Button>
+
         <Button type="button" onClick={handleNextStep}>
           Next step
         </Button>

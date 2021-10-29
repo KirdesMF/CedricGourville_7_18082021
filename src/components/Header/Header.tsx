@@ -7,14 +7,14 @@ import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
-import { useAuth } from '../../context/auth.context';
+import { useUser } from '../../api/user.api';
 
 // TODO
 // handle user logged in case
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useTheme();
-  const { user } = useAuth();
+  const { data: user } = useUser();
 
   const handleTheme = () => {
     mode === 'dark' ? setMode('light') : setMode('dark');

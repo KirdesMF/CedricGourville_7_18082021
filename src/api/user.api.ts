@@ -50,7 +50,7 @@ export function useLogOutUser() {
 
   return useMutation(() => Fetch.deleted('user/logout'), {
     onSettled: () => {
-      queryClient.removeQueries('user');
+      queryClient.resetQueries('user');
       push('/');
     },
   });

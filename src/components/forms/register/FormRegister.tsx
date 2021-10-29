@@ -1,26 +1,25 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
+
 import { Anchor } from '../../Anchor/Anchor';
 import { cx } from '../../../utils/classname.utils';
 import { Heading } from '../../Heading/Heading';
 import { Paragraph } from '../../Paragraph/Paragraph';
 import { useCreateUser } from '../../../api/user.api';
+import { grid } from '../../../styles/layouts.css';
+import { utilities } from '../../../styles/utilities.css';
 
 import { UserFields } from './types';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
 import { Step3 } from './Step3';
 import { Summary } from './Summary';
-import { grid } from '../../../styles/layouts.css';
-import { utilities } from '../../../styles/utilities.css';
 
 // TODO
 // redesign input components
 // improve types
 // improve animation
-
-// TODO
 // fix success step throw error because of routes
 
 /**
@@ -38,9 +37,9 @@ function Success() {
 }
 
 const variants: Variants = {
-  initial: { x: '-100%', opacity: 0 },
+  initial: { x: '100%', opacity: 0 },
   animate: { x: 0, opacity: 1 },
-  exit: { x: '100%', opacity: 0 },
+  exit: { x: '-100%', opacity: 0 },
 };
 
 export function FormRegister() {
@@ -56,6 +55,12 @@ export function FormRegister() {
     setValue,
   } = useForm<UserFields>({ mode: 'onChange' });
 
+  const handleOnSubmit = async (data: UserFields) => {
+    const { confirmPassword: _, ...user } = data;
+    mutate(user);
+    setStep((step) => step + 1);
+  };
+
   const common = { setStep, register, errors, trigger };
 
   const STEPS = {
@@ -67,12 +72,6 @@ export function FormRegister() {
   };
 
   const currentStep = STEPS[step as keyof typeof STEPS];
-
-  const handleOnSubmit = async (data: UserFields) => {
-    const { confirmPassword: _, ...user } = data;
-    mutate(user);
-    setStep((step) => step + 1);
-  };
 
   return (
     <>
@@ -90,6 +89,7 @@ export function FormRegister() {
             initial="initial"
             animate="animate"
             exit="exit"
+            transition={{ ease: 'easeIn' }}
             className={utilities({
               gridArea: 'area',
               display: 'grid',

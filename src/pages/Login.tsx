@@ -1,4 +1,3 @@
-import { useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
 import { FormLogIn } from '../components/forms/FormLogin';
 import { Heading } from '../components/Heading/Heading';
@@ -10,9 +9,9 @@ import { flex } from '../styles/layouts.css';
 import { utilities } from '../styles/utilities.css';
 import { cx } from '../utils/classname.utils';
 
+// TODO
+// handle error message
 export function Login() {
-  const { error } = useUser();
-
   return (
     <main className={panel.lg}>
       <div
@@ -22,8 +21,6 @@ export function Login() {
         ])}
       >
         <section className={utilities({ display: 'grid' })}>
-          {error && <p>{error.message}</p>}
-
           <Heading>
             Connect to your{' '}
             <Span variant={{ color: 'secondary' }}>profile</Span>

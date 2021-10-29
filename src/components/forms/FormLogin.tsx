@@ -19,7 +19,7 @@ export function FormLogIn() {
     formState: { errors },
   } = useForm<LoginFields>({ mode: 'onChange' });
 
-  const handleOnSubmit = async (data: LoginFields) => {
+  const handleOnSubmit = (data: LoginFields) => {
     mutate(data);
   };
 

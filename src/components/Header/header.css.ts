@@ -4,9 +4,12 @@ import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 export const header = style([
+  utilities({ position: 'sticky' }),
   panel.lg,
   {
     borderBottom: `1px solid ${vars.colors['border-base']}`,
+    top: 0,
+    backdropFilter: 'blur(5px)',
   },
 ]);
 
