@@ -24,7 +24,7 @@ enum Department {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
+  id             String    @id @default(uuid())
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   lastConnection DateTime? @db.DateTime
@@ -37,6 +37,7 @@ model User {
   lastName   String?    @db.VarChar(45)
   bio        String?    @db.TinyText
   avatar     String?    @db.VarChar(255)
+  avatarId   String?    @db.VarChar(255)
   role       Role       @default(USER)
   comments   Comment[]
   posts      Post[]
@@ -44,18 +45,19 @@ model User {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   title    String    @db.VarChar(255)
   content  String
   media    String?   @db.VarChar(255)
+  mediaId  String?   @db.VarChar(255)
   comments Comment[]
   rating   Rating[]
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 enum Reaction {
@@ -70,9 +72,9 @@ model Rating {
   createdAt DateTime  @default(now())
   reaction  Reaction?
   user      User      @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
   post      Post      @relation(fields: [postId], references: [id])
-  postId    Int
+  postId    String
 }
 
 model Comment {
@@ -81,8 +83,8 @@ model Comment {
   image     String?  @db.VarChar(255)
   content   String   @db.LongText
 
-  user   User? @relation(fields: [userId], references: [id])
-  userId Int?
-  post   Post? @relation(references: [id], fields: [postId])
-  postId Int?
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+  post   Post?   @relation(references: [id], fields: [postId])
+  postId String?
 }

@@ -7,12 +7,12 @@ async function createPost(data: Post) {
   return post;
 }
 
-async function deletePost(id: number) {
+async function deletePost(id: string) {
   const post = await prisma.post.delete({ where: { id } });
   return post;
 }
 
-async function updatePost(id: number, data: Post) {
+async function updatePost(id: string, data: Post) {
   const post = await prisma.post.update({ where: { id }, data });
   return post;
 }
@@ -22,7 +22,7 @@ async function getAllPosts() {
   return posts;
 }
 
-async function getPost(id: number) {
+async function getPost(id: string) {
   const post = await prisma.post.findUnique({ where: { id } });
   return post;
 }

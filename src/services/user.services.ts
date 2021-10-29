@@ -2,7 +2,6 @@ import { PrismaClient, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 
 type TUniqueUserField = keyof Pick<User, 'id' | 'username' | 'email'>;
-type TValueGetUser<T> = T extends 'id' ? number : string;
 
 const prisma = new PrismaClient();
 
@@ -31,10 +30,7 @@ async function createUser(data: User) {
  * @param value string | number depending on field
  * @returns User as promise
  */
-async function getUser<T extends TUniqueUserField>(
-  field: T,
-  value: TValueGetUser<T>
-) {
+async function getUser<T extends TUniqueUserField>(field: T, value: string) {
   const user = prisma.user.findUnique({
     where: { [field]: value },
   });
@@ -52,7 +48,7 @@ async function getUser<T extends TUniqueUserField>(
  */
 async function updateUser<T extends TUniqueUserField>(
   field: T,
-  value: TValueGetUser<T>,
+  value: string,
   data: Partial<User>
 ) {
   const updatedUser = await prisma.user.update({
@@ -70,10 +66,7 @@ async function updateUser<T extends TUniqueUserField>(
  * @param value
  * @returns
  */
-async function deleteUser<T extends TUniqueUserField>(
-  field: T,
-  value: TValueGetUser<T>
-) {
+async function deleteUser<T extends TUniqueUserField>(field: T, value: string) {
   const user = await prisma.user.delete({
     where: { [field]: value },
   });

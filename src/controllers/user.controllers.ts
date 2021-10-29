@@ -92,7 +92,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 }
 
 async function edit(req: Request, res: Response, next: NextFunction) {
-  const userId = parseInt(req?.userId, 10);
+  const userId = req?.userId;
   const body = req.body as User;
   try {
     const user = await UserServices.updateUser('id', userId, body);
@@ -128,7 +128,7 @@ async function logout(req: Request, res: Response, next: NextFunction) {
 async function unRegister(req: Request, res: Response, next: NextFunction) {
   const id = req.userId;
   try {
-    const user = await UserServices.deleteUser('id', parseInt(id, 10));
+    const user = await UserServices.deleteUser('id', id);
     res.status(httpStatus.OK).json(user);
   } catch (error) {
     next(error);

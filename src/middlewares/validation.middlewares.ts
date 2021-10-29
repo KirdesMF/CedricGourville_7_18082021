@@ -1,5 +1,4 @@
 import { Schema } from 'express-validator';
-import { UserServices } from '../services/user.services';
 
 export const registerValidatorSchema: Schema = {
   email: {
@@ -8,16 +7,6 @@ export const registerValidatorSchema: Schema = {
     normalizeEmail: true,
     isEmail: { bail: true },
     errorMessage: 'Invalid adress mail',
-    custom: {
-      options: (value: string) => {
-        UserServices.findUserByEmail(value).then((user) => {
-          if (user) {
-            throw new Error('Already in use');
-          }
-          return true;
-        });
-      },
-    },
   },
   password: {
     in: 'body',

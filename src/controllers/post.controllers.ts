@@ -15,7 +15,7 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
 
 async function getOne(req: Request, res: Response, next: NextFunction) {
   try {
-    const id = req.body?.id as number;
+    const id = req.body?.id;
 
     const post = await PostServices.getPost(id);
     res.status(200).json(post);
@@ -27,7 +27,7 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const body = req.body as Post;
-    const userId = parseInt(req?.userId, 10);
+    const userId = req?.userId;
 
     const post = await PostServices.createPost({ ...body, userId });
 
