@@ -1,5 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
+// import ImageKit from 'imagekit';
+
 import { ExpressLoader } from './loaders/express.loader';
 import { Routes } from './routes';
 import { ErrorsMiddleWare } from './middlewares/errors.middlewares';
@@ -10,6 +12,14 @@ const app = express();
 const localhost = process.env.MYSQL_DB || 'localhost';
 const port = process.env.API_PORT || 1234;
 
+// TODO
+// use .env file
+// const imagekit = new ImageKit({
+//   publicKey: 'public_LACBQ1l5yA/Ko4n7CaM23xA+ikg=',
+//   privateKey: 'private_FGtYc6CIix1KSlqkT5utseJrS+w=',
+//   urlEndpoint: 'https://ik.imagekit.io/i3uinwevzvu',
+// });
+
 function startServer() {
   ExpressLoader(app);
   Routes(app);
@@ -17,6 +27,14 @@ function startServer() {
   app.use(ErrorsMiddleWare.logger);
   app.use(ErrorsMiddleWare.responder);
 
+  // app.get('/imagekit', (req, res) => {
+  //   const result = imagekit.getAuthenticationParameters();
+  //   res.send(result);
+  // });
+
+  // TODO
+  // remove this cookie part ?
+  // I don't remember why its here
   app.get('/setcookie', (req, res) => {
     res.cookie(`Cookie token name`, `encrypted cookie string Value`, {
       maxAge: 5000 * 5000,

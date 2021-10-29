@@ -1,6 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
-import { PostServices } from '../services/post.services';
 import { httpStatus } from '../utils/http-status';
+import { PostServices } from '../services/post.services';
+import { Post } from '.prisma/client';
 
 async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -23,4 +24,17 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export const PostController = { getAll, getOne };
+async function create(req: Request, res: Response, next: NextFunction) {
+  try {
+    const body = req.body as Post;
+    const userId = parseInt(req?.userId, 10);
+
+    const post = await PostServices.createPost({ ...body, userId });
+
+    res.status(httpStatus.OK).json(post);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const PostController = { getAll, getOne, create };

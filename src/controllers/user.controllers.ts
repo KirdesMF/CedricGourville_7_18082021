@@ -50,22 +50,30 @@ async function login(req: Request, res: Response, next: NextFunction) {
   let errorMessage: string;
 
   try {
-    // TODO
-    // improve password check if username contains @
+    // if email input
     if (log.includes('@')) {
-      user = await UserServices.updateUser('email', log, { lastConnection });
+      user = await UserServices.getUser('email', log);
       errorMessage = 'We did not find this user email';
+
+      if (!user) {
+        throw new ErrorHandler(httpStatus.forbidden, `❌ ${errorMessage}`);
+      }
+      await UserServices.updateUser('email', user.email, { lastConnection });
     } else {
-      user = await UserServices.updateUser('username', log, { lastConnection });
+      // if username input
+      user = await UserServices.getUser('username', log);
       errorMessage = 'We did not find this username';
+
+      if (!user) {
+        throw new ErrorHandler(httpStatus.forbidden, `❌ ${errorMessage}`);
+      }
+      await UserServices.updateUser('username', user.username, {
+        lastConnection,
+      });
     }
 
-    if (!user) {
-      throw new ErrorHandler(httpStatus.forbidden, `❌ ${errorMessage}`);
-    }
-
+    // check password
     const isCorrectPassword = await compare(password, user.password);
-
     if (!isCorrectPassword) {
       throw new ErrorHandler(httpStatus.forbidden, `❌ Wrong Password`);
     }
