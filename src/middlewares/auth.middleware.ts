@@ -1,5 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 import { JwtPayload, verify } from 'jsonwebtoken';
+import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
@@ -21,6 +22,8 @@ export async function authorization(
 
     req.userId = id;
 
+    const user = await UserServices.getAvatarId(id);
+    if (user) req.avatarId = user.avatarId;
     next();
   } catch (error) {
     next(error);

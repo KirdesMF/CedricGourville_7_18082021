@@ -1,7 +1,7 @@
 import { Application, Router } from 'express';
 import { PostController } from '../controllers/post.controllers';
 import { authorization } from '../middlewares/auth.middleware';
-import { uploadFileToImageKit } from '../middlewares/imagekit.middleware';
+import { uploadMediaToImageKit } from '../middlewares/imagekit.middleware';
 import { uploadMedia } from '../middlewares/multer.middleware';
 
 export function postRouter(app: Application) {
@@ -15,7 +15,7 @@ export function postRouter(app: Application) {
     '/',
     authorization,
     uploadMedia,
-    uploadFileToImageKit,
+    uploadMediaToImageKit,
     PostController.create
   );
 }

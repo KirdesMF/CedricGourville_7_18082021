@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:alpine3.11 as base
+FROM node:current-alpine as base
 ENV TZ Europe/Paris
 WORKDIR /app
 COPY package*.json wait-for-it.sh prisma /app/

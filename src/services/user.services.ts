@@ -38,6 +38,17 @@ async function getUser<T extends TUniqueUserField>(field: T, value: string) {
   return user;
 }
 
+async function getAvatarId(id: string) {
+  const avatarId = prisma.user.findUnique({
+    where: { id },
+    select: {
+      avatarId: true,
+    },
+  });
+
+  return avatarId;
+}
+
 // Update
 /**
  *
@@ -77,5 +88,6 @@ export const UserServices = {
   createUser,
   deleteUser,
   getUser,
+  getAvatarId,
   updateUser,
 };

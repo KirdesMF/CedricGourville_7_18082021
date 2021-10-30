@@ -8,17 +8,12 @@ const imagekit = new ImageKit({
   urlEndpoint: 'https://ik.imagekit.io/i3uinwevzvu',
 });
 
-export async function uploadFileToImageKit(
+export async function uploadMediaToImageKit(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
   try {
-    if (!req.file) {
-      req.body.media = null;
-      next();
-    }
-
     if (req.file) {
       const file = createReadStream(req.file.path);
 
@@ -33,6 +28,7 @@ export async function uploadFileToImageKit(
         await promises.unlink(req.file.path);
         // set post url img
         req.body.media = response.url;
+        req.body.mediaId = response.fileId;
         next();
       }
     }
@@ -47,11 +43,6 @@ export async function uploadAvatarToImageKit(
   next: NextFunction
 ) {
   try {
-    if (!req.file) {
-      req.body.avatar = null;
-      next();
-    }
-
     if (req.file) {
       const file = createReadStream(req.file.path);
 
@@ -64,8 +55,15 @@ export async function uploadAvatarToImageKit(
       if (response) {
         // delete tmp file
         await promises.unlink(req.file.path);
+
+        // delete prev avatar
+        if (req.avatarId) {
+          await imagekit.deleteFile(req.avatarId).catch((err) => next(err));
+        }
         // set post url img
         req.body.avatar = response.url;
+        req.body.avatarId = response.fileId;
+
         next();
       }
     }
