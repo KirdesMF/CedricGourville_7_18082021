@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLogOutUser, useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
+import { Avatar } from '../components/Avatar/Avatar';
 import { Button } from '../components/Button/Button';
 import { FormProfile } from '../components/forms/FormProfile';
 import { Heading } from '../components/Heading/Heading';
@@ -28,7 +29,7 @@ export function Profil() {
         <Heading>Profile</Heading>
         <Anchor to="/feed">Feed</Anchor>
 
-        {user?.avatar && <img src={user.avatar} alt="avatar" />}
+        {user?.avatar && <Avatar src={user.avatar} alt="avatar" />}
 
         <ul>
           <li>Firstname: {user?.firstName || notProvided}</li>

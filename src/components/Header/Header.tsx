@@ -8,6 +8,23 @@ import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
 import { useUser } from '../../api/user.api';
+import { User } from 'p7_types';
+import { Avatar } from '../Avatar/Avatar';
+
+const AnchorAvatar = ({ user }: { user: User | undefined }) => {
+  if (!user) {
+    return (
+      <Anchor to="/login">
+        <Icon name="PersonIcon" variant={{ size: 'medium' }} />
+      </Anchor>
+    );
+  }
+  return (
+    <Anchor to="/profil">
+      <Avatar src={user.avatar as string} alt="avatar" />
+    </Anchor>
+  );
+};
 
 // TODO
 // handle user logged in case
@@ -26,9 +43,7 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <Anchor to={user ? '/profil' : '/login'}>
-            <Icon name="PersonIcon" variant={{ size: 'medium' }} />
-          </Anchor>
+          <AnchorAvatar user={user} />
 
           <Anchor to={user ? '/feed' : '/'} variant={{ gap: true }}>
             <Icon name="Groupomania" variant={{ size: 'medium' }} />

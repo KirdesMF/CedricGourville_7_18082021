@@ -1,4 +1,6 @@
 import { motion, Variants } from 'framer-motion';
+import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
 import * as styles from './post.css';
 
 type PostProps = {
@@ -37,9 +39,19 @@ export function Post(props: PostProps) {
       className={styles.post}
       custom={delay}
     >
-      {media && <img className={styles.img} src={media} alt="" />}
-      <h2>{title}</h2>
-      <p>{content}</p>
+      {media && (
+        <span className={styles.figure}>
+          <img className={styles.img} src={media} alt="" />
+        </span>
+      )}
+
+      <div className={styles.content}>
+        <h2>{title}</h2>
+        <p>{content}</p>
+        <Button>
+          <Icon name="ChatBubbleIcon" />
+        </Button>
+      </div>
     </motion.article>
   );
 }

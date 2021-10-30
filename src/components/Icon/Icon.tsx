@@ -5,6 +5,7 @@ import {
   SunIcon,
   HamburgerMenuIcon,
   PersonIcon,
+  ChatBubbleIcon,
 } from '@radix-ui/react-icons';
 
 const Groupomania = ({ className }: { className: string }) => {
@@ -27,6 +28,7 @@ const icons = {
   SunIcon,
   HamburgerMenuIcon,
   PersonIcon,
+  ChatBubbleIcon,
   Groupomania,
 };
 

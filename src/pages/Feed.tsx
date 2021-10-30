@@ -27,7 +27,13 @@ export function Feed() {
 
         <FormPost />
 
-        <div className={utilities({ display: 'grid', gap: 'md' })}>
+        <div
+          className={utilities({
+            display: 'grid',
+            gap: 'lg',
+            paddingBlock: 'lg',
+          })}
+        >
           <AnimatePresence>
             {posts?.map((p, idx) => (
               <Post
