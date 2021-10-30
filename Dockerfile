@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:17-alpine3.12 as development
+FROM node:current-alpine as development
 ENV NODE_ENV development
 ENV TZ Europe/Paris
 WORKDIR /app
