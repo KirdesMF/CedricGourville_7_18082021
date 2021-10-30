@@ -27,7 +27,7 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const body = req.body as Post;
-    const post = await PostServices.createPost(body);
+    const post = await PostServices.createPost({ ...body, userId: req.userId });
 
     res.status(httpStatus.OK).json(post);
   } catch (error) {
