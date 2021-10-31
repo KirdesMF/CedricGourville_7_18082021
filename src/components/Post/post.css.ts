@@ -5,7 +5,7 @@ import { vars } from '../../styles/vars.css';
 export const post = style([
   utilities({
     display: 'grid',
-    background: 'border-base',
+    background: 'bg-base-subtle',
     padding: 'lg',
     gap: 'lg',
   }),

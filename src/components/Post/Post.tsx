@@ -1,14 +1,17 @@
 import { motion, Variants } from 'framer-motion';
+import { Comment, Post as PostType, User } from 'p7_types';
+import { useState } from 'react';
+import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
+import { FormComment } from '../forms/FormComment';
 import { Icon } from '../Icon/Icon';
 import * as styles from './post.css';
 
 type PostProps = {
-  title: string;
-  content: string;
-  media: string | null;
   delay: number;
-};
+  user: Pick<User, 'username'>;
+  comments: Pick<Comment, 'content'>[];
+} & Pick<PostType, 'content' | 'id' | 'title' | 'media'>;
 
 const variants: Variants = {
   initial: {
@@ -29,15 +32,28 @@ const variants: Variants = {
 };
 
 export function Post(props: PostProps) {
-  const { title, content, media, delay } = props;
+  const {
+    id,
+    title,
+    content,
+    media,
+    delay,
+    user: { username },
+    comments,
+  } = props;
+  const [isCommenting, setIsCommenting] = useState(false);
+
+  const handleComment = () => setIsCommenting((prev) => !prev);
+
   return (
     <motion.article
+      className={styles.post}
       variants={variants}
       initial="initial"
       animate="animate"
       exit="exit"
-      className={styles.post}
       custom={delay}
+      layout
     >
       {media && (
         <span className={styles.figure}>
@@ -48,10 +64,24 @@ export function Post(props: PostProps) {
       <div className={styles.content}>
         <h2>{title}</h2>
         <p>{content}</p>
-        <Button>
+        <small>{username}</small>
+
+        <Button onClick={handleComment}>
           <Icon name="ChatBubbleIcon" />
         </Button>
+
+        {isCommenting && <FormComment postId={id} />}
       </div>
+
+      <Anchor to={`/feed?id=${id}`}>Details</Anchor>
+
+      {comments.length !== 0 && (
+        <div>
+          {comments.map((com, idx) => (
+            <p key={idx}>{com.content}</p>
+          ))}
+        </div>
+      )}
     </motion.article>
   );
 }

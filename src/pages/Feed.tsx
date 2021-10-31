@@ -1,4 +1,4 @@
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { usePosts } from '../api/post.api';
 import { useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
@@ -27,25 +27,29 @@ export function Feed() {
 
         <FormPost />
 
-        <div
-          className={utilities({
-            display: 'grid',
-            gap: 'lg',
-            paddingBlock: 'lg',
-          })}
-        >
-          <AnimatePresence>
-            {posts?.map((p, idx) => (
+        <AnimatePresence>
+          <motion.div
+            layout
+            className={utilities({
+              display: 'grid',
+              gap: 'lg',
+              paddingBlock: 'lg',
+            })}
+          >
+            {posts?.map((post, idx) => (
               <Post
-                key={p.id}
-                title={p.title}
-                content={p.content}
-                media={p.media}
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                content={post.content}
+                media={post.media}
+                user={post.user}
+                comments={post.comments}
                 delay={idx}
               />
             ))}
-          </AnimatePresence>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </main>
   );

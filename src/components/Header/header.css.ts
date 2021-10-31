@@ -10,6 +10,8 @@ export const header = style([
     borderBottom: `1px solid ${vars.colors['border-base']}`,
     top: 0,
     backdropFilter: 'blur(5px)',
+    isolation: 'isolate',
+    zIndex: 1,
   },
 ]);
 

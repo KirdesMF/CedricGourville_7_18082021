@@ -23,7 +23,11 @@ export function FormPost() {
   const handleOnSubmit = (data: PostField) => {
     const form = new FormData();
 
-    Object.entries(data).forEach(([key, value]) => {
+    const values = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v.length !== 0)
+    );
+
+    Object.entries(values).forEach(([key, value]) => {
       key === 'media'
         ? form.append(key, value[0])
         : form.append(key, value as string);
