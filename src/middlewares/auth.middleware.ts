@@ -22,7 +22,20 @@ export async function authorization(
 
     req.userId = id;
 
-    const user = await UserServices.getAvatarId(id);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getAvatarId(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { userId } = req;
+    const user = await UserServices.getAvatarId(userId);
     if (user) req.avatarId = user.avatarId;
     next();
   } catch (error) {

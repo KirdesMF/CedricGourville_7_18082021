@@ -18,7 +18,27 @@ async function updatePost(id: string, data: Post) {
 }
 
 async function getAllPosts() {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      media: true,
+      user: {
+        select: {
+          username: true,
+        },
+      },
+      comments: {
+        select: {
+          content: true,
+        },
+      },
+    },
+  });
   return posts;
 }
 

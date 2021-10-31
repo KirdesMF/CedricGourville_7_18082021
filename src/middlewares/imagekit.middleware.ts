@@ -13,27 +13,27 @@ export async function uploadMediaToImageKit(
   res: Response,
   next: NextFunction
 ) {
+  if (!req.file) return next();
+
   try {
-    if (req.file) {
-      const file = createReadStream(req.file.path);
+    const file = createReadStream(req.file.path);
 
-      const response = await imagekit.upload({
-        file,
-        fileName: req.file.filename,
-        folder: 'feed',
-      });
+    const response = await imagekit.upload({
+      file,
+      fileName: req.file.filename,
+      folder: 'feed',
+    });
 
-      if (response) {
-        // delete tmp file
-        await promises.unlink(req.file.path);
-        // set post url img
-        req.body.media = response.url;
-        req.body.mediaId = response.fileId;
-        next();
-      }
+    if (response) {
+      // delete tmp file
+      await promises.unlink(req.file.path);
+      // set post url img
+      req.body.media = response.url;
+      req.body.mediaId = response.fileId;
     }
+    return next();
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
 
@@ -42,32 +42,31 @@ export async function uploadAvatarToImageKit(
   res: Response,
   next: NextFunction
 ) {
+  if (!req.file) return next();
+
   try {
-    if (req.file) {
-      const file = createReadStream(req.file.path);
+    const file = createReadStream(req.file.path);
 
-      const response = await imagekit.upload({
-        file,
-        fileName: req.file.filename,
-        folder: `avatar`,
-      });
+    const response = await imagekit.upload({
+      file,
+      fileName: req.file.filename,
+      folder: `avatar`,
+    });
 
-      if (response) {
-        // delete tmp file
-        await promises.unlink(req.file.path);
+    if (response) {
+      // delete tmp file
+      await promises.unlink(req.file.path);
 
-        // delete prev avatar
-        if (req.avatarId) {
-          await imagekit.deleteFile(req.avatarId).catch((err) => next(err));
-        }
-        // set post url img
-        req.body.avatar = response.url;
-        req.body.avatarId = response.fileId;
-
-        next();
+      // delete prev avatar
+      if (req.avatarId) {
+        await imagekit.deleteFile(req.avatarId).catch((err) => next(err));
       }
+      // set post url img
+      req.body.avatar = response.url;
+      req.body.avatarId = response.fileId;
     }
+    return next();
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }

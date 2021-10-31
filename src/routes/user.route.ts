@@ -1,6 +1,6 @@
 import { Application, Router } from 'express';
 import { UserControllers } from '../controllers/user.controllers';
-import { authorization } from '../middlewares/auth.middleware';
+import { authorization, getAvatarId } from '../middlewares/auth.middleware';
 import { uploadAvatarToImageKit } from '../middlewares/imagekit.middleware';
 import { uploadAvatar } from '../middlewares/multer.middleware';
 
@@ -14,6 +14,7 @@ export function userRouter(app: Application) {
   router.post(
     '/edit',
     authorization,
+    getAvatarId,
     uploadAvatar,
     uploadAvatarToImageKit,
     UserControllers.edit
