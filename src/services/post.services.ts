@@ -14,8 +14,10 @@ async function createPost(body: Post) {
 }
 
 async function deletePost(id: string) {
-  const post = await prisma.post.delete({ where: { id } });
-  return post;
+  const comments = prisma.comment.deleteMany({ where: { postId: id } });
+  const post = prisma.post.delete({ where: { id } });
+
+  await prisma.$transaction([comments, post]);
 }
 
 async function updatePost(id: string, data: Post) {
@@ -36,9 +38,11 @@ async function getAllPosts() {
       user: {
         select: {
           username: true,
+          id: true,
         },
       },
       comments: {
+        orderBy: { createdAt: 'asc' },
         select: {
           content: true,
         },

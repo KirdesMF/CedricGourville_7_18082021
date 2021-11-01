@@ -18,4 +18,6 @@ export function postRouter(app: Application) {
     uploadMediaToImageKit,
     PostController.create
   );
+
+  router.delete('/', authorization, PostController.erase);
 }

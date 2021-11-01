@@ -2,7 +2,6 @@ import { NextFunction, Response, Request } from 'express';
 import { httpStatus } from '../utils/http-status';
 import { PostServices } from '../services/post.services';
 import { Post } from '.prisma/client';
-import { Socket } from '../loaders/socket.loader';
 
 async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -37,4 +36,13 @@ async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export const PostController = { getAll, getOne, create };
+async function erase(req: Request, res: Response, next: NextFunction) {
+  try {
+    await PostServices.deletePost(req.body.id);
+    res.status(httpStatus.OK).json({ message: 'Successfully deleted' });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const PostController = { getAll, getOne, create, erase };
