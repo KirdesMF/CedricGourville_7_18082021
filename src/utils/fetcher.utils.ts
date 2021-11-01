@@ -59,8 +59,10 @@ async function patch<T>(
 
 async function deleted<T>(
   path: string,
+  body: unknown,
   options: RequestInit = {
     method: 'DELETE',
+    body: JSON.stringify(body),
     ...fetchOptions,
   }
 ): Promise<T> {

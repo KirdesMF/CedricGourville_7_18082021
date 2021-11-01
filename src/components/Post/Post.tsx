@@ -1,6 +1,7 @@
 import { motion, Variants } from 'framer-motion';
 import { Comment, Post as PostType, User } from 'p7_types';
 import { useState } from 'react';
+import { useDeletePost } from '../../api/post.api';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
 import { FormComment } from '../forms/FormComment';
@@ -9,9 +10,9 @@ import * as styles from './post.css';
 
 type PostProps = {
   delay: number;
-  user: Pick<User, 'username'>;
+  user: Pick<User, 'username' | 'id' | 'role'>;
   comments: Pick<Comment, 'content'>[];
-} & Pick<PostType, 'content' | 'id' | 'title' | 'media'>;
+} & Pick<PostType, 'content' | 'id' | 'title' | 'media' | 'userId'>;
 
 const variants: Variants = {
   initial: {
@@ -33,18 +34,24 @@ const variants: Variants = {
 
 export function Post(props: PostProps) {
   const {
-    id,
+    id: postId,
     title,
     content,
     media,
     delay,
-    user: { username },
+    userId,
+    user: { username, id: relationUserId, role },
     comments,
   } = props;
 
   const [isCommenting, setIsCommenting] = useState(false);
+  const { mutate } = useDeletePost();
 
   const handleComment = () => setIsCommenting((prev) => !prev);
+  const handleDelete = () => {
+    mutate({ id: postId });
+  };
+  const isAdminOrUser = userId === relationUserId || role === 'ADMIN';
 
   return (
     <motion.article
@@ -63,26 +70,31 @@ export function Post(props: PostProps) {
       )}
 
       <div className={styles.content}>
-        <h2>{title}</h2>
-        <p>{content}</p>
-        <small>{username}</small>
+        <motion.h2 layout>Title: {title}</motion.h2>
+        <motion.p layout>Content: {content}</motion.p>
+        <small>Username: {username}</small>
 
         <Button onClick={handleComment}>
           <Icon name="ChatBubbleIcon" />
         </Button>
 
-        {isCommenting && <FormComment postId={id} />}
+        {isCommenting && <FormComment postId={postId} />}
       </div>
 
-      <Anchor to={`/feed?id=${id}`}>Details</Anchor>
+      <Anchor to={`/feed?id=${postId}`}>Details</Anchor>
 
-      {comments.length !== 0 && (
-        <div>
-          {comments.map((com, idx) => (
-            <p key={idx}>{com.content}</p>
-          ))}
-        </div>
-      )}
+      {isAdminOrUser && <button onClick={handleDelete}>Delete</button>}
+
+      <div>
+        <h3>Comments</h3>
+        {comments.length !== 0 && (
+          <div>
+            {comments.map((com, idx) => (
+              <p key={idx}>{com.content}</p>
+            ))}
+          </div>
+        )}
+      </div>
     </motion.article>
   );
 }

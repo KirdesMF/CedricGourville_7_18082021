@@ -4,7 +4,7 @@ import { Comment, Post, User } from 'p7_types';
 import { TError } from '../types';
 
 type TUsePost = Post & {
-  user: Pick<User, 'username'>;
+  user: Pick<User, 'username' | 'id' | 'role'>;
   comments: Pick<Comment, 'content'>[];
 };
 
@@ -21,6 +21,19 @@ export function useCreatePost() {
     (body) => Fetch.postFormData('post', body),
     {
       onSettled: () => {
+        queryClient.invalidateQueries('post');
+      },
+    }
+  );
+}
+
+export function useDeletePost() {
+  const queryClient = useQueryClient();
+
+  return useMutation<Pick<Post, 'id'>, TError, Pick<Post, 'id'>>(
+    (id) => Fetch.deleted('post', id),
+    {
+      onSuccess: () => {
         queryClient.invalidateQueries('post');
       },
     }

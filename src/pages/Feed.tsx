@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { Role } from 'p7_types';
 import { usePosts } from '../api/post.api';
 import { useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
@@ -43,9 +44,14 @@ export function Feed() {
                 title={post.title}
                 content={post.content}
                 media={post.media}
-                user={post.user}
+                user={{
+                  id: user?.id as string,
+                  role: user?.role as Role,
+                  username: user?.username as string,
+                }}
                 comments={post.comments}
                 delay={idx}
+                userId={user?.id as string}
               />
             ))}
           </motion.div>

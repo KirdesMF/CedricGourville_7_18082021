@@ -49,7 +49,7 @@ export function useLogOutUser() {
   const queryClient = useQueryClient();
   const { push } = useHistory();
 
-  return useMutation(() => Fetch.deleted('user/logout'), {
+  return useMutation((body) => Fetch.deleted('user/logout', body), {
     onSettled: () => {
       queryClient.resetQueries('user');
       push('/');
