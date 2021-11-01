@@ -7,7 +7,7 @@ import { convertHoursToMilliseconds } from '../utils/utils';
 
 export function useUser() {
   return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
-    staleTime: convertHoursToMilliseconds(1), // 1 hour
+    staleTime: convertHoursToMilliseconds(1),
     retry: 0,
   });
 }
@@ -22,6 +22,7 @@ export function useCreateUser() {
 
 export function useCheckNotUsed() {
   const queryClient = useQueryClient();
+
   return useMutation<Record<string, string>, TError, Record<string, string>>(
     (body) => Fetch.post('user/not-used', body),
     {
@@ -34,12 +35,14 @@ export function useCheckNotUsed() {
 
 export function useLogUser() {
   const { push } = useHistory();
+  const queryClient = useQueryClient();
 
   return useMutation<Record<string, string>, TError, Record<string, string>>(
     (body) => Fetch.patch('user/login', body),
     {
       onSuccess: () => {
         push('/feed');
+        queryClient.invalidateQueries('user');
       },
     }
   );
@@ -65,6 +68,21 @@ export function useUpdateUser() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
+      },
+    }
+  );
+}
+
+export function useUnregisterUser() {
+  const { push } = useHistory();
+  const queryClient = useQueryClient();
+
+  return useMutation<Pick<User, 'id'>, TError, Pick<User, 'id'>>(
+    (body) => Fetch.deleted('user/unregister', body),
+    {
+      onSuccess: () => {
+        queryClient.resetQueries('user');
+        push('/');
       },
     }
   );

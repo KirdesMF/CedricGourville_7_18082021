@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLogOutUser, useUser } from '../api/user.api';
+import { useLogOutUser, useUnregisterUser, useUser } from '../api/user.api';
 import { Anchor } from '../components/Anchor/Anchor';
 import { Avatar } from '../components/Avatar/Avatar';
 import { Button } from '../components/Button/Button';
@@ -11,12 +11,14 @@ import { cx } from '../utils/classname.utils';
 
 const notProvided = '❌ Not Provided';
 export function Profil() {
-  const { mutate } = useLogOutUser();
+  const { mutate: logout } = useLogOutUser();
+  const { mutate: unregister } = useUnregisterUser();
   const { data: user } = useUser();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditing = () => setIsEditing((prev) => !prev);
-  const handleLogout = () => mutate();
+  const handleLogout = () => logout();
+  const handleUnregister = () => user && unregister({ id: user?.id });
 
   return (
     <main className={panel['2xl']}>
@@ -41,6 +43,7 @@ export function Profil() {
         <div className={utilities({ display: 'flex', gap: 'md' })}>
           <Button onClick={handleEditing}>Edit profile</Button>
           <Button onClick={handleLogout}>Log out</Button>
+          <Button onClick={handleUnregister}>Unregister</Button>
         </div>
 
         {isEditing && <FormProfile />}
