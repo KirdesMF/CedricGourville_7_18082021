@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { useCreatePost } from '../../api/post.api';
+import { socket } from '../../App';
 import { utilities } from '../../styles/utilities.css';
 import { BasicInput, CustomInput } from '../Input/Input';
-// import { IKUpload } from 'imagekitio-react';
 
 type PostField = {
   title: string;
@@ -35,6 +35,7 @@ export function FormPost() {
 
     mutate(form);
     reset();
+    socket.emit('new-post');
   };
 
   return (

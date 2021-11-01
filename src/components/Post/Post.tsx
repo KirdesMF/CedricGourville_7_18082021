@@ -41,6 +41,7 @@ export function Post(props: PostProps) {
     user: { username },
     comments,
   } = props;
+
   const [isCommenting, setIsCommenting] = useState(false);
 
   const handleComment = () => setIsCommenting((prev) => !prev);
