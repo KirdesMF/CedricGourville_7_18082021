@@ -2,8 +2,14 @@ import { Post, PrismaClient } from '.prisma/client';
 
 const prisma = new PrismaClient();
 
-async function createPost(data: Post) {
-  const post = await prisma.post.create({ data });
+async function createPost(body: Post) {
+  const { userId, ...data } = body;
+  const post = await prisma.post.create({
+    data: {
+      ...data,
+      user: { connect: { id: userId } },
+    },
+  });
   return post;
 }
 

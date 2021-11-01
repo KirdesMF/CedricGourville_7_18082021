@@ -2,6 +2,9 @@ import { NextFunction, Response, Request } from 'express';
 import ImageKit from 'imagekit';
 import { createReadStream, promises } from 'fs';
 
+// TODO
+// use .env file
+
 const imagekit = new ImageKit({
   publicKey: 'public_LACBQ1l5yA/Ko4n7CaM23xA+ikg=',
   privateKey: 'private_FGtYc6CIix1KSlqkT5utseJrS+w=',

@@ -21,6 +21,7 @@ export async function authorization(
     ) as JwtPayload;
 
     req.userId = id;
+    req.body.userId = id;
 
     next();
   } catch (error) {
