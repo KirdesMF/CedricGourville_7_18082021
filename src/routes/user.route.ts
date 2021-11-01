@@ -24,7 +24,7 @@ export function userRouter(app: Application) {
   router.post('/not-used', UserControllers.checkNotUsed);
 
   router.delete('/logout', authorization, UserControllers.logout);
-  router.delete('/unregister', UserControllers.unRegister);
+  router.delete('/unregister', authorization, UserControllers.unRegister);
 
   return app;
 }

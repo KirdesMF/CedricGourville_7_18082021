@@ -74,6 +74,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
     // check password
     const isCorrectPassword = await compare(password, user.password);
+
     if (!isCorrectPassword) {
       throw new ErrorHandler(httpStatus.forbidden, `❌ Wrong Password`);
     }
@@ -128,8 +129,11 @@ async function logout(req: Request, res: Response, next: NextFunction) {
 async function unRegister(req: Request, res: Response, next: NextFunction) {
   const id = req.userId;
   try {
-    const user = await UserServices.deleteUser('id', id);
-    res.status(httpStatus.OK).json(user);
+    await UserServices.deleteUser(id);
+    res
+      .clearCookie('jwt')
+      .status(httpStatus.OK)
+      .json({ message: '👋 user successfully  deleted' });
   } catch (error) {
     next(error);
   }

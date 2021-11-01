@@ -77,11 +77,16 @@ async function updateUser<T extends TUniqueUserField>(
  * @param value
  * @returns
  */
-async function deleteUser<T extends TUniqueUserField>(field: T, value: string) {
-  const user = await prisma.user.delete({
-    where: { [field]: value },
+async function deleteUser(id: string) {
+  const comments = prisma.comment.deleteMany({
+    where: { userId: id },
   });
-  return user;
+  const posts = prisma.post.deleteMany({ where: { userId: id } });
+  const user = prisma.user.delete({
+    where: { id },
+  });
+
+  await prisma.$transaction([comments, posts, user]);
 }
 
 export const UserServices = {
