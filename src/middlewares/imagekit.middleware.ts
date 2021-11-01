@@ -2,13 +2,10 @@ import { NextFunction, Response, Request } from 'express';
 import ImageKit from 'imagekit';
 import { createReadStream, promises } from 'fs';
 
-// TODO
-// use .env file
-
 const imagekit = new ImageKit({
-  publicKey: 'public_LACBQ1l5yA/Ko4n7CaM23xA+ikg=',
-  privateKey: 'private_FGtYc6CIix1KSlqkT5utseJrS+w=',
-  urlEndpoint: 'https://ik.imagekit.io/i3uinwevzvu',
+  publicKey: process.env.IMG_KIT_PUBLIC || 'publickey',
+  privateKey: process.env.IMG_KIT_PRIVATE || 'privatekey',
+  urlEndpoint: process.env.IMG_KIT_ENDPOINT || 'endpoint',
 });
 
 export async function uploadMediaToImageKit(
