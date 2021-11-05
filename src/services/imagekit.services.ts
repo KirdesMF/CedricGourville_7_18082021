@@ -7,7 +7,20 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMG_KIT_ENDPOINT || 'endpoint',
 });
 
-async function upload(file: Express.Multer.File, folder: 'avatar' | 'feed') {
+type Avatar = {
+  avatar: string;
+  avatarId: string;
+};
+
+type Feed = {
+  media: string;
+  mediaId: string;
+};
+
+async function upload<T extends 'avatar' | 'feed'>(
+  file: Express.Multer.File,
+  folder: T
+) {
   const stream = createReadStream(file.path);
   const image = await imagekit.upload({
     file: stream,
@@ -19,10 +32,17 @@ async function upload(file: Express.Multer.File, folder: 'avatar' | 'feed') {
     await promises.unlink(file.path);
   }
 
+  if (folder === 'avatar') {
+    return {
+      avatar: image.url,
+      avatarId: image.fileId,
+    } as unknown as Promise<T extends 'avatar' ? Avatar : Feed>;
+  }
+
   return {
-    avatar: image.url,
-    avatarId: image.fileId,
-  };
+    media: image.url,
+    mediaId: image.fileId,
+  } as unknown as Promise<T extends 'feed' ? Feed : Avatar>;
 }
 
 async function remove(path: string) {

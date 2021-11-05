@@ -1,8 +1,7 @@
 import { Application, Router } from 'express';
 import { PostController } from '../controllers/post.controllers';
 import { authorization } from '../middlewares/auth.middleware';
-import { uploadMediaToImageKit } from '../middlewares/imagekit.middleware';
-import { uploadMedia } from '../middlewares/multer.middleware';
+import { multerMedia } from '../middlewares/multer.middleware';
 
 export function postRouter(app: Application) {
   const router = Router();
@@ -11,13 +10,7 @@ export function postRouter(app: Application) {
 
   router.get('/', authorization, PostController.getAll);
   router.get('/:id', authorization, PostController.getOne);
-  router.post(
-    '/',
-    authorization,
-    uploadMedia,
-    uploadMediaToImageKit,
-    PostController.create
-  );
+  router.post('/', authorization, multerMedia, PostController.create);
 
-  router.delete('/', authorization, PostController.erase);
+  router.delete('/', authorization, PostController.remove);
 }

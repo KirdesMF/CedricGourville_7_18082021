@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
 });
 
-export const uploadMedia = multer({
+export const multerMedia = multer({
   storage,
   limits: { fileSize: 2e6 },
 }).single('media');

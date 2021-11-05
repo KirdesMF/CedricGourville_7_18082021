@@ -2,6 +2,8 @@ import { NextFunction, Response, Request } from 'express';
 import { httpStatus } from '../utils/http-status';
 import { PostServices } from '../services/post.services';
 import { Post } from '.prisma/client';
+import { ImageKitServices } from '../services/imagekit.services';
+import { ErrorHandler } from '../utils/error.utils';
 
 async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
@@ -14,9 +16,8 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
 }
 
 async function getOne(req: Request, res: Response, next: NextFunction) {
+  const id = req.body?.id;
   try {
-    const id = req.body?.id;
-
     const post = await PostServices.getPost(id);
     res.status(200).json(post);
   } catch (error) {
@@ -25,10 +26,26 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
 }
 
 async function create(req: Request, res: Response, next: NextFunction) {
-  try {
-    const body = req.body as Post;
+  const body = req.body as Post;
+  const file = req?.file;
+  const userId = req?.userId;
+  let post: Post;
 
-    const post = await PostServices.createPost({ ...body, userId: req.userId });
+  try {
+    if (!file) {
+      post = await PostServices.createPost({ ...body, userId });
+    } else {
+      const { media, mediaId } = await ImageKitServices.upload(file, 'feed');
+
+      if (!media || !mediaId) {
+        throw new ErrorHandler(
+          httpStatus.serverError,
+          'something went wrong with the post image'
+        );
+      }
+
+      post = await PostServices.createPost({ ...body, media, mediaId, userId });
+    }
 
     res.status(httpStatus.OK).json(post);
   } catch (error) {
@@ -36,13 +53,18 @@ async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function erase(req: Request, res: Response, next: NextFunction) {
+async function remove(req: Request, res: Response, next: NextFunction) {
+  const postId = req.body.id;
   try {
-    await PostServices.deletePost(req.body.id);
+    const mediaId = await PostServices.getMediaId(postId);
+
+    if (mediaId) await ImageKitServices.remove(mediaId);
+    await PostServices.deletePost(postId);
+
     res.status(httpStatus.OK).json({ message: 'Successfully deleted' });
   } catch (error) {
     next(error);
   }
 }
 
-export const PostController = { getAll, getOne, create, erase };
+export const PostController = { getAll, getOne, create, remove };

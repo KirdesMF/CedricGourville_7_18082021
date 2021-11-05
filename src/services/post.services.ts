@@ -52,6 +52,17 @@ async function getAllPosts() {
   return posts;
 }
 
+async function getMediaId(id: string) {
+  const post = await prisma.post.findUnique({
+    where: { id },
+    select: {
+      mediaId: true,
+    },
+  });
+
+  return post && post.mediaId;
+}
+
 async function getPost(id: string) {
   const post = await prisma.post.findUnique({ where: { id } });
   return post;
@@ -63,4 +74,5 @@ export const PostServices = {
   updatePost,
   getAllPosts,
   getPost,
+  getMediaId,
 };
