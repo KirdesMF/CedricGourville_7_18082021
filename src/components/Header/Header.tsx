@@ -21,13 +21,15 @@ const AnchorAvatar = ({ user }: { user: User | undefined }) => {
   }
   return (
     <Anchor to="/profil">
-      <Avatar src={user.avatar as string} alt="avatar" />
+      {user?.avatar ? (
+        <Avatar src={user.avatar as string} alt="avatar" />
+      ) : (
+        <span>{user?.username}</span>
+      )}
     </Anchor>
   );
 };
 
-// TODO
-// handle user logged in case
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useTheme();

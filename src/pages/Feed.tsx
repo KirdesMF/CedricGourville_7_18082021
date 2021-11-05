@@ -45,9 +45,9 @@ export function Feed() {
                 content={post.content}
                 media={post.media}
                 user={{
-                  id: user?.id as string,
+                  id: post?.user.id as string,
                   role: user?.role as Role,
-                  username: user?.username as string,
+                  username: post?.user.username as string,
                 }}
                 comments={post.comments}
                 delay={idx}

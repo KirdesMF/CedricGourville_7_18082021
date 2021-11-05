@@ -6,7 +6,6 @@
   "extends": [
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
-    "standard",
     "plugin:jsx-a11y/recommended"
   ],
   "parser": "@typescript-eslint/parser",

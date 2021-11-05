@@ -6,6 +6,9 @@ import { Fetch } from '../utils/fetcher.utils';
 import { convertHoursToMilliseconds } from '../utils/utils';
 
 export function useUser() {
+  const queryClient = useQueryClient();
+  const { push } = useHistory();
+
   return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
     staleTime: convertHoursToMilliseconds(1),
     retry: 0,
@@ -81,7 +84,7 @@ export function useUnregisterUser() {
     (body) => Fetch.deleted('user/unregister', body),
     {
       onSuccess: () => {
-        queryClient.resetQueries('user');
+        queryClient.invalidateQueries('user');
         push('/');
       },
     }

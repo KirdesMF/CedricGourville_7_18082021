@@ -14,6 +14,8 @@ const queryClient = new QueryClient({
   },
 });
 
+// TODO
+// sockets hooks ? context ?
 export const socket = io('http://localhost:1234', { withCredentials: true });
 
 export default function App() {
