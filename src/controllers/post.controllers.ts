@@ -53,6 +53,47 @@ async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+async function edit(req: Request, res: Response, next: NextFunction) {
+  const { id: postId, body } = req.body;
+  const file = req?.file;
+  let post: Post;
+
+  try {
+    if (!file) post = await PostServices.updatePost(postId, body);
+    else {
+      const currentMediaId = await PostServices.getMediaId(postId);
+      const { media, mediaId } = await ImageKitServices.upload(file, 'feed');
+
+      if (!media) {
+        throw new ErrorHandler(
+          httpStatus.serverError,
+          'Something went wrong with your image pls try again'
+        );
+      }
+
+      if (currentMediaId && mediaId) {
+        await ImageKitServices.remove(currentMediaId);
+      }
+
+      post = await PostServices.updatePost(postId, {
+        ...body,
+        media,
+        mediaId,
+      });
+    }
+
+    if (!post) {
+      throw new ErrorHandler(httpStatus.serverError, 'Post not updated');
+    }
+
+    res
+      .status(httpStatus.OK)
+      .json({ message: `🎉 Successfully updated`, post });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function remove(req: Request, res: Response, next: NextFunction) {
   const postId = req.body.id;
   try {
@@ -67,4 +108,4 @@ async function remove(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export const PostController = { getAll, getOne, create, remove };
+export const PostController = { getAll, getOne, create, remove, edit };

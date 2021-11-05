@@ -9,8 +9,8 @@ export function userRouter(app: Application) {
   app.use('/user', router);
 
   router.get('/', UserControllers.logged);
-  router.patch('/login', UserControllers.login);
-  router.post('/edit', authorization, multerAvatar, UserControllers.edit);
+  router.post('/login', UserControllers.login);
+  router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
 
   router.post('/register', UserControllers.register);
   router.post('/not-used', UserControllers.checkNotUsed);

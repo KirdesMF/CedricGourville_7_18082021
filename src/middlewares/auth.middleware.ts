@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
 import { JwtPayload, verify } from 'jsonwebtoken';
-import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
@@ -23,21 +22,6 @@ export async function authorization(
     req.userId = id;
     req.body.userId = id;
 
-    next();
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function getAvatarId(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  try {
-    const { userId } = req;
-    const user = await UserServices.getAvatarId(userId);
-    if (user) req.avatarId = user;
     next();
   } catch (error) {
     next(error);

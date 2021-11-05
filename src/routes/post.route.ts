@@ -11,6 +11,6 @@ export function postRouter(app: Application) {
   router.get('/', authorization, PostController.getAll);
   router.get('/:id', authorization, PostController.getOne);
   router.post('/', authorization, multerMedia, PostController.create);
-
+  router.patch('/', authorization, multerMedia, PostController.edit);
   router.delete('/', authorization, PostController.remove);
 }
