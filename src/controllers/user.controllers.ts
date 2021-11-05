@@ -3,6 +3,7 @@ import { compare } from 'bcrypt';
 import { NextFunction, Response, Request } from 'express';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { config } from '../config/config';
+import { ImageKitServices } from '../services/imagekit.services';
 import { UserServices } from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
@@ -38,18 +39,18 @@ async function register(req: Request, res: Response, next: NextFunction) {
 
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, log } = req.body as Record<string, string>;
-  const input = log.includes('@') ? 'email' : 'username';
-  const message = `We did not find this ${input}`;
+  const field = log.includes('@') ? 'email' : 'username';
+  const message = `We did not find this ${field}`;
   const lastConnection = new Date();
 
   try {
-    const user = await UserServices.getUser(input, log);
+    const user = await UserServices.getUser(field, log);
 
     if (!user) {
       throw new ErrorHandler(httpStatus.forbidden, `❌ ${message}`);
     }
 
-    await UserServices.updateUser(input, user[input], {
+    await UserServices.updateUser(field, user[field], {
       lastConnection,
     });
 
@@ -76,8 +77,40 @@ async function login(req: Request, res: Response, next: NextFunction) {
 async function edit(req: Request, res: Response, next: NextFunction) {
   const userId = req?.userId;
   const body = req.body as User;
+  const file = req?.file;
+  let user: User;
+
   try {
-    const user = await UserServices.updateUser('id', userId, body);
+    if (!file) user = await UserServices.updateUser('id', userId, body);
+    else {
+      const currentAvatarId = await UserServices.getAvatarId(userId);
+      const { avatar, avatarId } = await ImageKitServices.upload(
+        file,
+        'avatar'
+      );
+
+      if (!avatar) {
+        throw new ErrorHandler(
+          httpStatus.serverError,
+          'Something went wrong with your image pls try again'
+        );
+      }
+
+      if (currentAvatarId && avatarId) {
+        await ImageKitServices.remove(currentAvatarId);
+      }
+
+      user = await UserServices.updateUser('id', userId, {
+        ...body,
+        avatar,
+        avatarId,
+      });
+    }
+
+    if (!user) {
+      throw new ErrorHandler(httpStatus.serverError, 'User not updated');
+    }
+
     res
       .status(httpStatus.OK)
       .json({ message: `🎉 Successfully updated`, user });
@@ -108,9 +141,12 @@ async function logout(req: Request, res: Response, next: NextFunction) {
  * @param next
  */
 async function unRegister(req: Request, res: Response, next: NextFunction) {
-  const id = req.userId;
+  const { userId } = req;
   try {
-    await UserServices.deleteUser(id);
+    const avatarId = await UserServices.getAvatarId(userId);
+    if (avatarId) await ImageKitServices.remove(avatarId);
+    await UserServices.deleteUser(userId);
+
     res
       .clearCookie('jwt')
       .status(httpStatus.OK)

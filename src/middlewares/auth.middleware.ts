@@ -37,7 +37,7 @@ export async function getAvatarId(
   try {
     const { userId } = req;
     const user = await UserServices.getAvatarId(userId);
-    if (user) req.avatarId = user.avatarId;
+    if (user) req.avatarId = user;
     next();
   } catch (error) {
     next(error);
