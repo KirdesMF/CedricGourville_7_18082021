@@ -1,4 +1,3 @@
-// TODO improve TS for unused var
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { httpStatus } from '../utils/http-status';

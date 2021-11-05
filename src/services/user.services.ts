@@ -31,7 +31,7 @@ async function createUser(data: User) {
  * @returns User as promise
  */
 async function getUser<T extends TUniqueUserField>(field: T, value: string) {
-  const user = prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { [field]: value },
   });
 
@@ -39,7 +39,7 @@ async function getUser<T extends TUniqueUserField>(field: T, value: string) {
 }
 
 async function getAvatarId(id: string) {
-  const avatarId = prisma.user.findUnique({
+  const avatarId = await prisma.user.findUnique({
     where: { id },
     select: {
       avatarId: true,

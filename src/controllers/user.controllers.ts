@@ -36,41 +36,22 @@ async function register(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-/**
- *
- * @param req
- * @param res
- * @param next
- */
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, log } = req.body as Record<string, string>;
+  const input = log.includes('@') ? 'email' : 'username';
+  const message = `We did not find this ${input}`;
   const lastConnection = new Date();
 
-  let user: User | null;
-  let errorMessage: string;
-
   try {
-    // if email input
-    if (log.includes('@')) {
-      user = await UserServices.getUser('email', log);
-      errorMessage = 'We did not find this user email';
+    const user = await UserServices.getUser(input, log);
 
-      if (!user) {
-        throw new ErrorHandler(httpStatus.forbidden, `❌ ${errorMessage}`);
-      }
-      await UserServices.updateUser('email', user.email, { lastConnection });
-    } else {
-      // if username input
-      user = await UserServices.getUser('username', log);
-      errorMessage = 'We did not find this username';
-
-      if (!user) {
-        throw new ErrorHandler(httpStatus.forbidden, `❌ ${errorMessage}`);
-      }
-      await UserServices.updateUser('username', user.username, {
-        lastConnection,
-      });
+    if (!user) {
+      throw new ErrorHandler(httpStatus.forbidden, `❌ ${message}`);
     }
+
+    await UserServices.updateUser(input, user[input], {
+      lastConnection,
+    });
 
     // check password
     const isCorrectPassword = await compare(password, user.password);
@@ -139,9 +120,11 @@ async function unRegister(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+// TODO
+// clean this function
 async function checkNotUsed(req: Request, res: Response, next: NextFunction) {
-  const email = req.body?.email;
-  const username = req.body?.username;
+  const email = req.body?.email as string;
+  const username = req.body?.username as string;
 
   try {
     if (email) {
