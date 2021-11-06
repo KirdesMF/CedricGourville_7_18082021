@@ -4,8 +4,8 @@ import { CommentServices } from '../services/comment.services';
 import { httpStatus } from '../utils/http-status';
 
 async function create(req: Request, res: Response, next: NextFunction) {
+  const data = req.body as Comment;
   try {
-    const data = req.body as Comment;
     const comments = await CommentServices.createComment(data);
 
     res.status(httpStatus.OK).json(comments);

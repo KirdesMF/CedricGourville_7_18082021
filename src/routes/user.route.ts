@@ -2,6 +2,7 @@ import { Application, Router } from 'express';
 import { UserControllers } from '../controllers/user.controllers';
 import { authorization } from '../middlewares/auth.middleware';
 import { multerAvatar } from '../middlewares/multer.middleware';
+import { validationRegister } from '../middlewares/validation.middlewares';
 
 export function userRouter(app: Application) {
   const router = Router();
@@ -12,7 +13,7 @@ export function userRouter(app: Application) {
   router.post('/login', UserControllers.login);
   router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
 
-  router.post('/register', UserControllers.register);
+  router.post('/register', validationRegister, UserControllers.register);
   router.post('/not-used', UserControllers.checkNotUsed);
 
   router.delete('/logout', authorization, UserControllers.logout);
