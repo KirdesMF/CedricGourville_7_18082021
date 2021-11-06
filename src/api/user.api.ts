@@ -6,20 +6,22 @@ import { Fetch } from '../utils/fetcher.utils';
 import { convertHoursToMilliseconds } from '../utils/utils';
 
 export function useUser() {
-  const queryClient = useQueryClient();
-  const { push } = useHistory();
-
   return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
     staleTime: convertHoursToMilliseconds(1),
     retry: 0,
   });
 }
 
-// TODO
-// improve typing
 export function useCreateUser() {
-  return useMutation<User, TError, Partial<User>>((body) =>
-    Fetch.post('user/register', body)
+  const queryClient = useQueryClient();
+
+  return useMutation<User, TError, Partial<User>>(
+    (body) => Fetch.post('user/register', body),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+      },
+    }
   );
 }
 
@@ -41,7 +43,7 @@ export function useLogUser() {
   const queryClient = useQueryClient();
 
   return useMutation<Record<string, string>, TError, Record<string, string>>(
-    (body) => Fetch.patch('user/login', body),
+    (body) => Fetch.post('user/login', body),
     {
       onSuccess: () => {
         push('/feed');
@@ -55,7 +57,7 @@ export function useLogOutUser() {
   const queryClient = useQueryClient();
   const { push } = useHistory();
 
-  return useMutation((body) => Fetch.deleted('user/logout', body), {
+  return useMutation((body) => Fetch.remove('user/logout', body), {
     onSettled: () => {
       queryClient.resetQueries('user');
       push('/');
@@ -67,7 +69,7 @@ export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   return useMutation<FormData, TError, FormData>(
-    (body) => Fetch.postFormData('user/edit', body),
+    (body) => Fetch.patchFormData('user/edit', body),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
@@ -81,10 +83,10 @@ export function useUnregisterUser() {
   const queryClient = useQueryClient();
 
   return useMutation<Pick<User, 'id'>, TError, Pick<User, 'id'>>(
-    (body) => Fetch.deleted('user/unregister', body),
+    (body) => Fetch.remove('user/unregister', body),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('user');
+        queryClient.resetQueries('user');
         push('/');
       },
     }

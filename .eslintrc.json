@@ -33,7 +33,14 @@
         "controlComponents": ["Input"]
       }
     ],
-    "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "_" }]
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
   },
   "globals": {
     "JSX": true

@@ -31,7 +31,7 @@ export function useDeletePost() {
   const queryClient = useQueryClient();
 
   return useMutation<Pick<Post, 'id'>, TError, Pick<Post, 'id'>>(
-    (id) => Fetch.deleted('post', id),
+    (id) => Fetch.remove('post', id),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');

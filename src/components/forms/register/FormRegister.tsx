@@ -43,7 +43,7 @@ const variants: Variants = {
 };
 
 export function FormRegister() {
-  const { mutate } = useCreateUser();
+  const { mutate, isSuccess } = useCreateUser();
   const [step, setStep] = useState<number>(1);
   const {
     handleSubmit,
@@ -59,6 +59,7 @@ export function FormRegister() {
     const { confirmPassword: _, ...user } = data;
     mutate(user);
     setStep((step) => step + 1);
+    console.log(isSuccess);
   };
 
   const common = { setStep, register, errors, trigger };
