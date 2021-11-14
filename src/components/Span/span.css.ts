@@ -27,9 +27,8 @@ export const span = recipe({
       inherit: { color: 'inherit' },
     },
     size: {
-      xs: utilities({ fontSize: 2 }),
-      sm: utilities({ fontSize: 4 }),
-      lg: utilities({ fontSize: 5 }),
+      sm: utilities({ fontSize: 'sm' }),
+      lg: utilities({ fontSize: 'lg' }),
       inherit: { fontSize: 'inherit' },
     },
   },

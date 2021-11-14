@@ -1,26 +1,24 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { utilities } from './utilities.css';
 import { vars } from './vars.css';
 
-export const activeClassName = style([
-  utilities({ color: 'warning', position: 'relative' }),
-  {
-    textDecoration: 'line-through',
-    textDecorationColor: vars.colors['brand-primary'],
-    '::before': {
-      content: '',
-      position: 'absolute',
-      left: '-15px',
-      top: '50%',
-      height: '10px',
-      width: '10px',
-      background: vars.colors.success,
-      transform: 'translateY(-50%)',
-      borderRadius: vars.radius.full,
-    },
+export const activeClassName = style({
+  textDecoration: 'line-through',
+  textDecorationColor: vars.colors.primary9,
+  color: vars.colors.warning,
+  position: 'relative',
+  '::before': {
+    content: '',
+    position: 'absolute',
+    left: '-15px',
+    top: '50%',
+    height: '10px',
+    width: '10px',
+    background: vars.colors.success,
+    transform: 'translateY(-50%)',
+    borderRadius: vars.radius.full,
   },
-]);
+});
 
 export const container = recipe({
   base: {

@@ -42,11 +42,9 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={grid({ template: 'full' })}>
-        <Header />
-        <Routes />
-      </div>
-      <ReactQueryDevtools />
+      <Header />
+      <Routes />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

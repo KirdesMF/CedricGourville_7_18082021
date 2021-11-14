@@ -1,6 +1,8 @@
 import { createGlobalTheme, globalFontFace } from '@vanilla-extract/css';
-// TODO
-// add fluid font size
+
+/**
+ * @link https://fluid-typography.netlify.app/
+ */
 
 globalFontFace('Lexend Deca', {
   src: 'url(/fonts/LexendDeca-VariableFont_wght.ttf)',
@@ -13,16 +15,10 @@ export const fontsVars = createGlobalTheme(':root', {
       global: 'Lexend Deca',
     },
     sizes: {
-      1: '0.625rem',
-      2: '0.75rem',
-      3: '0.875rem',
-      4: '1rem',
-      5: '1.125rem',
-      6: '1.25rem',
-      7: '1.5rem',
-      8: '1.75rem',
-      9: '2rem',
-      10: '2.625rem',
+      sm: 'clamp(0.5rem, 2.1vw - 0.3rem, 1rem)',
+      md: 'clamp(1rem, 1vw + 0.6rem, 1.25rem)',
+      lg: 'clamp(1.375rem, 1.6vw + 0.8rem, 1.75rem)',
+      xl: 'clamp(2.5rem, 2.1vw + 1.7rem, 3rem)',
     },
     variations: {
       100: `'wght' 100`,

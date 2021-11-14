@@ -33,7 +33,7 @@ export const input = style([
   utilities({
     background: 'ui-base',
     color: 'on-base-high-contrast',
-    fontSize: 3,
+    fontSize: 'sm',
   }),
 ]);
 

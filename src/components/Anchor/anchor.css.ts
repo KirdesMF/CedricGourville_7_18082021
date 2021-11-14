@@ -12,11 +12,11 @@ export const baseAnchor = style({
   textUnderlineOffset: vars.spaces.xs,
   appearance: 'none',
 
-  selectors: {
-    [`&:hover:not(${activeClassName})`]: {
-      textDecorationLine: 'underline',
-    },
-  },
+  // selectors: {
+  //   [`&:hover:not(${activeClassName})`]: {
+  //     textDecorationLine: 'underline',
+  //   },
+  // },
 });
 
 export const anchor = recipe({
@@ -43,9 +43,10 @@ export const anchor = recipe({
       }),
     },
     size: {
-      sm: utilities({ fontSize: 4 }),
-      lg: utilities({ fontSize: 5 }),
-      '2xl': utilities({ fontSize: 10 }),
+      sm: utilities({ fontSize: 'sm' }),
+      md: utilities({ fontSize: 'md' }),
+      lg: utilities({ fontSize: 'lg' }),
+      '2xl': utilities({ fontSize: 'xl' }),
       inherit: { fontSize: 'inherit' },
     },
     gap: {
@@ -53,15 +54,27 @@ export const anchor = recipe({
     },
     weight: {
       thin: { fontVariationSettings: vars.fonts.variations[200] },
+      'semi-bold': { fontVariationSettings: vars.fonts.variations[700] },
       bold: { fontVariationSettings: vars.fonts.variations[850] },
     },
     transform: {
       uppercase: { textTransform: 'uppercase' },
     },
+    btn: {
+      true: [
+        utilities({
+          background: { default: 'primary2', '@hover': 'primary3' },
+        }),
+        {
+          padding: '0.5rem 1rem',
+          border: `0.5px solid ${vars.colors.base4}`,
+        },
+      ],
+    },
   },
   defaultVariants: {
     color: 'base',
-    size: 'inherit',
+    size: 'md',
     weight: 'thin',
   },
 });

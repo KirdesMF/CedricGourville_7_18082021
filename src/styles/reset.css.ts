@@ -39,7 +39,7 @@ globalStyle('html:focus-within', {
 globalStyle('body', {
   textRendering: 'optimizeSpeed',
   lineHeight: vars['line-heights'].reset,
-  background: vars.colors['bg-base'],
+  background: vars.colors.base1,
   fontFamily: vars.fonts.family.global,
   overflowX: 'hidden',
 });
@@ -63,6 +63,8 @@ globalStyle('input, button, textarea, select', {
   font: 'inherit',
 });
 
-globalStyle('html, body, #root', {
-  height: '100%',
+globalStyle('#root', {
+  minHeight: '100vh',
+  display: 'grid',
+  gridTemplateRows: 'min-content auto',
 });

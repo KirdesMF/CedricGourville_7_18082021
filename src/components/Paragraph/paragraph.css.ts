@@ -5,7 +5,6 @@ import { vars } from '../../styles/vars.css';
 export const base = style({
   fontVariationSettings: vars.fonts.variations[200],
   color: vars.colors['on-base-high-contrast'],
-  paddingBlockEnd: vars.spaces.md,
   width: 'min(100%, 45ch)',
 });
 
@@ -13,9 +12,8 @@ export const paragraph = recipe({
   base: base,
   variants: {
     size: {
-      xs: { fontSize: vars.fonts.sizes[3] },
-      sm: { fontSize: vars.fonts.sizes[4] },
-      md: { fontSize: vars.fonts.sizes[5] },
+      sm: { fontSize: vars.fonts.sizes.sm },
+      md: { fontSize: vars.fonts.sizes.md },
     },
   },
   defaultVariants: { size: 'md' },

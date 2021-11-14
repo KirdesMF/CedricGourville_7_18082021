@@ -3,11 +3,11 @@ import { Feed } from '../pages/Feed';
 import { Login } from '../pages/Login';
 import { Profil } from '../pages/Profil';
 import { Register } from '../pages/Register';
-import { Home } from '../pages/Home';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
 import { PublicRoute } from './PublicRoute';
 import { AdminRoute } from './AdminRoute';
+import { Home } from '../pages/home/Home';
 
 export function Routes() {
   return (

@@ -30,7 +30,7 @@ export function FormLogIn() {
         utilities({
           display: 'grid',
           gap: 'md',
-          maxWidth: '50ch',
+          maxWidth: 'lg',
           paddingBlock: 'sm',
         }),
       ])}

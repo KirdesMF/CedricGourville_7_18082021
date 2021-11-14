@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useCreatePost } from '../../api/post.api';
 import { socket } from '../../App';
 import { utilities } from '../../styles/utilities.css';
+import { convertMegaBytesToBytes } from '../../utils/utils';
 import { BasicInput, CustomInput } from '../Input/Input';
 
 type PostField = {
@@ -9,6 +10,8 @@ type PostField = {
   content: string;
   media: FileList;
 };
+
+const MAX_FILE_SIZE = convertMegaBytesToBytes(2.5);
 
 export function FormPost() {
   const { mutate } = useCreatePost();
@@ -69,6 +72,29 @@ export function FormPost() {
         errors={errors}
         label="file pic"
         placeholder="Add a pic"
+        options={{
+          required: false,
+          // validate: {
+          //   size: (value) => {
+          //     if (typeof value === 'object') {
+          //       return (
+          //         (value[0] && value[0]?.size < MAX_FILE_SIZE) ||
+          //         'Max file size 2.5 Mo pls'
+          //       );
+          //     }
+          //     return true;
+          //   },
+          //   format: (value) => {
+          //     if (typeof value === 'object') {
+          //       return (
+          //         value[0]?.name.match(/.(jpg|png)$/gi) ||
+          //         'only jpg and png allowed'
+          //       );
+          //     }
+          //     return true;
+          //   },
+          // },
+        }}
       />
 
       <BasicInput value="Send" type="submit" />
