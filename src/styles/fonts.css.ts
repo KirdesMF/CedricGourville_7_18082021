@@ -15,6 +15,7 @@ export const fontsVars = createGlobalTheme(':root', {
       global: 'Lexend Deca',
     },
     sizes: {
+      xs: 'clamp(0.5rem, 1.4vw + 0rem, 0.825rem)',
       sm: 'clamp(0.5rem, 2.1vw - 0.3rem, 1rem)',
       md: 'clamp(1rem, 1vw + 0.6rem, 1.25rem)',
       lg: 'clamp(1.375rem, 1.6vw + 0.8rem, 1.75rem)',

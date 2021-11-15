@@ -87,11 +87,6 @@ export const colorsVars = createGlobalTheme(':root', {
     'border-secondary-focus': baseColorVars.colors.red8,
     'outline-secondary': baseColorVars.colors.red8,
 
-    error: baseColorVars.colors.red9,
-    success: baseColorVars.colors.green9,
-    warning: baseColorVars.colors.red9,
-    info: baseColorVars.colors.indigo9,
-
     base1: baseColorVars.colors.slate1,
     base2: baseColorVars.colors.slate2,
     base3: baseColorVars.colors.slate3,
@@ -136,5 +131,11 @@ export const colorsVars = createGlobalTheme(':root', {
     secondary12: baseColorVars.colors.red12,
     'on-secondary-low-contrast': baseColorVars.colors.red11,
     'on-secondary-high-contrast': baseColorVars.colors.red12,
+
+    error: baseColorVars.colors.red9,
+    success: baseColorVars.colors.green9,
+    warning: baseColorVars.colors.red9,
+    info: baseColorVars.colors.indigo9,
+    shadow: 'hsl(200, 20%, 10%, 0.6)',
   },
 });

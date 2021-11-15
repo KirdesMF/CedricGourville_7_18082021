@@ -1,6 +1,5 @@
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-import { activeClassName } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
@@ -11,12 +10,6 @@ export const baseAnchor = style({
   whiteSpace: 'nowrap',
   textUnderlineOffset: vars.spaces.xs,
   appearance: 'none',
-
-  // selectors: {
-  //   [`&:hover:not(${activeClassName})`]: {
-  //     textDecorationLine: 'underline',
-  //   },
-  // },
 });
 
 export const anchor = recipe({
@@ -24,15 +17,13 @@ export const anchor = recipe({
   variants: {
     color: {
       base: utilities({
-        color: {
-          default: 'on-base-low-contrast',
-          '@hover': 'on-base-high-contrast',
-        },
+        color: 'on-base-high-contrast',
       }),
       primary: utilities({
-        color: {
-          default: 'on-primary-low-contrast',
-          '@hover': 'on-primary-high-contrast',
+        color: 'on-primary-high-contrast',
+        background: {
+          default: 'primary7',
+          '@hover': 'primary8',
         },
       }),
       secondary: utilities({
@@ -61,15 +52,11 @@ export const anchor = recipe({
       uppercase: { textTransform: 'uppercase' },
     },
     btn: {
-      true: [
-        utilities({
-          background: { default: 'primary2', '@hover': 'primary3' },
-        }),
-        {
-          padding: '0.5rem 1rem',
-          border: `0.5px solid ${vars.colors.base4}`,
-        },
-      ],
+      true: {
+        padding: '0.5rem 1rem',
+        filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,
+        justifyContent: 'space-between',
+      },
     },
   },
   defaultVariants: {

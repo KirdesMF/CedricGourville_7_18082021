@@ -66,5 +66,5 @@ globalStyle('input, button, textarea, select', {
 globalStyle('#root', {
   minHeight: '100vh',
   display: 'grid',
-  gridTemplateRows: 'min-content auto',
+  gridTemplateRows: 'min-content auto min-content',
 });

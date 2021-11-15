@@ -1,5 +1,6 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
+import { vars } from '../../styles/vars.css';
 import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { baseAnchor } from '../Anchor/anchor.css';
 
@@ -30,6 +31,14 @@ export const span = recipe({
       sm: utilities({ fontSize: 'sm' }),
       lg: utilities({ fontSize: 'lg' }),
       inherit: { fontSize: 'inherit' },
+    },
+    gradient: {
+      true: {
+        background: `linear-gradient(to right, ${vars.colors.primary9}, ${vars.colors.secondary9})`,
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      },
     },
   },
   defaultVariants: {

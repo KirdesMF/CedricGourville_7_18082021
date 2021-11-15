@@ -7,7 +7,7 @@ export const header = style({
   top: 0,
   paddingBlock: vars.spaces.lg,
   paddingInline: vars.spaces.md,
-  borderBottom: `1px solid ${vars.colors['border-base']}`,
+  borderBottom: `1px dashed ${vars.colors['border-base']}`,
   backdropFilter: 'blur(5px)',
 });
 
