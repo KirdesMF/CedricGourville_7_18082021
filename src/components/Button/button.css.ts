@@ -6,16 +6,35 @@ import { vars } from '../../styles/vars.css';
 const base = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   border: 'none',
   borderRadius: vars.radius.xs,
   appearance: 'none',
+  width: 'min(100%, 12ch)',
 });
 
 export const button = recipe({
   base,
   variants: {
     uppercase: { true: { textTransform: 'uppercase' } },
+    fontSize: {
+      xs: utilities({ fontSize: 'xs' }),
+      sm: utilities({ fontSize: 'sm' }),
+      md: utilities({ fontSize: 'md' }),
+      lg: utilities({ fontSize: 'lg' }),
+      xl: utilities({ fontSize: 'xl' }),
+      inherit: { fontSize: 'inherit' },
+    },
+    weight: {
+      thin: { fontVariationSettings: vars.fonts.variations[200] },
+      'semi-bold': { fontVariationSettings: vars.fonts.variations[700] },
+      bold: { fontVariationSettings: vars.fonts.variations[850] },
+    },
+    shadow: {
+      true: {
+        filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,
+      },
+    },
     ghost: {
       true: [
         utilities({
@@ -31,10 +50,7 @@ export const button = recipe({
         utilities({
           background: { default: 'base3', '@hover': 'base4' },
           color: 'on-base-high-contrast',
-          paddingInline: 'md',
-          paddingBlock: 'sm',
         }),
-        { boxShadow: `0 0 0 0.5px ${vars.colors['on-primary-high-contrast']}` },
       ],
     },
     primary: {
@@ -42,6 +58,8 @@ export const button = recipe({
         utilities({
           background: { default: 'primary5', '@hover': 'primary7' },
           color: 'on-primary-high-contrast',
+          paddingInline: 'md',
+          paddingBlock: 'sm',
         }),
       ],
     },
@@ -49,6 +67,7 @@ export const button = recipe({
       true: [
         utilities({
           background: { default: 'secondary5', '@hover': 'secondary7' },
+          color: 'on-secondary-high-contrast',
         }),
       ],
     },

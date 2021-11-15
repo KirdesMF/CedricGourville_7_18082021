@@ -1,32 +1,29 @@
 import { Anchor } from '../../components/Anchor/Anchor';
-import { FormLogIn } from '../../components/forms/FormLogin';
+import { FormRegister } from '../../components/forms/register/FormRegister';
 import { Guides } from '../../components/Guides/Guides';
 import { Heading } from '../../components/Heading/Heading';
 import { Illustration } from '../../components/Illustration/Illustration';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { Span } from '../../components/Span/Span';
-import * as styles from './login.css';
+import * as styles from './register.css';
 
-// handle error message
-export function Login() {
+export function Register() {
   return (
     <main className={styles.main}>
       <Guides />
       <div className={styles.inner}>
         <section className={styles.section}>
           <Heading>
-            Connect to your <Span variant={{ gradient: true }}>profile</Span>
+            Create a new user{' '}
+            <Span variant={{ color: 'secondary' }}>account</Span>
           </Heading>
 
-          <FormLogIn />
+          <FormRegister />
 
           <Paragraph variant={{ size: 'sm' }}>
-            First time here ?{' '}
-            <Anchor
-              variant={{ fontSize: 'xs', color: 'primary' }}
-              to="/register"
-            >
-              Create your account
+            Already an account ?{' '}
+            <Anchor variant={{ fontSize: 'xs', color: 'primary' }} to="/login">
+              Log here
             </Anchor>
           </Paragraph>
         </section>

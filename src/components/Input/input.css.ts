@@ -4,20 +4,19 @@ import { vars } from '../../styles/vars.css';
 
 export const input = style([
   utilities({
-    background: 'ui-base',
+    background: 'primary3',
     color: 'on-base-high-contrast',
     fontSize: 'sm',
     paddingInline: 'md',
     paddingBlock: 'sm',
-    borderRadius: 'sm',
   }),
   {
-    background: 'none',
     border: 'none',
     appearance: 'none',
+
+    borderBottom: `1px solid ${vars.colors['on-base-high-contrast']}`,
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
     width: `min(100%, ${vars.sizes.lg} / 2)`,
-    boxShadow: `0 0 0 0.5px ${vars.colors['on-base-high-contrast']}`,
 
     ':focus': {
       outline: 'none',

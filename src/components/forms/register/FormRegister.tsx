@@ -75,37 +75,31 @@ export function FormRegister() {
   const currentStep = STEPS[step as keyof typeof STEPS];
 
   return (
-    <>
-      <form
-        className={cx([
-          grid({ template: 'sameArea' }),
-          utilities({ overflow: 'hidden' }),
-        ])}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      >
-        <AnimatePresence>
-          <motion.div
-            key={step}
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ ease: 'easeIn' }}
-            className={utilities({
-              gridArea: 'area',
-              display: 'grid',
-              gap: 'md',
-              paddingBlock: 'sm',
-            })}
-          >
-            {currentStep}
-          </motion.div>
-        </AnimatePresence>
-      </form>
-
-      <small className={utilities({ color: 'info' })}>
-        {step} of {Object.keys(STEPS).length}
-      </small>
-    </>
+    <form
+      className={cx([
+        grid({ template: 'sameArea' }),
+        utilities({ overflow: 'hidden' }),
+      ])}
+      onSubmit={handleSubmit(handleOnSubmit)}
+    >
+      <AnimatePresence>
+        <motion.div
+          key={step}
+          variants={variants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ ease: 'easeIn' }}
+          className={utilities({
+            gridArea: 'area',
+            display: 'grid',
+            gap: 'md',
+            paddingBlock: 'sm',
+          })}
+        >
+          {currentStep}
+        </motion.div>
+      </AnimatePresence>
+    </form>
   );
 }

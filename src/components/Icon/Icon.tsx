@@ -8,6 +8,7 @@ import {
   ChatBubbleIcon,
   GitHubLogoIcon,
   ChevronRightIcon,
+  Pencil1Icon,
 } from '@radix-ui/react-icons';
 
 const Groupomania = ({ className }: { className: string }) => {
@@ -34,6 +35,7 @@ const icons = {
   Groupomania,
   GitHubLogoIcon,
   ChevronRightIcon,
+  Pencil1Icon,
 };
 
 type IconProps = {

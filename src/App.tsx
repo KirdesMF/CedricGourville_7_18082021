@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { Footer } from './components/Footer/Footer';
+import { Doodle } from './components/Doodle/Doodle';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,6 +44,7 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Doodle />
       <Header />
       <Routes />
       <Footer />

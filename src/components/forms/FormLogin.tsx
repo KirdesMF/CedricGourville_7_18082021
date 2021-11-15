@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useLogUser } from '../../api/user.api';
-import { BasicInput, CustomInput } from '../../components/Input/Input';
+import { CustomInput } from '../../components/Input/Input';
 import { utilities } from '../../styles/utilities.css';
 import { cx } from '../../utils/classname.utils';
 import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
 
 type LoginFields = {
@@ -42,7 +43,7 @@ export function FormLogIn() {
         id="log"
         type="text"
         name="log"
-        placeholder="Enter your email or username"
+        placeholder="Email or username"
         label="Email"
         errors={errors}
         register={register}
@@ -55,7 +56,7 @@ export function FormLogIn() {
         name="password"
         id="password"
         type="password"
-        placeholder="Enter your password"
+        placeholder="Password"
         autoComplete="username"
         label="Password"
         register={register}
@@ -65,8 +66,17 @@ export function FormLogIn() {
         }}
       />
 
-      <Button type="submit" variant={{ base: true, uppercase: true }}>
+      <Button
+        type="submit"
+        variant={{
+          primary: true,
+          fontSize: 'xs',
+          weight: 'thin',
+          shadow: true,
+        }}
+      >
         Log in
+        <Icon name="Pencil1Icon" />
       </Button>
     </form>
   );

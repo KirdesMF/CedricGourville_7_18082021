@@ -1,13 +1,13 @@
 import { Route, Switch } from 'react-router-dom';
 import { Feed } from '../pages/Feed';
 import { Profil } from '../pages/Profil';
-import { Register } from '../pages/Register';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
 import { PublicRoute } from './PublicRoute';
 import { AdminRoute } from './AdminRoute';
 import { Home } from '../pages/home/Home';
 import { Login } from '../pages/login/Login';
+import { Register } from '../pages/register/Register';
 
 export function Routes() {
   return (
