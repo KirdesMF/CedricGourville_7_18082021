@@ -19,5 +19,5 @@ export const inner = style({
 
 export const section = style({
   display: 'grid',
-  gap: vars.spaces.lg,
+  gap: vars.spaces.md,
 });

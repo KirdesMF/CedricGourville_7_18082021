@@ -8,6 +8,7 @@ const base = style({
   alignItems: 'center',
   border: 'none',
   padding: vars.spaces.sm,
+  borderRadius: vars.radius.sm,
   appearance: 'none',
   ':hover': {
     boxShadow: `inset 0 0 0 1.5px ${vars.colors['border-primary-hover']}`,
@@ -15,14 +16,33 @@ const base = style({
 });
 
 export const button = recipe({
-  base: [
-    base,
-    utilities({
-      color: 'on-base-high-contrast',
-      borderRadius: 'sm',
-      background: { default: 'bg-base', '@hover': 'ui-base-hover' },
-    }),
-  ],
+  base,
+  variants: {
+    base: {
+      true: [
+        utilities({
+          background: { default: 'base1', '@hover': 'base4' },
+        }),
+      ],
+    },
+    primary: {
+      true: [
+        utilities({
+          background: { default: 'primary9', '@hover': 'primary10' },
+        }),
+      ],
+    },
+    secondary: {
+      true: [
+        utilities({
+          background: { default: 'secondary9', '@hover': 'secondary10' },
+        }),
+      ],
+    },
+  },
+  defaultVariants: {
+    base: true,
+  },
 });
 
 export type ButtonVariants = RecipeVariants<typeof button>;

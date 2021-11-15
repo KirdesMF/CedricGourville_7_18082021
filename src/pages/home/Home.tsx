@@ -5,6 +5,7 @@ import { Icon } from '../../components/Icon/Icon';
 import { Illustration } from '../../components/Illustration/Illustration';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { Span } from '../../components/Span/Span';
+import { utilities } from '../../styles/utilities.css';
 import * as styles from './home.css';
 
 export function Home() {
@@ -31,7 +32,12 @@ export function Home() {
 
           <nav className={styles.nav}>
             <Anchor
-              variant={{ color: 'primary', btn: true, size: 'sm' }}
+              variant={{
+                color: 'primary',
+                btn: 'primary',
+                fontSize: 'sm',
+                'space-between': true,
+              }}
               to="/login"
             >
               <span>Login</span>
@@ -39,7 +45,12 @@ export function Home() {
             </Anchor>
 
             <Anchor
-              variant={{ color: 'base', btn: true, size: 'sm' }}
+              variant={{
+                color: 'base',
+                btn: 'base',
+                fontSize: 'sm',
+                'space-between': true,
+              }}
               to="/register"
             >
               <span>Register</span>

@@ -56,10 +56,9 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
               key={element.href}
               to={element.href}
               variant={{
-                size: '2xl',
+                fontSize: 'xl',
                 color: 'primary',
                 weight: 'bold',
-                transform: 'uppercase',
               }}
               onClick={() => handleMenu(false)}
             >

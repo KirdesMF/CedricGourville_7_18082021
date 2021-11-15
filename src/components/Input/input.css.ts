@@ -4,7 +4,7 @@ import { vars } from '../../styles/vars.css';
 
 export const input = style([
   {
-    border: `1px solid ${vars.colors['on-base-high-contrast']}`,
+    border: `0.2px solid ${vars.colors['on-base-high-contrast']}`,
     background: 'none',
     paddingInline: vars.spaces.md,
     paddingBlock: vars.spaces.sm,

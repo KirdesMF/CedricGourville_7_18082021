@@ -12,56 +12,59 @@ export const baseAnchor = style({
   appearance: 'none',
 });
 
+const btn = style({
+  filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,
+  padding: `${vars.spaces.sm} ${vars.spaces.md}`,
+  borderRadius: vars.radius.sm,
+  transition: 'background 100ms ease',
+});
+
 export const anchor = recipe({
-  base: [baseAnchor, utilities({ borderRadius: 'sm' })],
+  base: baseAnchor,
   variants: {
+    gap: { true: [utilities({ gap: 'sm' })] },
+    'space-between': { true: [utilities({ justifyContent: 'space-between' })] },
     color: {
-      base: utilities({
-        color: 'on-base-high-contrast',
-      }),
-      primary: utilities({
-        color: 'on-primary-high-contrast',
-        background: {
-          default: 'primary7',
-          '@hover': 'primary8',
-        },
-      }),
-      secondary: utilities({
-        color: {
-          default: 'on-secondary-low-contrast',
-          '@hover': 'on-secondary-high-contrast',
-        },
-      }),
+      base: utilities({ color: 'on-base-high-contrast' }),
+      primary: utilities({ color: 'on-primary-high-contrast' }),
+      secondary: utilities({ color: 'on-secondary-high-contrast' }),
+      success: utilities({ color: 'on-success-high-contrast' }),
     },
-    size: {
+    fontSize: {
+      xs: utilities({ fontSize: 'xs' }),
       sm: utilities({ fontSize: 'sm' }),
       md: utilities({ fontSize: 'md' }),
       lg: utilities({ fontSize: 'lg' }),
-      '2xl': utilities({ fontSize: 'xl' }),
+      xl: utilities({ fontSize: 'xl' }),
       inherit: { fontSize: 'inherit' },
-    },
-    gap: {
-      true: utilities({ gap: 'sm' }),
     },
     weight: {
       thin: { fontVariationSettings: vars.fonts.variations[200] },
       'semi-bold': { fontVariationSettings: vars.fonts.variations[700] },
       bold: { fontVariationSettings: vars.fonts.variations[850] },
     },
-    transform: {
-      uppercase: { textTransform: 'uppercase' },
-    },
     btn: {
-      true: {
-        padding: '0.5rem 1rem',
-        filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,
-        justifyContent: 'space-between',
-      },
+      base: [
+        btn,
+        utilities({ background: { default: 'base2', '@hover': 'base3' } }),
+      ],
+      primary: [
+        btn,
+        utilities({
+          background: { default: 'primary6', '@hover': 'primary8' },
+        }),
+      ],
+      secondary: [
+        btn,
+        utilities({
+          background: { default: 'secondary6', '@hover': 'secondary8' },
+        }),
+      ],
     },
   },
   defaultVariants: {
     color: 'base',
-    size: 'md',
+    fontSize: 'md',
     weight: 'thin',
   },
 });

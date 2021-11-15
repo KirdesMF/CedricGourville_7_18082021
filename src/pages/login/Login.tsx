@@ -24,7 +24,7 @@ export function Login() {
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           </Paragraph>
 
-          <Anchor variant={{ size: 'sm' }} to="/register">
+          <Anchor variant={{ fontSize: 'xs' }} to="/register">
             Create your account
           </Anchor>
         </section>

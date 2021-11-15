@@ -20,7 +20,7 @@ const AnchorAvatar = ({ user }: { user: User | undefined }) => {
     );
   }
   return (
-    <Anchor to="/profil" variant={{ size: 'sm' }}>
+    <Anchor to="/profil" variant={{ fontSize: 'sm' }}>
       {user?.avatar ? (
         <Avatar src={user.avatar as string} alt="avatar" />
       ) : (
@@ -47,7 +47,10 @@ export function Header() {
         <div className={styles.inner}>
           <AnchorAvatar user={user} />
 
-          <Anchor to={user ? '/feed' : '/'} variant={{ gap: true, size: 'sm' }}>
+          <Anchor
+            to={user ? '/feed' : '/'}
+            variant={{ fontSize: 'sm', gap: true }}
+          >
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
             <Span>Groupomania</Span>
           </Anchor>
