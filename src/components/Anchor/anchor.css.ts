@@ -22,11 +22,12 @@ const btn = style({
 export const anchor = recipe({
   base: baseAnchor,
   variants: {
+    uppercase: { true: { textTransform: 'uppercase' } },
     gap: { true: [utilities({ gap: 'sm' })] },
     'space-between': { true: [utilities({ justifyContent: 'space-between' })] },
     color: {
       base: utilities({ color: 'on-base-high-contrast' }),
-      primary: utilities({ color: 'on-primary-high-contrast' }),
+      primary: utilities({ color: 'primary10' }),
       secondary: utilities({ color: 'on-secondary-high-contrast' }),
       success: utilities({ color: 'on-success-high-contrast' }),
     },

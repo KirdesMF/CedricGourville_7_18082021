@@ -59,6 +59,7 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
                 fontSize: 'xl',
                 color: 'primary',
                 weight: 'bold',
+                uppercase: true,
               }}
               onClick={() => handleMenu(false)}
             >

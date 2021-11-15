@@ -3,15 +3,21 @@ import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 export const input = style([
+  utilities({
+    background: 'ui-base',
+    color: 'on-base-high-contrast',
+    fontSize: 'sm',
+    paddingInline: 'md',
+    paddingBlock: 'sm',
+    borderRadius: 'sm',
+  }),
   {
-    border: `0.2px solid ${vars.colors['on-base-high-contrast']}`,
     background: 'none',
-    paddingInline: vars.spaces.md,
-    paddingBlock: vars.spaces.sm,
+    border: 'none',
     appearance: 'none',
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
-    width: 'min(100%, 52ch)',
-    borderRadius: vars.radius.sm,
+    width: `min(100%, ${vars.sizes.lg} / 2)`,
+    boxShadow: `0 0 0 0.5px ${vars.colors['on-base-high-contrast']}`,
 
     ':focus': {
       outline: 'none',
@@ -30,14 +36,9 @@ export const input = style([
       fontVariationSettings: vars.fonts.variations[200],
     },
   },
-  utilities({
-    background: 'ui-base',
-    color: 'on-base-high-contrast',
-    fontSize: 'sm',
-  }),
 ]);
 
 export const small = style([
-  { justifySelf: 'center' },
   utilities({ color: 'on-base-high-contrast' }),
+  { justifySelf: 'center' },
 ]);

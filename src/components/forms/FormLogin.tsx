@@ -3,6 +3,7 @@ import { useLogUser } from '../../api/user.api';
 import { BasicInput, CustomInput } from '../../components/Input/Input';
 import { utilities } from '../../styles/utilities.css';
 import { cx } from '../../utils/classname.utils';
+import { Button } from '../Button/Button';
 import { Span } from '../Span/Span';
 
 type LoginFields = {
@@ -64,7 +65,9 @@ export function FormLogIn() {
         }}
       />
 
-      <BasicInput value="Send" type="submit" />
+      <Button type="submit" variant={{ base: true, uppercase: true }}>
+        Log in
+      </Button>
     </form>
   );
 }

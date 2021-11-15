@@ -25,7 +25,7 @@ export function CustomInput<TFields>(props: TCustomInput<TFields>) {
       <span className={srOnly}>{label}</span>
       <input {...register(name, options)} {...rest} className={styles.input} />
       {errors?.[name] && (
-        <Span variant={{ color: 'secondary', size: 'xs' }}>
+        <Span variant={{ color: 'secondary', size: 'sm' }}>
           {errors?.[name]?.message}
         </Span>
       )}

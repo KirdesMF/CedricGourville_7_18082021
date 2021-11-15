@@ -6,42 +6,55 @@ import { vars } from '../../styles/vars.css';
 const base = style({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   border: 'none',
-  padding: vars.spaces.sm,
-  borderRadius: vars.radius.sm,
+  borderRadius: vars.radius.xs,
   appearance: 'none',
-  ':hover': {
-    boxShadow: `inset 0 0 0 1.5px ${vars.colors['border-primary-hover']}`,
-  },
 });
 
 export const button = recipe({
   base,
   variants: {
+    uppercase: { true: { textTransform: 'uppercase' } },
+    ghost: {
+      true: [
+        utilities({
+          background: { default: 'base1', '@hover': 'base3' },
+          color: 'on-base-high-contrast',
+          paddingInline: 'sm',
+          paddingBlock: 'sm',
+        }),
+      ],
+    },
     base: {
       true: [
         utilities({
-          background: { default: 'base1', '@hover': 'base4' },
+          background: { default: 'base3', '@hover': 'base4' },
+          color: 'on-base-high-contrast',
+          paddingInline: 'md',
+          paddingBlock: 'sm',
         }),
+        { boxShadow: `0 0 0 0.5px ${vars.colors['on-primary-high-contrast']}` },
       ],
     },
     primary: {
       true: [
         utilities({
-          background: { default: 'primary9', '@hover': 'primary10' },
+          background: { default: 'primary5', '@hover': 'primary7' },
+          color: 'on-primary-high-contrast',
         }),
       ],
     },
     secondary: {
       true: [
         utilities({
-          background: { default: 'secondary9', '@hover': 'secondary10' },
+          background: { default: 'secondary5', '@hover': 'secondary7' },
         }),
       ],
     },
   },
   defaultVariants: {
-    base: true,
+    ghost: true,
   },
 });
 

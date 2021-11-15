@@ -21,12 +21,14 @@ export function Login() {
           <FormLogIn />
 
           <Paragraph variant={{ size: 'sm' }}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Do you already have an account ?{' '}
+            <Anchor
+              variant={{ fontSize: 'xs', color: 'primary' }}
+              to="/register"
+            >
+              Create your account
+            </Anchor>
           </Paragraph>
-
-          <Anchor variant={{ fontSize: 'xs' }} to="/register">
-            Create your account
-          </Anchor>
         </section>
 
         <Illustration />
