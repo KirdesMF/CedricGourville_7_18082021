@@ -9,6 +9,8 @@ import {
   GitHubLogoIcon,
   ChevronRightIcon,
   Pencil1Icon,
+  PaperPlaneIcon,
+  ImageIcon,
 } from '@radix-ui/react-icons';
 
 const Groupomania = ({ className }: { className: string }) => {
@@ -36,6 +38,8 @@ const icons = {
   GitHubLogoIcon,
   ChevronRightIcon,
   Pencil1Icon,
+  PaperPlaneIcon,
+  ImageIcon,
 };
 
 type IconProps = {

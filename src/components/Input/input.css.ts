@@ -4,7 +4,7 @@ import { vars } from '../../styles/vars.css';
 
 export const input = style([
   utilities({
-    background: 'primary3',
+    background: 'base2',
     color: 'on-base-high-contrast',
     fontSize: 'sm',
     paddingInline: 'md',
@@ -37,7 +37,14 @@ export const input = style([
   },
 ]);
 
-// globalStyle(`${input} ~ span`, {
-//   position: 'absolute',
-//   bottom: '-50%',
-// });
+export const hidden = style({
+  appearance: 'none',
+  position: 'absolute',
+  margin: 0,
+  width: 0,
+  height: 0,
+});
+
+globalStyle(`${hidden}:focus-visible ~ label`, {
+  boxShadow: `0 0 0 1px ${vars.colors['on-base-high-contrast']}`,
+});

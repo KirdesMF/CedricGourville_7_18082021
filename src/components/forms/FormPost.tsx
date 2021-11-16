@@ -3,7 +3,9 @@ import { useCreatePost } from '../../api/post.api';
 import { socket } from '../../App';
 import { utilities } from '../../styles/utilities.css';
 import { convertMegaBytesToBytes } from '../../utils/utils';
-import { BasicInput, CustomInput } from '../Input/Input';
+import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
+import { BasicInput, CustomInput, FileInput } from '../Input/Input';
 
 type PostField = {
   title: string;
@@ -65,8 +67,7 @@ export function FormPost() {
         name="content"
         options={{ required: 'Please provide something to say' }}
       />
-      <CustomInput
-        type="file"
+      <FileInput
         name="media"
         register={register}
         errors={errors}
@@ -97,7 +98,13 @@ export function FormPost() {
         }}
       />
 
-      <BasicInput value="Send" type="submit" />
+      <Button
+        variant={{ primary: true, weight: 'thin', shadow: true }}
+        type="submit"
+      >
+        Post
+        <Icon name="PaperPlaneIcon" />
+      </Button>
     </form>
   );
 }

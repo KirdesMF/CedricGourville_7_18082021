@@ -18,13 +18,7 @@ export function Feed() {
   return (
     <main className={panel['2xl']}>
       <div className={container({ width: 'lg', padding: '2xl' })}>
-        <Heading>Feed page</Heading>
-
-        <Anchor to="/profil">Profil</Anchor>
-        <Paragraph>
-          Welcome{' '}
-          <Span variant={{ color: 'secondary' }}> {user?.username}</Span>
-        </Paragraph>
+        <Heading>Feed</Heading>
 
         <FormPost />
 

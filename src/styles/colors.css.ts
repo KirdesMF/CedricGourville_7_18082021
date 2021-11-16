@@ -33,6 +33,7 @@ const baseColorVars = createThemeContract({
     ...makeContratFromPalette(indigo),
     ...makeContratFromPalette(green),
     ...makeContratFromPalette(orange),
+    shadow: null,
   },
 });
 
@@ -43,6 +44,7 @@ createGlobalTheme(':root', baseColorVars, {
     ...indigo,
     ...green,
     ...orange,
+    shadow: 'hsl(200, 20%, 10%, 0.6)',
   },
 });
 
@@ -53,6 +55,7 @@ createGlobalTheme(':root.dark', baseColorVars, {
     ...indigoDark,
     ...greenDark,
     ...orangeDark,
+    shadow: 'hsl(200, 20%, 5%)',
   },
 });
 
@@ -137,6 +140,6 @@ export const colorsVars = createGlobalTheme(':root', {
     'on-success-high-contrast': baseColorVars.colors.green12,
     warning: baseColorVars.colors.red9,
     info: baseColorVars.colors.indigo9,
-    shadow: 'hsl(200, 20%, 10%, 0.6)',
+    shadow: baseColorVars.colors.shadow,
   },
 });

@@ -9,5 +9,6 @@ export const heading = recipe({
     lineHeight: 1.1,
     width: 'min(100%, 15ch)',
     textTransform: 'uppercase',
+    marginBlockEnd: vars.spaces.sm,
   },
 });
