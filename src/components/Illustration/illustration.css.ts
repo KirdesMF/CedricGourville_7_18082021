@@ -5,7 +5,7 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 export const illustration = style({
   display: 'none',
   '@media': {
-    [makeBreakpoint('md')]: {
+    [makeBreakpoint('sm')]: {
       display: 'grid',
       height: '40vmin',
     },

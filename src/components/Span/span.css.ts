@@ -28,9 +28,15 @@ export const span = recipe({
       inherit: { color: 'inherit' },
     },
     size: {
+      xs: utilities({ fontSize: 'xs' }),
       sm: utilities({ fontSize: 'sm' }),
       lg: utilities({ fontSize: 'lg' }),
       inherit: { fontSize: 'inherit' },
+    },
+    weight: {
+      thin: { fontVariationSettings: vars.fonts.variations[200] },
+      'semi-bold': { fontVariationSettings: vars.fonts.variations[700] },
+      bold: { fontVariationSettings: vars.fonts.variations[850] },
     },
     gradient: {
       true: {

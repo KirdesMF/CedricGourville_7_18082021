@@ -1,12 +1,14 @@
 import { style, styleVariants } from '@vanilla-extract/css';
+import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
-export const footer = style({
-  width: '100%',
-  paddingBlock: vars.spaces.lg,
-  paddingInline: vars.spaces.md,
-  borderTop: `1px dashed ${vars.colors.base5}`,
-});
+export const footer = style([
+  utilities({ background: 'base1', paddingBlock: 'lg', paddingInline: 'md' }),
+  {
+    width: '100%',
+    borderTop: `1px dashed ${vars.colors.base5}`,
+  },
+]);
 
 export const inner = style({
   marginInline: 'auto',

@@ -48,7 +48,7 @@ export function FormLogIn() {
         errors={errors}
         register={register}
         options={{
-          required: '❌ Please enter an email address or a username ⤴ ',
+          required: 'Please enter an email address or a username ⤴ ',
         }}
       />
 
@@ -62,7 +62,7 @@ export function FormLogIn() {
         register={register}
         errors={errors}
         options={{
-          required: '❌ Please enter your corresponding password ⤴ ',
+          required: 'Please enter your corresponding password ⤴ ',
         }}
       />
 

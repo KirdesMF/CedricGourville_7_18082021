@@ -1,5 +1,5 @@
 import { Anchor } from '../../components/Anchor/Anchor';
-import { FormRegister } from '../../components/forms/register/FormRegister';
+import { FormRegister } from '../../components/forms/FormRegister';
 import { Guides } from '../../components/Guides/Guides';
 import { Heading } from '../../components/Heading/Heading';
 import { Illustration } from '../../components/Illustration/Illustration';
@@ -14,15 +14,17 @@ export function Register() {
       <div className={styles.inner}>
         <section className={styles.section}>
           <Heading>
-            Create a new user{' '}
-            <Span variant={{ color: 'secondary' }}>account</Span>
+            Create a new user <Span variant={{ gradient: true }}>account</Span>
           </Heading>
 
           <FormRegister />
 
           <Paragraph variant={{ size: 'sm' }}>
-            Already an account ?{' '}
-            <Anchor variant={{ fontSize: 'xs', color: 'primary' }} to="/login">
+            Already registered ?{' '}
+            <Anchor
+              variant={{ fontSize: 'inherit', color: 'primary' }}
+              to="/login"
+            >
               Log here
             </Anchor>
           </Paragraph>

@@ -6,11 +6,11 @@ import { vars } from '../../styles/vars.css';
 const base = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  gap: vars.spaces.lg,
   border: 'none',
   borderRadius: vars.radius.xs,
   appearance: 'none',
-  width: 'min(100%, 12ch)',
+  width: 'max-content',
 });
 
 export const button = recipe({

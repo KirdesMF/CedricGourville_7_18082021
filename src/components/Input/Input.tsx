@@ -21,11 +21,17 @@ export function CustomInput<TFields>(props: TCustomInput<TFields>) {
   const { label, register, name, options, errors, ...rest } = props;
 
   return (
-    <label className={utilities({ display: 'grid', gap: 'sm' })}>
+    <label
+      className={utilities({
+        display: 'grid',
+        gap: 'sm',
+        position: 'relative',
+      })}
+    >
       <span className={srOnly}>{label}</span>
       <input {...register(name, options)} {...rest} className={styles.input} />
       {errors?.[name] && (
-        <Span variant={{ color: 'secondary', size: 'sm' }}>
+        <Span variant={{ color: 'secondary', size: 'xs', weight: 'thin' }}>
           {errors?.[name]?.message}
         </Span>
       )}

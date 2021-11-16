@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
@@ -9,6 +9,7 @@ export const input = style([
     fontSize: 'sm',
     paddingInline: 'md',
     paddingBlock: 'sm',
+    position: 'relative',
   }),
   {
     border: 'none',
@@ -16,7 +17,6 @@ export const input = style([
 
     borderBottom: `1px solid ${vars.colors['on-base-high-contrast']}`,
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
-    width: `min(100%, ${vars.sizes.lg} / 2)`,
 
     ':focus': {
       outline: 'none',
@@ -37,7 +37,7 @@ export const input = style([
   },
 ]);
 
-export const small = style([
-  utilities({ color: 'on-base-high-contrast' }),
-  { justifySelf: 'center' },
-]);
+// globalStyle(`${input} ~ span`, {
+//   position: 'absolute',
+//   bottom: '-50%',
+// });
