@@ -8,21 +8,12 @@ export const avatar = style({
   userSelect: 'none',
   verticalAlign: 'middle',
   position: 'relative',
+  border: `2px solid ${vars.colors.primary9}`,
+  padding: '0.25rem',
 
   display: 'inline-flex',
   justifyContent: 'center',
   alignItems: 'center',
-
-  '::after': {
-    content: '',
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: '0.75rem',
-    height: '0.75rem',
-    borderRadius: vars.radius.full,
-    backgroundColor: vars.colors.success,
-  },
 });
 
 export const imgAvatar = style({
@@ -30,4 +21,9 @@ export const imgAvatar = style({
   height: '100%',
   objectFit: 'cover',
   borderRadius: 'inherit',
+});
+
+export const svg = style({
+  width: '2.5rem',
+  height: '2.5rem',
 });

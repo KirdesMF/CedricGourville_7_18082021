@@ -9,7 +9,7 @@ import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
 import { useUser } from '../../api/user.api';
 import { User } from 'p7_types';
-import { Avatar } from '../Avatar/Avatar';
+import { Avatar, AvatarSvg } from '../Avatar/Avatar';
 
 const AnchorAvatar = ({ user }: { user: User | undefined }) => {
   if (!user) {
@@ -24,7 +24,7 @@ const AnchorAvatar = ({ user }: { user: User | undefined }) => {
       {user?.avatar ? (
         <Avatar src={user.avatar as string} alt="avatar" />
       ) : (
-        <span>{user?.username}</span>
+        <AvatarSvg departement={user.department} />
       )}
     </Anchor>
   );

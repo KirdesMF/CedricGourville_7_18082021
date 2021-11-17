@@ -83,7 +83,7 @@ export function Post(props: PostProps) {
 
       <Anchor to={`/feed?id=${postId}`}>Details</Anchor>
 
-      {isAdminOrUser && <button onClick={handleDelete}>Delete</button>}
+      {isAdminOrUser && <Button onClick={handleDelete}>Delete</Button>}
 
       <div>
         <h3>Comments</h3>
