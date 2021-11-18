@@ -14,7 +14,7 @@ export function Login() {
       <Guides />
       <div className={styles.inner}>
         <section className={styles.section}>
-          <Heading>
+          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
             Connect to your <Span variant={{ gradient: true }}>profile</Span>
           </Heading>
 
@@ -22,11 +22,8 @@ export function Login() {
 
           <Paragraph variant={{ size: 'sm' }}>
             First time here ?{' '}
-            <Anchor
-              variant={{ fontSize: 'xs', color: 'primary' }}
-              to="/register"
-            >
-              Create your account
+            <Anchor variant={{ color: 'primary' }} to="/register">
+              <Span variant={{ size: 'xs' }}>Create your account</Span>
             </Anchor>
           </Paragraph>
         </section>

@@ -7,7 +7,7 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <ExternalAnchor
-          variant={{ fontSize: 'md' }}
+          variant={{ color: 'base' }}
           href="https://github.com/KirdesMF/cedricgourville_7_18082021_frontend"
         >
           <Icon name="GitHubLogoIcon" />

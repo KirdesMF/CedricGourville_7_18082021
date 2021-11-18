@@ -7,7 +7,6 @@ import { baseAnchor } from '../Anchor/anchor.css';
 export const span = recipe({
   base: {
     margin: 0,
-    lineHeight: 1,
 
     selectors: {
       [`${baseAnchor} &`]: {
@@ -21,6 +20,7 @@ export const span = recipe({
     },
   },
   variants: {
+    uppercase: { true: { textTransform: 'uppercase' } },
     color: {
       base: utilities({ color: 'on-base-low-contrast' }),
       primary: utilities({ color: 'on-primary-low-contrast' }),
@@ -30,13 +30,15 @@ export const span = recipe({
     size: {
       xs: utilities({ fontSize: 'xs' }),
       sm: utilities({ fontSize: 'sm' }),
+      md: utilities({ fontSize: 'md' }),
       lg: utilities({ fontSize: 'lg' }),
+      xl: utilities({ fontSize: 'xl' }),
       inherit: { fontSize: 'inherit' },
     },
     weight: {
-      thin: { fontVariationSettings: vars.fonts.variations[200] },
-      'semi-bold': { fontVariationSettings: vars.fonts.variations[700] },
-      bold: { fontVariationSettings: vars.fonts.variations[850] },
+      thin: utilities({ fontVariationSettings: 'thin' }),
+      'semi-bold': utilities({ fontVariationSettings: 'semi-bold' }),
+      bold: utilities({ fontVariationSettings: 'bold' }),
     },
     gradient: {
       true: {

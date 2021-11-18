@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import { Feed } from '../pages/Feed';
 import { Profil } from '../pages/Profil';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
@@ -8,6 +7,8 @@ import { AdminRoute } from './AdminRoute';
 import { Home } from '../pages/home/Home';
 import { Login } from '../pages/login/Login';
 import { Register } from '../pages/register/Register';
+import { PagePost } from '../pages/PagePost';
+import { Feed } from '../pages/feed/Feed';
 
 export function Routes() {
   return (
@@ -17,6 +18,7 @@ export function Routes() {
       <PublicRoute path="/register" component={Register} />
       <PrivateRoute path="/feed" component={Feed} />
       <PrivateRoute path="/profil" component={Profil} />
+      <PrivateRoute path="/post/:id" component={PagePost} />
       <AdminRoute path="/dashboard" component={() => <p>Dashboard</p>} />
       <Route component={Page404} />
     </Switch>

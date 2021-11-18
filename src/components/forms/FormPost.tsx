@@ -6,6 +6,7 @@ import { convertMegaBytesToBytes } from '../../utils/utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { BasicInput, CustomInput, FileInput } from '../Input/Input';
+import { Span } from '../Span/Span';
 
 type PostField = {
   title: string;
@@ -98,10 +99,7 @@ export function FormPost() {
         }}
       />
 
-      <Button
-        variant={{ primary: true, weight: 'thin', shadow: true }}
-        type="submit"
-      >
+      <Button variant={{ primary: true, shadow: true }} type="submit">
         Post
         <Icon name="PaperPlaneIcon" />
       </Button>

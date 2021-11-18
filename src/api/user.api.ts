@@ -3,13 +3,9 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
-import { convertHoursToMilliseconds } from '../utils/utils';
 
 export function useUser() {
-  return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
-    staleTime: convertHoursToMilliseconds(1),
-    retry: 0,
-  });
+  return useQuery<User, TError>(['user'], () => Fetch.get<User>('user'));
 }
 
 export function useCreateUser() {

@@ -2,14 +2,6 @@ import { Department } from 'p7_types';
 import { vars } from '../../styles/vars.css';
 import * as styles from './avatar.css';
 
-export function Avatar({ src, alt }: { src: string; alt: string }) {
-  return (
-    <span className={styles.avatar}>
-      <img className={styles.imgAvatar} src={src} alt={alt} />
-    </span>
-  );
-}
-
 const FILL_COLOR_DPT: Record<Department, string> = {
   VISITOR: 'red',
   COM: 'blue',
@@ -18,7 +10,7 @@ const FILL_COLOR_DPT: Record<Department, string> = {
   TECH: 'purple',
 };
 
-export function AvatarSvg({ departement }: { departement: Department }) {
+export function AvatarSvg({ department }: { department: Department }) {
   return (
     <svg
       className={styles.svg}
@@ -29,7 +21,7 @@ export function AvatarSvg({ departement }: { departement: Department }) {
     >
       <g stroke="#000" strokeMiterlimit={10}>
         <circle
-          fill={FILL_COLOR_DPT[departement]}
+          fill={FILL_COLOR_DPT[department]}
           strokeWidth={10.8002}
           cx={129.6}
           cy={129.6}
@@ -66,5 +58,21 @@ export function AvatarSvg({ departement }: { departement: Department }) {
         />
       </g>
     </svg>
+  );
+}
+
+export function Avatar({
+  src,
+  department,
+}: {
+  src: string | null;
+  department: Department;
+}) {
+  if (!src) return <AvatarSvg department={department} />;
+
+  return (
+    <div className={styles.avatar}>
+      <img className={styles.imgAvatar} src={src} alt="Avatar profil" />
+    </div>
   );
 }

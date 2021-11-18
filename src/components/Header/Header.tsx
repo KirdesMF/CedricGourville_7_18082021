@@ -9,23 +9,19 @@ import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
 import { useUser } from '../../api/user.api';
 import { User } from 'p7_types';
-import { Avatar, AvatarSvg } from '../Avatar/Avatar';
+import { Avatar } from '../Avatar/Avatar';
 
 const AnchorAvatar = ({ user }: { user: User | undefined }) => {
   if (!user) {
     return (
-      <Anchor to="/login">
+      <Anchor variant={{ color: 'base' }} to="/login">
         <Icon name="PersonIcon" variant={{ size: 'medium' }} />
       </Anchor>
     );
   }
   return (
-    <Anchor to="/profil" variant={{ fontSize: 'sm' }}>
-      {user?.avatar ? (
-        <Avatar src={user.avatar as string} alt="avatar" />
-      ) : (
-        <AvatarSvg departement={user.department} />
-      )}
+    <Anchor to="/profil">
+      <Avatar department={user.department} src={user.avatar} />
     </Anchor>
   );
 };
@@ -49,18 +45,24 @@ export function Header() {
 
           <Anchor
             to={user ? '/feed' : '/'}
-            variant={{ fontSize: 'sm', gap: true }}
+            variant={{
+              space: 'gap',
+              color: 'base',
+            }}
           >
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
-            <Span>Groupomania</Span>
+            <Span variant={{ size: 'sm', weight: 'thin' }}>Groupomania</Span>
           </Anchor>
 
           <aside className={styles.aside}>
-            <Button onClick={() => handleMenu(true)}>
+            <Button
+              variant={{ discret: true }}
+              onClick={() => handleMenu(true)}
+            >
               <Icon name="HamburgerMenuIcon" variant={{ size: 'small' }} />
             </Button>
 
-            <Button onClick={handleTheme}>
+            <Button variant={{ discret: true }} onClick={handleTheme}>
               <Icon name="SunIcon" variant={{ size: 'small' }} />
             </Button>
           </aside>

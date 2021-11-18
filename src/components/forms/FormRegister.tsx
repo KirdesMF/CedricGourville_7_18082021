@@ -98,8 +98,6 @@ export function FormRegister() {
         variant={{
           primary: true,
           shadow: true,
-          fontSize: 'xs',
-          weight: 'thin',
         }}
         type="submit"
       >

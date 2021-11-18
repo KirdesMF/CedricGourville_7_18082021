@@ -5,20 +5,23 @@ import { makeBreakpoint } from '../utils/breakpoints.utils';
 const properties = defineProperties({
   properties: {
     position: ['relative', 'absolute', 'sticky', 'fixed'],
-    height: ['100%'],
-    minHeight: ['100%', '100vh'],
-    width: ['100%'],
-    maxWidth: vars.sizes,
-    alignItems: ['center'],
+    width: {
+      lg: `min(100%, ${vars.sizes.lg})`,
+      xl: `min(100%, ${vars.sizes.xl})`,
+      '2xl': `min(100%, ${vars.sizes['2xl']})`,
+      full: `min(100%, ${vars.sizes.full})`,
+    },
+    alignItems: ['center', 'stretch', 'start', 'end'],
+    justifyContent: ['space-between', 'flex-start', 'flex-end', 'center'],
     placeItems: ['center'],
-    placeContent: ['center'],
-    gridAutoRows: ['min-content'],
-    gridArea: ['area'],
-    overflow: ['hidden'],
     flex: [1],
     gap: vars.spaces,
     borderRadius: vars.radius,
     fontSize: vars.fonts.sizes,
+    fontVariationSettings: vars.fonts.variations,
+    padding: vars.spaces,
+    paddingInline: vars.spaces,
+    paddingBlock: vars.spaces,
     marginInline: ['auto'],
   },
 });
@@ -31,11 +34,7 @@ const responsiveProperties = defineProperties({
   },
   defaultCondition: 'sm',
   properties: {
-    display: ['flex', 'grid', 'inline-flex', 'none', 'initial'],
-    justifyContent: ['space-between', 'flex-start', 'flex-end'],
-    padding: vars.spaces,
-    paddingInline: vars.spaces,
-    paddingBlock: vars.spaces,
+    display: ['none', 'initial', 'flex', 'inline-flex', 'grid', 'inline-grid'],
   },
 });
 
@@ -46,8 +45,8 @@ const colorsProperties = defineProperties({
   },
   defaultCondition: 'default',
   properties: {
-    color: vars.colors,
-    background: vars.colors,
+    color: { none: 'none', ...vars.colors },
+    background: { none: 'none', ...vars.colors },
   },
 });
 

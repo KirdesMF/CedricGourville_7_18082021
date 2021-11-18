@@ -1,23 +1,27 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
+import { utilities } from '../../styles/utilities.css';
 
-export const main = style({
+export const main = utilities({
   position: 'relative',
   display: 'flex',
-  paddingBlock: vars.spaces.lg,
-  paddingInline: vars.spaces.lg,
+  paddingBlock: 'lg',
+  paddingInline: 'lg',
 });
 
-export const inner = style({
-  display: 'grid',
-  gridAutoColumns: '1fr',
-  gridAutoFlow: 'column',
-  alignItems: 'center',
-  width: 'min(100%, 64rem)',
-  marginInline: 'auto',
-});
+export const inner = style([
+  utilities({
+    display: 'grid',
+    alignItems: 'center',
+    width: 'lg',
+    marginInline: 'auto',
+  }),
+  {
+    gridAutoColumns: '1fr',
+    gridAutoFlow: 'column',
+  },
+]);
 
-export const section = style({
+export const section = utilities({
   display: 'grid',
-  gap: vars.spaces.md,
+  gap: 'lg',
 });

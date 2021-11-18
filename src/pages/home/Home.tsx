@@ -14,7 +14,7 @@ export function Home() {
       <Guides />
       <div className={styles.inner}>
         <section className={styles.section}>
-          <Heading>
+          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
             Connect with your
             <Span variant={{ size: 'inherit', gradient: true }}>
               {' '}
@@ -35,12 +35,11 @@ export function Home() {
               variant={{
                 color: 'primary',
                 btn: 'primary',
-                fontSize: 'sm',
-                'space-between': true,
+                space: 'between',
               }}
               to="/login"
             >
-              <span>Login</span>
+              Login
               <Icon name="ChevronRightIcon" />
             </Anchor>
 
@@ -48,12 +47,11 @@ export function Home() {
               variant={{
                 color: 'base',
                 btn: 'base',
-                fontSize: 'sm',
-                'space-between': true,
+                space: 'between',
               }}
               to="/register"
             >
-              <span>Register</span>
+              Register
               <Icon name="ChevronRightIcon" />
             </Anchor>
           </nav>

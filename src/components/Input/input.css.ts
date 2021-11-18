@@ -32,7 +32,7 @@ export const input = style([
 
     '::placeholder': {
       fontStyle: 'italic',
-      fontVariationSettings: vars.fonts.variations[200],
+      fontVariationSettings: vars.fonts.variations.thin,
     },
   },
 ]);

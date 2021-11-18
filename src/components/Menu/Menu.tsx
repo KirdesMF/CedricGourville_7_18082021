@@ -5,6 +5,7 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { Anchor } from '../Anchor/Anchor';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
+import { Span } from '../Span/Span';
 import * as styles from './menu.css';
 
 const variants: Variants = {
@@ -45,7 +46,11 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
       className={styles.menu}
     >
       <aside className={styles.aside}>
-        <Button onClick={() => handleMenu(false)}>
+        <Button
+          className={styles.button}
+          variant={{ discret: true }}
+          onClick={() => handleMenu(false)}
+        >
           <Icon name="Cross2Icon" variant={{ size: 'small' }} />
         </Button>
 
@@ -55,15 +60,12 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
               navLink
               key={element.href}
               to={element.href}
-              variant={{
-                fontSize: 'xl',
-                color: 'primary',
-                weight: 'bold',
-                uppercase: true,
-              }}
+              variant={{ color: 'primary' }}
               onClick={() => handleMenu(false)}
             >
-              {element.name}
+              <Span variant={{ size: 'xl', weight: 'bold', uppercase: true }}>
+                {element.name}
+              </Span>
             </Anchor>
           ))}
         </nav>

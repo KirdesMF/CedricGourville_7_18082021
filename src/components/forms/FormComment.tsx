@@ -2,7 +2,8 @@ import { Comment } from 'p7_types';
 import { useForm } from 'react-hook-form';
 import { useCreateComment } from '../../api/comment.api';
 import { socket } from '../../App';
-import { BasicInput, CustomInput } from '../Input/Input';
+import { Button } from '../Button/Button';
+import { CustomInput } from '../Input/Input';
 
 export function FormComment({ postId }: { postId: string }) {
   const {
@@ -31,7 +32,9 @@ export function FormComment({ postId }: { postId: string }) {
         placeholder="content"
         label="content"
       />
-      <BasicInput type="submit" value="send" />
+      <Button variant={{ primary: true }} type="submit">
+        Comment
+      </Button>
     </form>
   );
 }

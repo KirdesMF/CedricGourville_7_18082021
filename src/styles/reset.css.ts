@@ -52,6 +52,7 @@ globalStyle('img, picture', {
 
 globalStyle('input, button, textarea, select', {
   font: 'inherit',
+  background: 'none',
 });
 
 // Set body defaults

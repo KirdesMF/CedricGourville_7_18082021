@@ -139,6 +139,7 @@ export const colorsVars = createGlobalTheme(':root', {
     success: baseColorVars.colors.green9,
     'on-success-high-contrast': baseColorVars.colors.green12,
     warning: baseColorVars.colors.red9,
+    'warning-hover': baseColorVars.colors.red11,
     info: baseColorVars.colors.indigo9,
     shadow: baseColorVars.colors.shadow,
   },

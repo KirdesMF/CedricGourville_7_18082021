@@ -1,11 +1,13 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
+import { utilities } from '../../styles/utilities.css';
 
-export const flexField = style({
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: vars.spaces.xl,
-});
+export const flexField = style([
+  utilities({
+    display: 'flex',
+    gap: 'xl',
+  }),
+  { flexWrap: 'wrap' },
+]);
 
 globalStyle(`${flexField} > *`, {
   flex: 1,

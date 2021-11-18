@@ -5,9 +5,7 @@ import { Avatar } from '../components/Avatar/Avatar';
 import { Button } from '../components/Button/Button';
 import { FormProfile } from '../components/forms/FormProfile';
 import { Heading } from '../components/Heading/Heading';
-import { container, panel } from '../styles/helpers.css';
 import { utilities } from '../styles/utilities.css';
-import { cx } from '../utils/classname.utils';
 
 const notProvided = '❌ Not Provided';
 export function Profil() {
@@ -21,17 +19,24 @@ export function Profil() {
   const handleUnregister = () => user && unregister({ id: user?.id });
 
   return (
-    <main className={panel['2xl']}>
+    <main className={utilities({ paddingBlock: '2xl', paddingInline: 'lg' })}>
       <div
-        className={cx([
-          container({ width: 'lg', padding: '2xl' }),
-          utilities({ display: 'grid', gap: 'md' }),
-        ])}
+        className={utilities({
+          display: 'grid',
+          gap: 'md',
+          padding: '2xl',
+          width: 'lg',
+          marginInline: 'auto',
+        })}
       >
-        <Heading>Profile</Heading>
-        <Anchor to="/feed">Feed</Anchor>
+        <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>Profile</Heading>
+        <Anchor variant={{ color: 'primary' }} to="/feed">
+          Feed
+        </Anchor>
 
-        {user?.avatar && <Avatar src={user.avatar} alt="avatar" />}
+        {user?.avatar && (
+          <Avatar src={user.avatar} department={user.department} />
+        )}
 
         <ul>
           <li>Firstname: {user?.firstName || notProvided}</li>
@@ -41,9 +46,15 @@ export function Profil() {
         </ul>
 
         <div className={utilities({ display: 'flex', gap: 'md' })}>
-          <Button onClick={handleEditing}>Edit profile</Button>
-          <Button onClick={handleLogout}>Log out</Button>
-          <Button onClick={handleUnregister}>Unregister</Button>
+          <Button variant={{ primary: true }} onClick={handleEditing}>
+            Edit profile
+          </Button>
+          <Button variant={{ primary: true }} onClick={handleLogout}>
+            Log out
+          </Button>
+          <Button variant={{ primary: true }} onClick={handleUnregister}>
+            Unregister
+          </Button>
         </div>
 
         {isEditing && <FormProfile />}

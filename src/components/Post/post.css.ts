@@ -4,17 +4,20 @@ import { vars } from '../../styles/vars.css';
 
 export const post = style([
   utilities({
-    display: 'grid',
-    background: 'bg-base-subtle',
-    padding: 'lg',
+    display: 'flex',
     gap: 'lg',
+    paddingBlock: 'md',
+    paddingInline: 'sm',
+    background: 'base1',
   }),
-  {
-    gridTemplateColumns: '10rem 1fr',
-    boxShadow: `1px 3px 6px black`,
-    borderRadius: vars.radius.md,
-  },
+  { borderTop: `0.5px solid ${vars.colors.base3}` },
 ]);
+
+export const avatar = style({
+  width: 'min-content',
+  height: 'min-content',
+  alignSelf: 'start',
+});
 
 export const figure = style({
   width: 'min(100%, 15rem)',
@@ -38,11 +41,3 @@ export const img = style({
     },
   },
 });
-
-export const content = style([
-  utilities({ display: 'grid', gap: 'md' }),
-  {
-    placeItems: 'center start',
-    gridTemplateRows: 'min-content min-content',
-  },
-]);

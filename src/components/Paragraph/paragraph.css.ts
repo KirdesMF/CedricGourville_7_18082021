@@ -3,7 +3,7 @@ import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { vars } from '../../styles/vars.css';
 
 export const base = style({
-  fontVariationSettings: vars.fonts.variations[200],
+  fontVariationSettings: vars.fonts.variations.thin,
   color: vars.colors['on-base-high-contrast'],
   width: 'min(100%, 45ch)',
 });

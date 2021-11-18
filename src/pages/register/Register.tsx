@@ -13,7 +13,7 @@ export function Register() {
       <Guides />
       <div className={styles.inner}>
         <section className={styles.section}>
-          <Heading>
+          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
             Create a new user <Span variant={{ gradient: true }}>account</Span>
           </Heading>
 
@@ -21,11 +21,8 @@ export function Register() {
 
           <Paragraph variant={{ size: 'sm' }}>
             Already registered ?{' '}
-            <Anchor
-              variant={{ fontSize: 'inherit', color: 'primary' }}
-              to="/login"
-            >
-              Log here
+            <Anchor variant={{ color: 'primary' }} to="/login">
+              <Span variant={{ size: 'inherit' }}>Log here</Span>
             </Anchor>
           </Paragraph>
         </section>

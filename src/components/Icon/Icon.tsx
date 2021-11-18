@@ -11,6 +11,8 @@ import {
   Pencil1Icon,
   PaperPlaneIcon,
   ImageIcon,
+  DotsVerticalIcon,
+  TrashIcon,
 } from '@radix-ui/react-icons';
 
 const Groupomania = ({ className }: { className: string }) => {
@@ -40,6 +42,8 @@ const icons = {
   Pencil1Icon,
   PaperPlaneIcon,
   ImageIcon,
+  DotsVerticalIcon,
+  TrashIcon,
 };
 
 type IconProps = {

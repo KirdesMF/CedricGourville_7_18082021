@@ -3,23 +3,27 @@ import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 export const footer = style([
-  utilities({ background: 'base1', paddingBlock: 'lg', paddingInline: 'md' }),
+  utilities({
+    background: 'base1',
+    paddingBlock: 'lg',
+    paddingInline: 'md',
+  }),
   {
     width: '100%',
     borderTop: `1px dashed ${vars.colors.base5}`,
   },
 ]);
 
-export const inner = style({
+export const inner = utilities({
   marginInline: 'auto',
-  width: `min(100%, ${vars.sizes.xl})`,
+  width: 'xl',
   display: 'flex',
-  gap: vars.spaces.md,
+  gap: 'md',
 });
 
-export const small = style({
-  color: vars.colors['on-base-low-contrast'],
-  fontSize: vars.fonts.sizes.xs,
+export const small = utilities({
+  color: 'on-base-low-contrast',
+  fontSize: 'xs',
   display: 'inline-flex',
   alignItems: 'center',
 });

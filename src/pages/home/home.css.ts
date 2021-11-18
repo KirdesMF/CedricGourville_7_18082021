@@ -1,32 +1,40 @@
 import { globalStyle, style } from '@vanilla-extract/css';
-import { vars } from '../../styles/vars.css';
+import { utilities } from '../../styles/utilities.css';
 
-export const main = style({
+export const main = utilities({
   position: 'relative',
   display: 'flex',
-  paddingBlock: vars.spaces.lg,
-  paddingInline: vars.spaces.lg,
+  paddingBlock: 'lg',
+  paddingInline: 'lg',
 });
 
-export const inner = style({
+export const inner = style([
+  utilities({
+    display: 'grid',
+    alignItems: 'center',
+    width: 'lg',
+    marginInline: 'auto',
+  }),
+  {
+    gridAutoColumns: '1fr',
+    gridAutoFlow: 'column',
+  },
+]);
+
+export const section = utilities({
   display: 'grid',
-  gridAutoColumns: '1fr',
-  gridAutoFlow: 'column',
-  alignItems: 'center',
-  width: 'min(100%, 64rem)',
-  marginInline: 'auto',
+  gap: 'lg',
 });
 
-export const section = style({
-  display: 'grid',
-  gap: vars.spaces.lg,
-});
-
-export const nav = style({
-  display: 'flex',
-  gap: vars.spaces.md,
-  flexWrap: 'wrap',
-});
+export const nav = style([
+  utilities({
+    display: 'flex',
+    gap: 'md',
+  }),
+  {
+    flexWrap: 'wrap',
+  },
+]);
 
 globalStyle(`${nav} > *`, {
   flex: '0 1 15ch',

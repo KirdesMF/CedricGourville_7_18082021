@@ -22,11 +22,9 @@ export const fontsVars = createGlobalTheme(':root', {
       xl: 'clamp(2.5rem, 2.1vw + 1.7rem, 3rem)',
     },
     variations: {
-      100: `'wght' 100`,
-      200: `'wght' 200`,
-      700: `'wght' 700`,
-      850: `'wght' 850`,
-      900: `'wght' 900`,
+      thin: `'wght' 200`,
+      'semi-bold': `'wght' 700`,
+      bold: `'wght' 850`,
     },
   },
 

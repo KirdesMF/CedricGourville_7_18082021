@@ -32,7 +32,7 @@ export function FormLogIn() {
         utilities({
           display: 'grid',
           gap: 'md',
-          maxWidth: 'lg',
+          width: 'lg',
           paddingBlock: 'sm',
         }),
       ])}
@@ -70,8 +70,6 @@ export function FormLogIn() {
         type="submit"
         variant={{
           primary: true,
-          fontSize: 'xs',
-          weight: 'thin',
           shadow: true,
         }}
       >

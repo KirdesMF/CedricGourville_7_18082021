@@ -4,7 +4,7 @@ import { Comment, Post, User } from 'p7_types';
 import { TError } from '../types';
 
 type TUsePost = Post & {
-  user: Pick<User, 'username' | 'id' | 'role'>;
+  user: Pick<User, 'username' | 'id' | 'role' | 'avatar' | 'department'>;
   comments: Pick<Comment, 'content'>[];
 };
 
@@ -20,7 +20,7 @@ export function useCreatePost() {
   return useMutation<FormData, unknown, FormData>(
     (body) => Fetch.postFormData('post', body),
     {
-      onSettled: () => {
+      onSuccess: () => {
         queryClient.invalidateQueries('post');
       },
     }
