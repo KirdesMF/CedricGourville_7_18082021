@@ -10,6 +10,7 @@ export function userRouter(app: Application) {
   app.use('/user', router);
 
   router.get('/', UserControllers.logged);
+  router.get('/:id', UserControllers.getUserById);
   router.post('/login', UserControllers.login);
   router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
 
