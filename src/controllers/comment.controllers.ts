@@ -14,4 +14,4 @@ async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export const CommentController = { create };
+export const CommentControllers = { create };

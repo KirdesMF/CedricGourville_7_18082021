@@ -38,6 +38,9 @@ async function getUser<T extends TUniqueUserField>(field: T, value: string) {
   return user;
 }
 
+/**
+ * get avatar id
+ */
 async function getAvatarId(id: string) {
   const user = await prisma.user.findUnique({
     where: { id },

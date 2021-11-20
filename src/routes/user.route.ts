@@ -15,7 +15,6 @@ export function userRouter(app: Application) {
   router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
 
   router.post('/register', validationRegister, UserControllers.register);
-  router.post('/not-used', UserControllers.checkNotUsed);
 
   router.delete('/logout', authorization, UserControllers.logout);
   router.delete('/unregister', authorization, UserControllers.unRegister);

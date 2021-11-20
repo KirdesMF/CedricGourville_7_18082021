@@ -5,6 +5,9 @@ import { Post } from '.prisma/client';
 import { ImageKitServices } from '../services/imagekit.services';
 import { ErrorHandler } from '../utils/error.utils';
 
+/**
+ * get all posts
+ */
 async function getAll(req: Request, res: Response, next: NextFunction) {
   try {
     const posts = await PostServices.getAllPosts();
@@ -16,6 +19,9 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * get one post by id
+ */
 async function getOne(req: Request, res: Response, next: NextFunction) {
   const id = req.body?.id;
   try {
@@ -26,6 +32,9 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * create one post
+ */
 async function create(req: Request, res: Response, next: NextFunction) {
   const body = req.body as Post;
   const file = req?.file;
@@ -54,6 +63,9 @@ async function create(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * edit post
+ */
 async function edit(req: Request, res: Response, next: NextFunction) {
   const { id: postId, body } = req.body;
   const file = req?.file;
@@ -95,6 +107,9 @@ async function edit(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * remove post
+ */
 async function remove(req: Request, res: Response, next: NextFunction) {
   const postId = req.body.id;
   try {

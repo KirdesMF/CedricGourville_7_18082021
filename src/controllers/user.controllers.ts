@@ -10,10 +10,7 @@ import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * register user
  */
 async function register(req: Request, res: Response, next: NextFunction) {
   const body = req.body as User;
@@ -48,6 +45,9 @@ async function register(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * login user
+ */
 async function login(req: Request, res: Response, next: NextFunction) {
   const { password, log } = req.body as Record<string, string>;
   const field = log.includes('@') ? 'email' : 'username';
@@ -85,6 +85,9 @@ async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * get user by id
+ */
 async function getUserById(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   try {
@@ -95,6 +98,9 @@ async function getUserById(req: Request, res: Response, next: NextFunction) {
   }
 }
 
+/**
+ * update user
+ */
 async function edit(req: Request, res: Response, next: NextFunction) {
   const userId = req?.userId;
   const body = req.body as User;
@@ -141,10 +147,7 @@ async function edit(req: Request, res: Response, next: NextFunction) {
 }
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * log out user
  */
 async function logout(req: Request, res: Response, next: NextFunction) {
   res
@@ -156,10 +159,7 @@ async function logout(req: Request, res: Response, next: NextFunction) {
 }
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * delete user
  */
 async function unRegister(req: Request, res: Response, next: NextFunction) {
   const { userId } = req;
@@ -172,43 +172,6 @@ async function unRegister(req: Request, res: Response, next: NextFunction) {
       .clearCookie('jwt')
       .status(httpStatus.OK)
       .json({ message: '👋 user successfully  deleted' });
-  } catch (error) {
-    next(error);
-  }
-}
-
-// TODO
-// clean this function
-async function checkNotUsed(req: Request, res: Response, next: NextFunction) {
-  const email = req.body?.email as string;
-  const username = req.body?.username as string;
-
-  try {
-    if (email) {
-      const user = await UserServices.getUser('email', email);
-
-      if (user) {
-        throw new ErrorHandler(
-          httpStatus.conflict,
-          '❌ This email is already in use'
-        );
-      }
-
-      res.json({ message: '✔ Ok, this email is not in use' });
-    }
-
-    if (username) {
-      const user = await UserServices.getUser('username', username);
-
-      if (user) {
-        throw new ErrorHandler(
-          httpStatus.conflict,
-          '❌ This username is already in use'
-        );
-      }
-
-      res.json({ message: '✔ Ok, this username is not in use' });
-    }
   } catch (error) {
     next(error);
   }
@@ -245,6 +208,5 @@ export const UserControllers = {
   logout,
   register,
   unRegister,
-  checkNotUsed,
   logged,
 };

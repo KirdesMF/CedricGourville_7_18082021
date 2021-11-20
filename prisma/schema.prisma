@@ -41,7 +41,7 @@ model User {
   role       Role       @default(USER)
   comments   Comment[]
   posts      Post[]
-  rating     Like[]
+  likes      Like[]
 }
 
 model Post {
@@ -54,7 +54,7 @@ model Post {
   media    String?   @db.VarChar(255)
   mediaId  String?   @db.VarChar(255)
   comments Comment[]
-  rating   Like[]
+  likes    Like[]
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
