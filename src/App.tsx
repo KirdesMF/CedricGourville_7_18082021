@@ -2,7 +2,6 @@ import './styles/reset.css';
 
 import { Header } from './components/Header/Header';
 import { Routes } from './routes/Routes';
-import { grid } from './styles/layouts.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { io } from 'socket.io-client';

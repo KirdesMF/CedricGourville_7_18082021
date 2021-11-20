@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Department, Role } from 'p7_types';
+import { Role } from 'p7_types';
 import { usePosts } from '../../api/post.api';
 import { useUser } from '../../api/user.api';
 import { FormPost } from '../../components/forms/FormPost';

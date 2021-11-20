@@ -8,6 +8,12 @@ export function useUser() {
   return useQuery<User, TError>(['user'], () => Fetch.get<User>('user'));
 }
 
+export function useUserId(id: string) {
+  return useQuery<User, TError>(['user/:id'], () =>
+    Fetch.get<User>(`user/${id}`)
+  );
+}
+
 export function useCreateUser() {
   const queryClient = useQueryClient();
 

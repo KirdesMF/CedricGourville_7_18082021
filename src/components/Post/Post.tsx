@@ -1,5 +1,5 @@
 import { motion, Variants } from 'framer-motion';
-import { Comment, Post as PostType, Role, User } from 'p7_types';
+import { User } from 'p7_types';
 import { useState } from 'react';
 import { useDeletePost } from '../../api/post.api';
 import { TPost } from '../../types';

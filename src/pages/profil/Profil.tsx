@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { useLogOutUser, useUnregisterUser, useUser } from '../../api/user.api';
+import { useParams } from 'react-router';
+import {
+  useLogOutUser,
+  useUnregisterUser,
+  useUser,
+  useUserId,
+} from '../../api/user.api';
 import { Anchor } from '../../components/Anchor/Anchor';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Button } from '../../components/Button/Button';
@@ -10,9 +16,11 @@ import * as styles from './profil.css';
 const notProvided = '❌ Not Provided';
 
 export function Profil() {
+  const { id } = useParams<{ id: string }>();
   const { mutate: logout } = useLogOutUser();
   const { mutate: unregister } = useUnregisterUser();
-  const { data: user } = useUser();
+  // const { data: user } = useUser();
+  const { data: user } = useUserId(id);
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditing = () => setIsEditing((prev) => !prev);

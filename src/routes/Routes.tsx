@@ -17,7 +17,7 @@ export function Routes() {
       <PublicRoute path="/login" component={Login} />
       <PublicRoute path="/register" component={Register} />
       <PrivateRoute path="/feed" component={Feed} />
-      <PrivateRoute path="/profil" component={Profil} />
+      <PrivateRoute path="/profil/:id" component={Profil} />
       <PrivateRoute path="/post/:id" component={PagePost} />
       <AdminRoute path="/dashboard" component={() => <p>Dashboard</p>} />
       <Route component={Page404} />
