@@ -38,6 +38,7 @@ ALTER TABLE `User` DROP COLUMN `name`,
 -- DropTable
 DROP TABLE `Profile`;
 
+/** https://github.com/prisma/prisma/issues/5401 */
 -- CreateTable
 CREATE TABLE `Comment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
