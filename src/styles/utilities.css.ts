@@ -12,7 +12,7 @@ const properties = defineProperties({
       '2xl': `min(100%, ${vars.sizes['2xl']})`,
       full: `min(100%, ${vars.sizes.full})`,
     },
-    alignItems: ['center', 'stretch', 'start', 'end'],
+    alignItems: ['center', 'stretch', 'start', 'end', 'baseline'],
     justifyContent: ['space-between', 'flex-start', 'flex-end', 'center'],
     placeItems: ['center'],
     flex: [1],

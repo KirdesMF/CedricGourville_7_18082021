@@ -32,6 +32,13 @@ export const button = recipe({
         }),
       ],
     },
+    liked: {
+      true: [
+        utilities({
+          color: { default: 'success', '@hover': 'success-hover' },
+        }),
+      ],
+    },
     warning: {
       true: [
         utilities({
@@ -85,13 +92,6 @@ export const button = recipe({
           paddingBlock: 'sm',
           fontSize: 'sm',
           fontVariationSettings: 'thin',
-        }),
-      ],
-    },
-    liked: {
-      true: [
-        utilities({
-          color: { default: 'success', '@hover': 'success-hover' },
         }),
       ],
     },

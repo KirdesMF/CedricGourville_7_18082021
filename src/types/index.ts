@@ -18,6 +18,8 @@ type UserPost = {
   user: Pick<User, 'username' | 'avatar' | 'department'>;
 };
 type CommentsPost = {
-  comments: Pick<Comment, 'content' | 'createdAt'>[];
+  comments: (Pick<Comment, 'content' | 'createdAt' | 'id' | 'userId'> & {
+    user: Pick<User, 'avatar' | 'department'>;
+  })[];
 };
 export type TPost = Omit<Post, 'mediaId'> & UserPost & CommentsPost & LikePost;

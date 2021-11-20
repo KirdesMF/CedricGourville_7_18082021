@@ -1,4 +1,4 @@
-import { User } from 'p7_types';
+import { Comment, Like, Post, User } from 'p7_types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import { TError } from '../types';
@@ -7,16 +7,27 @@ import { Fetch } from '../utils/fetcher.utils';
 /**
  * get current user
  */
+type CurrentUser = Pick<
+  User,
+  'id' | 'email' | 'username' | 'password' | 'role' | 'department'
+>;
+
 export function useCurrentUser() {
-  return useQuery<User, TError>(['user'], () => Fetch.get<User>('user'));
+  return useQuery<CurrentUser, TError>('user', () =>
+    Fetch.get<CurrentUser>('user')
+  );
 }
 
 /**
  * get user by id
  */
+type UserById = Omit<User, 'role' | 'avatarId' | 'updatedAt' | 'email'> & {
+  likes: Like[];
+} & { posts: Post[] } & { comments: Comment[] };
+
 export function useUserId(id: string) {
-  return useQuery<User, TError>([`user/${id}`], () =>
-    Fetch.get<User>(`user/${id}`)
+  return useQuery<UserById, TError>(`user/:id`, () =>
+    Fetch.get<UserById>(`user/${id}`)
   );
 }
 
@@ -71,6 +82,7 @@ export function useUpdateUser() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
+        queryClient.invalidateQueries('user/:id');
       },
     }
   );

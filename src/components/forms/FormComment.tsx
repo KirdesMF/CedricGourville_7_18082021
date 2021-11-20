@@ -5,7 +5,13 @@ import { socket } from '../../App';
 import { Button } from '../Button/Button';
 import { CustomInput } from '../Input/Input';
 
-export function FormComment({ postId }: { postId: string }) {
+export function FormComment({
+  postId,
+  userId,
+}: {
+  postId: string;
+  userId: string;
+}) {
   const {
     handleSubmit,
     register,
@@ -16,7 +22,7 @@ export function FormComment({ postId }: { postId: string }) {
   const { mutate } = useCommentPost();
 
   const handleOnSubmit = (data: Comment) => {
-    const values = { ...data, postId };
+    const values = { ...data, postId, userId };
     mutate(values);
     reset();
     socket.emit('new-comment', postId);

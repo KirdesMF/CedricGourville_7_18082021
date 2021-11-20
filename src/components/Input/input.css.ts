@@ -15,7 +15,7 @@ export const input = style([
     border: 'none',
     appearance: 'none',
 
-    borderBottom: `1px solid ${vars.colors['on-base-high-contrast']}`,
+    borderBottom: `1px solid ${vars.colors.base9}`,
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
 
     ':focus': {

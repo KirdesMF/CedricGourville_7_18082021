@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
@@ -70,4 +70,25 @@ export const img = style({
       transform: `scale(1.05)`,
     },
   },
+});
+
+export const avatars = style([
+  utilities({ display: 'inline-flex' }),
+  {
+    flexDirection: 'row-reverse',
+  },
+]);
+
+export const avatarComments = style({
+  selectors: {
+    '&:not(:last-child)': {
+      marginLeft: '-10px',
+    },
+  },
+});
+
+export const lastComment = utilities({
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: 'xs',
 });

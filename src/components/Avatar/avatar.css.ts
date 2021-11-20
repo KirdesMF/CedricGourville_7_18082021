@@ -1,20 +1,36 @@
 import { style } from '@vanilla-extract/css';
+import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
-export const avatar = style([
-  utilities({
-    borderRadius: 'full',
-  }),
-  {
-    width: '2.5rem',
-    height: '2.5rem',
-    userSelect: 'none',
-    verticalAlign: 'middle',
-    border: `2px solid ${vars.colors.primary9}`,
-    padding: '0.25rem',
+export const avatar = recipe({
+  base: [
+    {
+      userSelect: 'none',
+      filter: `drop-shadow(0 2px 3px ${vars.colors.shadow})`,
+    },
+  ],
+  variants: {
+    size: {
+      small: {
+        width: '1.625rem',
+        height: '1.625rem',
+      },
+      medium: {
+        width: '2.5rem',
+        height: '2.5rem',
+      },
+    },
+    radius: {
+      full: utilities({ borderRadius: 'full' }),
+      square: utilities({ borderRadius: 'md' }),
+    },
   },
-]);
+  defaultVariants: {
+    size: 'medium',
+    radius: 'full',
+  },
+});
 
 export const imgAvatar = style({
   width: '100%',
@@ -23,7 +39,4 @@ export const imgAvatar = style({
   borderRadius: 'inherit',
 });
 
-export const svg = style({
-  width: '2.5rem',
-  height: '2.5rem',
-});
+export type AvatarVariant = RecipeVariants<typeof avatar>;

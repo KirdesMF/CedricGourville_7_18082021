@@ -1,34 +1,36 @@
 import { Department, User } from 'p7_types';
-import { vars } from '../../styles/vars.css';
 import * as styles from './avatar.css';
+import type { AvatarVariant } from './avatar.css';
+import { cx } from '../../utils/classname.utils';
 
 const FILL_COLOR_DPT: Record<Department, string> = {
   VISITOR: 'hsl(350, 30%, 60%)',
-  COM: 'hsl(50, 30%, 30%)',
-  DIRECTION: 'hsl(150, 30%, 30%)',
-  SOCIAL: 'hsl(250, 30%, 30%)',
-  TECH: 'hsl(1750, 30%, 30%)',
+  COM: 'hsl(50, 30%, 50%)',
+  DIRECTION: 'hsl(150, 30%, 50%)',
+  SOCIAL: 'hsl(250, 30%, 50%)',
+  TECH: 'hsl(1750, 30%, 50%)',
 };
 
 export function AvatarSvg({ department }: { department: Department }) {
   return (
     <svg
-      className={styles.svg}
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
       viewBox="0 0 259.3 259.3"
+      width="100%"
+      height="100%"
     >
-      <g stroke="#000" strokeMiterlimit={10}>
+      <g stroke="hsl(0, 10%, 10%)" strokeMiterlimit={10}>
         <circle
           fill={FILL_COLOR_DPT[department]}
-          strokeWidth={10.8002}
+          strokeWidth={12}
           cx={129.6}
           cy={129.6}
           r={124.2}
         />
         <path
-          fill={vars.colors.primary9}
+          fill="hsl(200, 20%, 50%)"
           strokeWidth={10}
           d="M51.1 225.5s-2.2-88.6 78.1-88.6 76.7 76.9 76.9 89.6c0 0-71 61.8-155-1"
         />
@@ -61,13 +63,26 @@ export function AvatarSvg({ department }: { department: Department }) {
   );
 }
 
-type AvatarProps = { user: Pick<User, 'avatar' | 'department'> };
+type AvatarProps = {
+  user: Pick<User, 'avatar' | 'department'>;
+  variant?: AvatarVariant;
+  className?: string;
+};
 
-export function Avatar({ user }: AvatarProps) {
-  if (!user.avatar) return <AvatarSvg department={user.department} />;
+export function Avatar({ user, variant, className }: AvatarProps) {
+  const cls = className
+    ? cx([styles.avatar(variant), className])
+    : styles.avatar(variant);
+
+  if (!user.avatar)
+    return (
+      <div className={cls}>
+        <AvatarSvg department={user.department} />
+      </div>
+    );
 
   return (
-    <div className={styles.avatar}>
+    <div className={cls}>
       <img className={styles.imgAvatar} src={user.avatar} alt="Avatar profil" />
     </div>
   );

@@ -1,8 +1,11 @@
 // import { User } from 'p7_types';
+import { Department } from 'p7_types';
 import { useForm } from 'react-hook-form';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';
-import { BasicInput, CustomInput } from '../Input/Input';
+import { Button } from '../Button/Button';
+import { CustomInput } from '../Input/Input';
+import { CustomSelect } from '../Select/Select';
 
 type ProfileField = {
   firstName: string;
@@ -11,7 +14,16 @@ type ProfileField = {
   avatar?: FileList;
   username: string;
   password: string;
+  department: string;
 };
+
+const DEPARTMENT: Department[] = [
+  'COM',
+  'DIRECTION',
+  'SOCIAL',
+  'TECH',
+  'VISITOR',
+];
 
 export function FormProfile() {
   const {
@@ -81,7 +93,18 @@ export function FormProfile() {
         placeholder="Add a pic profile"
       />
 
-      <BasicInput value="Send" type="submit" />
+      <CustomSelect
+        name="department"
+        choices={DEPARTMENT}
+        register={register}
+        errors={errors}
+        customPlaceholder="Select your department"
+        label="department"
+      />
+
+      <Button variant={{ primary: true }} type="submit">
+        Update your profil
+      </Button>
     </form>
   );
 }

@@ -14,3 +14,8 @@ export function convertDate(date: Date) {
   // month start from index 0
   return `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`;
 }
+
+export function convertDateToTime(date: Date) {
+  const newDate = new Date(date);
+  return `${newDate.getHours()}.${newDate.getMinutes()}`;
+}

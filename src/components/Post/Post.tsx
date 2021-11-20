@@ -7,7 +7,7 @@ import {
   useRemoveLikePost,
 } from '../../api/post.api';
 import { TPost } from '../../types';
-import { convertDate } from '../../utils/utils';
+import { convertDate, convertDateToTime } from '../../utils/utils';
 import { Anchor } from '../Anchor/Anchor';
 import { Avatar } from '../Avatar/Avatar';
 import { Button } from '../Button/Button';
@@ -56,6 +56,10 @@ export function Post(props: PostProps) {
   const { mutate: unlike } = useRemoveLikePost();
 
   const hasLiked = likes.find((e) => e.userId === currentUser.id);
+  const hasCommented = comments.some((e) => e.userId === currentUser.id);
+  const avatarsComment = comments.filter((e, i) => i < 5);
+  const lastComment = comments[comments.length - 1];
+
   const isAdminOrUserOwner =
     userId === currentUser.id || currentUser.role === 'ADMIN';
 
@@ -111,7 +115,21 @@ export function Post(props: PostProps) {
         )}
 
         <div className={styles.buttons}>
-          <Button variant={{ ghost: true }} onClick={handleComment}>
+          <div className={styles.avatars}>
+            {avatarsComment.map((e) => (
+              <Avatar
+                className={styles.avatarComments}
+                key={e.id}
+                variant={{ size: 'small', radius: 'square' }}
+                user={e.user}
+              />
+            ))}
+          </div>
+
+          <Button
+            variant={hasCommented ? { liked: true } : { ghost: true }}
+            onClick={handleComment}
+          >
             <Icon name="ChatBubbleIcon" />
             <Span variant={{ size: 'xs', weight: 'thin' }}>
               {comments.length}
@@ -133,17 +151,20 @@ export function Post(props: PostProps) {
           )}
         </div>
 
-        {isCommenting && <FormComment postId={id} />}
+        {lastComment && (
+          <div className={styles.lastComment}>
+            <small>
+              {convertDate(lastComment.createdAt)} -{' '}
+              {convertDateToTime(lastComment.createdAt)} -{' '}
+            </small>
 
-        {/* <div>
-          {comments.length !== 0 && (
-            <div>
-              {comments.map((com, idx) => (
-                <p key={idx}>{com.content}</p>
-              ))}
-            </div>
-          )}
-        </div> */}
+            <Paragraph variant={{ size: 'sm' }}>
+              {lastComment.content}
+            </Paragraph>
+          </div>
+        )}
+
+        {isCommenting && <FormComment postId={id} userId={currentUser.id} />}
       </div>
     </motion.article>
   );
