@@ -91,7 +91,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 async function getUserById(req: Request, res: Response, next: NextFunction) {
   const { id } = req.params;
   try {
-    const user = await UserServices.getUser('id', id);
+    const user = await UserServices.getUserById(id);
     res.status(httpStatus.OK).json(user);
   } catch (error) {
     next(error);

@@ -2,7 +2,7 @@ import { Comment, PrismaClient } from '.prisma/client';
 
 const prisma = new PrismaClient();
 
-async function createComment(body: Comment) {
+async function create(body: Comment) {
   const { postId, userId, ...data } = body;
   const comment = await prisma.comment.create({
     data: {
@@ -15,5 +15,5 @@ async function createComment(body: Comment) {
 }
 
 export const CommentServices = {
-  createComment,
+  create,
 };

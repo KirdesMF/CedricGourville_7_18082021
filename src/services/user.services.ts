@@ -33,6 +33,36 @@ async function createUser(data: User) {
 async function getUser<T extends TUniqueUserField>(field: T, value: string) {
   const user = await prisma.user.findUnique({
     where: { [field]: value },
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      password: true,
+      role: true,
+      department: true,
+    },
+  });
+
+  return user;
+}
+
+async function getUserById(id: string) {
+  const user = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      createdAt: true,
+      username: true,
+      department: true,
+      firstName: true,
+      lastName: true,
+      lastConnection: true,
+      avatar: true,
+      bio: true,
+      posts: true,
+      likes: true,
+      comments: true,
+    },
   });
 
   return user;
@@ -96,6 +126,7 @@ export const UserServices = {
   createUser,
   deleteUser,
   getUser,
+  getUserById,
   getAvatarId,
   updateUser,
 };

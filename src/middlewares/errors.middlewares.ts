@@ -35,7 +35,7 @@ function responder(
     if (err.code === 'P2002') {
       return res
         .status(status)
-        .json({ status, message: `${field} already in use` });
+        .json({ status, message: `${err.message} already in use` });
     }
   }
   return res.status(status).json({ status, message });

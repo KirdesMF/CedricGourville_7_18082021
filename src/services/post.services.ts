@@ -48,7 +48,15 @@ async function getAllPosts() {
       comments: {
         orderBy: { createdAt: 'asc' },
         select: {
+          id: true,
           content: true,
+          createdAt: true,
+          user: {
+            select: {
+              avatar: true,
+              department: true,
+            },
+          },
         },
       },
       likes: {
