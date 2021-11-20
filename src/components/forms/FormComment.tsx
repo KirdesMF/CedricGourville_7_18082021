@@ -1,6 +1,6 @@
 import { Comment } from 'p7_types';
 import { useForm } from 'react-hook-form';
-import { useCreateComment } from '../../api/comment.api';
+import { useCommentPost } from '../../api/post.api';
 import { socket } from '../../App';
 import { Button } from '../Button/Button';
 import { CustomInput } from '../Input/Input';
@@ -13,7 +13,7 @@ export function FormComment({ postId }: { postId: string }) {
     formState: { errors },
   } = useForm<{ content: string }>();
 
-  const { mutate } = useCreateComment();
+  const { mutate } = useCommentPost();
 
   const handleOnSubmit = (data: Comment) => {
     const values = { ...data, postId };

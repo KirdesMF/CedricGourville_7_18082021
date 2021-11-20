@@ -1,8 +1,8 @@
 import { Redirect, Route, RouteProps } from 'react-router';
-import { useUser } from '../api/user.api';
+import { useCurrentUser } from '../api/user.api';
 
 export function PublicRoute(props: RouteProps) {
-  const { data: user, isSuccess } = useUser();
+  const { data: user, isSuccess } = useCurrentUser();
 
   if (user && isSuccess) return <Redirect to="/feed" />;
 

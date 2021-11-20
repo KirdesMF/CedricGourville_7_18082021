@@ -1,5 +1,5 @@
 import { motion, Variants } from 'framer-motion';
-import { useUser } from '../../api/user.api';
+import { useCurrentUser } from '../../api/user.api';
 import { useMatchMedia } from '../../hooks/useMatchMedia';
 import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { Anchor } from '../Anchor/Anchor';
@@ -33,7 +33,7 @@ const LOG_LINKS = [
 
 export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
   const isDesktop = useMatchMedia(makeBreakpoint('md'));
-  const { data: user } = useUser();
+  const { data: user } = useCurrentUser();
   const mapLinks = user ? LOG_LINKS : LINKS;
 
   return (

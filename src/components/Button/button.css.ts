@@ -5,7 +5,7 @@ import { vars } from '../../styles/vars.css';
 
 const base = style([
   utilities({
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center',
     gap: 'sm',
     borderRadius: 'xs',
@@ -85,6 +85,13 @@ export const button = recipe({
           paddingBlock: 'sm',
           fontSize: 'sm',
           fontVariationSettings: 'thin',
+        }),
+      ],
+    },
+    liked: {
+      true: [
+        utilities({
+          color: { default: 'success', '@hover': 'success-hover' },
         }),
       ],
     },

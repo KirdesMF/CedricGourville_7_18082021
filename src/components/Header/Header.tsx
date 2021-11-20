@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
-import { useUser } from '../../api/user.api';
+import { useCurrentUser } from '../../api/user.api';
 import { User } from 'p7_types';
 import { Avatar } from '../Avatar/Avatar';
 
@@ -29,7 +29,7 @@ const AnchorAvatar = ({ user }: { user: User | undefined }) => {
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useTheme();
-  const { data: user } = useUser();
+  const { data: user } = useCurrentUser();
 
   const handleTheme = () => {
     mode === 'dark' ? setMode('light') : setMode('dark');

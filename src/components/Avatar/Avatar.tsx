@@ -3,11 +3,11 @@ import { vars } from '../../styles/vars.css';
 import * as styles from './avatar.css';
 
 const FILL_COLOR_DPT: Record<Department, string> = {
-  VISITOR: 'red',
-  COM: 'blue',
-  DIRECTION: 'green',
-  SOCIAL: 'yellow',
-  TECH: 'purple',
+  VISITOR: 'hsl(350, 30%, 60%)',
+  COM: 'hsl(50, 30%, 30%)',
+  DIRECTION: 'hsl(150, 30%, 30%)',
+  SOCIAL: 'hsl(250, 30%, 30%)',
+  TECH: 'hsl(1750, 30%, 30%)',
 };
 
 export function AvatarSvg({ department }: { department: Department }) {

@@ -4,34 +4,30 @@ import { useHistory } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
 
-export function useUser() {
+/**
+ * get current user
+ */
+export function useCurrentUser() {
   return useQuery<User, TError>(['user'], () => Fetch.get<User>('user'));
 }
 
+/**
+ * get user by id
+ */
 export function useUserId(id: string) {
-  return useQuery<User, TError>(['user/:id'], () =>
+  return useQuery<User, TError>([`user/${id}`], () =>
     Fetch.get<User>(`user/${id}`)
   );
 }
 
+/**
+ * create user
+ */
 export function useCreateUser() {
   const queryClient = useQueryClient();
 
   return useMutation<User, TError, Partial<User>>(
     (body) => Fetch.post('user/register', body),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('user');
-      },
-    }
-  );
-}
-
-export function useCheckNotUsed() {
-  const queryClient = useQueryClient();
-
-  return useMutation<Record<string, string>, TError, Record<string, string>>(
-    (body) => Fetch.post('user/not-used', body),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');

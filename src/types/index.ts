@@ -1,4 +1,4 @@
-import { Comment, Post, User } from 'p7_types';
+import { Comment, Like, Post, User } from 'p7_types';
 
 export type Data = {
   user?: User;
@@ -10,10 +10,14 @@ export type TError = Error & {
   message: string;
 };
 
+type LikePost = {
+  likes: Pick<Like, 'id' | 'userId'>[];
+};
+
 type UserPost = {
   user: Pick<User, 'username' | 'avatar' | 'department'>;
 };
 type CommentsPost = {
   comments: Pick<Comment, 'content' | 'createdAt'>[];
 };
-export type TPost = Omit<Post, 'mediaId'> & UserPost & CommentsPost;
+export type TPost = Omit<Post, 'mediaId'> & UserPost & CommentsPost & LikePost;

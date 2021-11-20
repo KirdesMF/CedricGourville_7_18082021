@@ -8,7 +8,6 @@ import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
 import { utilities } from '../../styles/utilities.css';
-import * as styles from './form.css';
 
 type UserFields = User & { confirmPassword: string };
 

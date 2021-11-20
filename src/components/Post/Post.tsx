@@ -1,7 +1,11 @@
 import { motion, Variants } from 'framer-motion';
 import { User } from 'p7_types';
 import { useState } from 'react';
-import { useDeletePost } from '../../api/post.api';
+import {
+  useDeletePost,
+  useLikePost,
+  useRemoveLikePost,
+} from '../../api/post.api';
 import { TPost } from '../../types';
 import { convertDate } from '../../utils/utils';
 import { Anchor } from '../Anchor/Anchor';
@@ -33,18 +37,35 @@ const variants: Variants = {
 
 export function Post(props: PostProps) {
   const { delay, currentUser, post } = props;
-  const { id, userId, createdAt, content, media, title, user, comments } = post;
+  const {
+    id,
+    userId,
+    createdAt,
+    content,
+    media,
+    title,
+    user,
+    comments,
+    likes,
+  } = post;
   const { username, avatar, department } = user;
 
   const [isCommenting, setIsCommenting] = useState(false);
-  const { mutate } = useDeletePost();
+  const { mutate: deletePost } = useDeletePost();
+  const { mutate: like } = useLikePost();
+  const { mutate: unlike } = useRemoveLikePost();
+
+  const hasLiked = likes.find((e) => e.userId === currentUser.id);
+  const isAdminOrUserOwner =
+    userId === currentUser.id || currentUser.role === 'ADMIN';
 
   const handleComment = () => setIsCommenting((prev) => !prev);
-  const handleDelete = () => {
-    mutate({ id });
+  const handleDelete = () => deletePost({ id });
+  const handleLike = () => {
+    hasLiked
+      ? unlike({ id: hasLiked.id })
+      : like({ userId: currentUser.id, postId: id });
   };
-  const isAdminOrUser =
-    userId === currentUser.id || currentUser.role === 'ADMIN';
 
   return (
     <motion.article
@@ -97,7 +118,15 @@ export function Post(props: PostProps) {
             </Span>
           </Button>
 
-          {isAdminOrUser && (
+          <Button
+            onClick={handleLike}
+            variant={hasLiked ? { liked: true } : { ghost: true }}
+          >
+            <Icon name="HeartIcon" />
+            <Span variant={{ size: 'xs', weight: 'thin' }}>{likes.length}</Span>
+          </Button>
+
+          {isAdminOrUserOwner && (
             <Button variant={{ warning: true }} onClick={handleDelete}>
               <Icon name="TrashIcon" />
             </Button>

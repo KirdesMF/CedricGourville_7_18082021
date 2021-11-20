@@ -5,20 +5,23 @@ import { makeBreakpoint } from '../../utils/breakpoints.utils';
 import { baseAnchor } from '../Anchor/anchor.css';
 
 export const span = recipe({
-  base: {
-    margin: 0,
+  base: [
+    utilities({ display: 'inline-flex', alignItems: 'center' }),
+    {
+      margin: 0,
 
-    selectors: {
-      [`${baseAnchor} &`]: {
-        display: 'none',
-        '@media': {
-          [makeBreakpoint('md')]: {
-            display: 'initial',
+      selectors: {
+        [`${baseAnchor} &`]: {
+          display: 'none',
+          '@media': {
+            [makeBreakpoint('md')]: {
+              display: 'initial',
+            },
           },
         },
       },
     },
-  },
+  ],
   variants: {
     uppercase: { true: { textTransform: 'uppercase' } },
     color: {
