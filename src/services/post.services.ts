@@ -35,10 +35,13 @@ async function getAllPosts() {
       title: true,
       content: true,
       media: true,
+      createdAt: true,
+      userId: true,
       user: {
         select: {
           username: true,
-          id: true,
+          avatar: true,
+          department: true,
         },
       },
       comments: {

@@ -1,5 +1,4 @@
 import { checkSchema, Schema } from 'express-validator';
-import { Department } from '.prisma/client';
 
 const registerValidatorSchema: Schema = {
   email: {
@@ -28,30 +27,6 @@ const registerValidatorSchema: Schema = {
       options: (value: string) => {
         if (value.includes('@')) {
           throw new Error('username cannot contains special characters');
-        }
-
-        return true;
-      },
-    },
-  },
-  department: {
-    in: 'body',
-    notEmpty: true,
-    custom: {
-      options: (value) => {
-        const dpt: (keyof typeof Department)[] = [
-          'DIRECTION',
-          'COM',
-          'SOCIAL',
-          'TECH',
-          'VISITOR',
-        ];
-
-        const list = dpt.join(',');
-        const error = `Please provide a department from this list: ${list}`;
-
-        if (!dpt.includes(value)) {
-          throw new Error(error);
         }
 
         return true;

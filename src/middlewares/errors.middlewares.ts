@@ -1,15 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { httpStatus } from '../utils/http-status';
 import { ErrorHandler } from '../utils/error.utils';
 
+function getFieldFromPrismaError(constraint: string) {
+  return constraint.includes('username') ? 'Username' : 'Email';
+}
+
 function logger(
-  err: ErrorRequestHandler,
+  err: ErrorHandler,
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  console.error(`Error Logger: ${err}`);
+  if (process.env.NODE_ENV === 'development') {
+    console.error(`Error Logger: ${err.message}`);
+  }
   next(err);
 }
 
@@ -21,7 +28,17 @@ function responder(
 ) {
   const status = err.status || httpStatus.serverError;
   const message = err.message || 'Something went wrong';
-  res.status(status).json({ status, message });
+
+  if (err instanceof PrismaClientKnownRequestError) {
+    const field = getFieldFromPrismaError(err.message);
+
+    if (err.code === 'P2002') {
+      return res
+        .status(status)
+        .json({ status, message: `${field} already in use` });
+    }
+  }
+  return res.status(status).json({ status, message });
 }
 
 export const ErrorsMiddleWare = {

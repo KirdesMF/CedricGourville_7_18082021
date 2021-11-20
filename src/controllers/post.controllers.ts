@@ -10,8 +10,9 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
     const posts = await PostServices.getAllPosts();
 
     res.status(httpStatus.OK).json(posts);
+    return posts;
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
 

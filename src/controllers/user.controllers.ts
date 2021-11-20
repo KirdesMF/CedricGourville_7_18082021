@@ -23,7 +23,6 @@ async function register(req: Request, res: Response, next: NextFunction) {
     if (!errors.isEmpty()) {
       const arr = errors.array();
       const message = arr.map((a) => a.msg).join(', ');
-      console.table(arr.map((a) => a));
       throw new ErrorHandler(
         httpStatus.badRequest,
         `Can you check this: ${message}`
