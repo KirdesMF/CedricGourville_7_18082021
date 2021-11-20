@@ -55,7 +55,7 @@ createGlobalTheme(':root.dark', baseColorVars, {
     ...indigoDark,
     ...greenDark,
     ...orangeDark,
-    shadow: 'hsl(200, 20%, 5%)',
+    shadow: 'hsl(200, 10%, 3%)',
   },
 });
 

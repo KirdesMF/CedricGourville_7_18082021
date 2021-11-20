@@ -19,24 +19,15 @@ export function Feed() {
         <FormPost />
 
         <AnimatePresence>
-          <motion.div layout className={styles.feed}>
+          <motion.div className={styles.feed}>
             {posts?.map((post, idx) => (
               <Post
                 key={post.id}
                 delay={idx}
-                id={post.id}
-                title={post.title}
-                content={post.content}
-                media={post.media}
-                createdAt={post.createdAt}
-                comments={post.comments}
-                userId={user?.id as string}
-                user={{
-                  id: post?.user.id,
+                post={post}
+                currentUser={{
+                  id: user?.id as string,
                   role: user?.role as Role,
-                  username: post?.user.username,
-                  avatar: post?.user.avatar,
-                  department: user?.department as Department,
                 }}
               />
             ))}

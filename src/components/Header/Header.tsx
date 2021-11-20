@@ -21,7 +21,7 @@ const AnchorAvatar = ({ user }: { user: User | undefined }) => {
   }
   return (
     <Anchor to="/profil">
-      <Avatar department={user.department} src={user.avatar} />
+      <Avatar user={{ avatar: user.avatar, department: user.department }} />
     </Anchor>
   );
 };

@@ -1,8 +1,8 @@
 import { motion, Variants } from 'framer-motion';
-import { Comment, Post as PostType, User } from 'p7_types';
+import { Comment, Post as PostType, Role, User } from 'p7_types';
 import { useState } from 'react';
 import { useDeletePost } from '../../api/post.api';
-import { utilities } from '../../styles/utilities.css';
+import { TPost } from '../../types';
 import { convertDate } from '../../utils/utils';
 import { Anchor } from '../Anchor/Anchor';
 import { Avatar } from '../Avatar/Avatar';
@@ -16,49 +16,35 @@ import * as styles from './post.css';
 
 type PostProps = {
   delay: number;
-  user: Pick<User, 'username' | 'id' | 'role' | 'avatar' | 'department'>;
-  comments: Pick<Comment, 'content'>[];
-} & Pick<
-  PostType,
-  'content' | 'id' | 'title' | 'media' | 'userId' | 'createdAt'
->;
+  post: TPost;
+  currentUser: Pick<User, 'id' | 'role'>;
+};
 
 const variants: Variants = {
-  initial: {
-    opacity: 0,
-  },
+  initial: { opacity: 0 },
   animate: (delay: number) => ({
     opacity: 1,
     transition: {
       delay: delay * 0.1,
     },
   }),
-  exit: {
-    opacity: 0,
-  },
+  exit: { opacity: 0 },
 };
 
 export function Post(props: PostProps) {
-  const {
-    id: postId,
-    title,
-    content,
-    media,
-    delay,
-    userId,
-    createdAt,
-    user: { username, id: relationUserId, role, avatar, department },
-    comments,
-  } = props;
+  const { delay, currentUser, post } = props;
+  const { id, userId, createdAt, content, media, title, user, comments } = post;
+  const { username, avatar, department } = user;
 
   const [isCommenting, setIsCommenting] = useState(false);
   const { mutate } = useDeletePost();
 
   const handleComment = () => setIsCommenting((prev) => !prev);
   const handleDelete = () => {
-    mutate({ id: postId });
+    mutate({ id });
   };
-  const isAdminOrUser = userId === relationUserId || role === 'ADMIN';
+  const isAdminOrUser =
+    userId === currentUser.id || currentUser.role === 'ADMIN';
 
   return (
     <motion.article
@@ -69,31 +55,17 @@ export function Post(props: PostProps) {
       exit="exit"
       custom={delay}
     >
-      <Anchor className={styles.avatar} to={`/profil/${relationUserId}`}>
-        <Avatar src={avatar} department={department} />
+      <Anchor className={styles.avatar} to={`/profil/${userId}`}>
+        <Avatar user={{ avatar, department }} />
       </Anchor>
 
-      <div className={utilities({ flex: 1, display: 'grid', gap: 'md' })}>
-        <div
-          className={utilities({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          })}
-        >
-          <div
-            className={utilities({
-              display: 'flex',
-              gap: 'sm',
-              alignItems: 'center',
-            })}
-          >
-            <Anchor
-              variant={{ color: 'base' }}
-              to={`/profil/${relationUserId}`}
-            >
+      <div className={styles.right}>
+        <div className={styles.innerRight}>
+          <div className={styles.info}>
+            <Anchor variant={{ color: 'base' }} to={`/profil/${userId}`}>
               <Span variant={{ weight: 'thin', size: 'sm' }}>{username}</Span>
             </Anchor>
+
             <Span variant={{ size: 'sm', color: 'primary' }}>
               {convertDate(createdAt)}
             </Span>
@@ -117,13 +89,7 @@ export function Post(props: PostProps) {
           </span>
         )}
 
-        <div
-          className={utilities({
-            display: 'flex',
-            gap: 'sm',
-            alignItems: 'center',
-          })}
-        >
+        <div className={styles.buttons}>
           <Button variant={{ ghost: true }} onClick={handleComment}>
             <Icon name="ChatBubbleIcon" />
             <Span variant={{ size: 'xs', weight: 'thin' }}>
@@ -138,7 +104,7 @@ export function Post(props: PostProps) {
           )}
         </div>
 
-        {isCommenting && <FormComment postId={postId} />}
+        {isCommenting && <FormComment postId={id} />}
 
         {/* <div>
           {comments.length !== 0 && (

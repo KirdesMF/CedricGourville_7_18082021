@@ -7,16 +7,46 @@ export const post = style([
     display: 'flex',
     gap: 'lg',
     paddingBlock: 'md',
-    paddingInline: 'sm',
+    paddingInline: 'md',
     background: 'base1',
   }),
-  { borderTop: `0.5px solid ${vars.colors.base3}` },
+  {
+    selectors: {
+      '&:not(:first-child)': {
+        borderTop: `0.5px solid ${vars.colors.base3}`,
+      },
+    },
+  },
 ]);
+
+export const right = utilities({
+  flex: 1,
+  display: 'grid',
+  gap: 'md',
+});
+
+export const innerRight = utilities({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
+export const info = utilities({
+  display: 'flex',
+  gap: 'sm',
+  alignItems: 'center',
+});
 
 export const avatar = style({
   width: 'min-content',
   height: 'min-content',
   alignSelf: 'start',
+});
+
+export const buttons = utilities({
+  display: 'flex',
+  gap: 'sm',
+  alignItems: 'center',
 });
 
 export const figure = style({

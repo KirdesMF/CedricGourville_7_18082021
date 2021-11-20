@@ -1,8 +1,5 @@
-import { User } from 'p7_types';
+import { Comment, Post, User } from 'p7_types';
 
-// TODO
-// type DATA should have more info
-// like createdAt updatedAt
 export type Data = {
   user?: User;
   message?: string;
@@ -12,3 +9,11 @@ export type TError = Error & {
   status: number;
   message: string;
 };
+
+type UserPost = {
+  user: Pick<User, 'username' | 'avatar' | 'department'>;
+};
+type CommentsPost = {
+  comments: Pick<Comment, 'content' | 'createdAt'>[];
+};
+export type TPost = Omit<Post, 'mediaId'> & UserPost & CommentsPost;

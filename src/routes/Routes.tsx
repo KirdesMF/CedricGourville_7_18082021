@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import { Profil } from '../pages/Profil';
 import { PrivateRoute } from './PrivateRoute';
 import { Page404 } from '../pages/Page404';
 import { PublicRoute } from './PublicRoute';
@@ -9,6 +8,7 @@ import { Login } from '../pages/login/Login';
 import { Register } from '../pages/register/Register';
 import { PagePost } from '../pages/PagePost';
 import { Feed } from '../pages/feed/Feed';
+import { Profil } from '../pages/profil/Profil';
 
 export function Routes() {
   return (

@@ -1,4 +1,6 @@
+import { style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
+import { vars } from '../../styles/vars.css';
 
 export const main = utilities({
   paddingBlock: '2xl',
@@ -6,11 +8,16 @@ export const main = utilities({
 });
 
 export const inner = utilities({
-  width: 'lg',
+  width: 'md',
   marginInline: 'auto',
 });
 
-export const feed = utilities({
-  display: 'grid',
-  paddingBlock: 'lg',
-});
+export const feed = style([
+  utilities({
+    display: 'grid',
+  }),
+  {
+    filter: `drop-shadow(0 0 2px ${vars.colors.shadow})`,
+    marginBlockStart: vars.spaces.lg,
+  },
+]);

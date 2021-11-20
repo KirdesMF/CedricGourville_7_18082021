@@ -1,4 +1,4 @@
-import { Department } from 'p7_types';
+import { Department, User } from 'p7_types';
 import { vars } from '../../styles/vars.css';
 import * as styles from './avatar.css';
 
@@ -61,18 +61,14 @@ export function AvatarSvg({ department }: { department: Department }) {
   );
 }
 
-export function Avatar({
-  src,
-  department,
-}: {
-  src: string | null;
-  department: Department;
-}) {
-  if (!src) return <AvatarSvg department={department} />;
+type AvatarProps = { user: Pick<User, 'avatar' | 'department'> };
+
+export function Avatar({ user }: AvatarProps) {
+  if (!user.avatar) return <AvatarSvg department={user.department} />;
 
   return (
     <div className={styles.avatar}>
-      <img className={styles.imgAvatar} src={src} alt="Avatar profil" />
+      <img className={styles.imgAvatar} src={user.avatar} alt="Avatar profil" />
     </div>
   );
 }

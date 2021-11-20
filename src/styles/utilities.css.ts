@@ -6,6 +6,7 @@ const properties = defineProperties({
   properties: {
     position: ['relative', 'absolute', 'sticky', 'fixed'],
     width: {
+      md: `min(100%, ${vars.sizes.md})`,
       lg: `min(100%, ${vars.sizes.lg})`,
       xl: `min(100%, ${vars.sizes.xl})`,
       '2xl': `min(100%, ${vars.sizes['2xl']})`,

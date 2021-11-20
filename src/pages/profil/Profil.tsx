@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { useLogOutUser, useUnregisterUser, useUser } from '../api/user.api';
-import { Anchor } from '../components/Anchor/Anchor';
-import { Avatar } from '../components/Avatar/Avatar';
-import { Button } from '../components/Button/Button';
-import { FormProfile } from '../components/forms/FormProfile';
-import { Heading } from '../components/Heading/Heading';
-import { utilities } from '../styles/utilities.css';
+import { useLogOutUser, useUnregisterUser, useUser } from '../../api/user.api';
+import { Anchor } from '../../components/Anchor/Anchor';
+import { Avatar } from '../../components/Avatar/Avatar';
+import { Button } from '../../components/Button/Button';
+import { FormProfile } from '../../components/forms/FormProfile';
+import { Heading } from '../../components/Heading/Heading';
+import * as styles from './profil.css';
 
 const notProvided = '❌ Not Provided';
+
 export function Profil() {
   const { mutate: logout } = useLogOutUser();
   const { mutate: unregister } = useUnregisterUser();
@@ -19,23 +20,16 @@ export function Profil() {
   const handleUnregister = () => user && unregister({ id: user?.id });
 
   return (
-    <main className={utilities({ paddingBlock: '2xl', paddingInline: 'lg' })}>
-      <div
-        className={utilities({
-          display: 'grid',
-          gap: 'md',
-          padding: '2xl',
-          width: 'lg',
-          marginInline: 'auto',
-        })}
-      >
+    <main className={styles.main}>
+      <div className={styles.inner}>
         <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>Profile</Heading>
+
         <Anchor variant={{ color: 'primary' }} to="/feed">
           Feed
         </Anchor>
 
-        {user?.avatar && (
-          <Avatar src={user.avatar} department={user.department} />
+        {user && (
+          <Avatar user={{ avatar: user.avatar, department: user.department }} />
         )}
 
         <ul>
@@ -45,7 +39,7 @@ export function Profil() {
           <li>Email: {user?.email || notProvided}</li>
         </ul>
 
-        <div className={utilities({ display: 'flex', gap: 'md' })}>
+        <div className={styles.buttons}>
           <Button variant={{ primary: true }} onClick={handleEditing}>
             Edit profile
           </Button>

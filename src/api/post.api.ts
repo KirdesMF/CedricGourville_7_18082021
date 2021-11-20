@@ -1,17 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Fetch } from '../utils/fetcher.utils';
-import { Comment, Post, User } from 'p7_types';
-import { TError } from '../types';
-
-type TUsePost = Post & {
-  user: Pick<User, 'username' | 'id' | 'role' | 'avatar' | 'department'>;
-  comments: Pick<Comment, 'content'>[];
-};
+import { Post } from 'p7_types';
+import { TError, TPost } from '../types';
 
 export function usePosts() {
-  return useQuery<TUsePost[], TError>(['post'], () =>
-    Fetch.get<TUsePost[]>('post')
-  );
+  return useQuery<TPost[], TError>(['post'], () => Fetch.get<TPost[]>('post'));
 }
 
 export function useCreatePost() {
