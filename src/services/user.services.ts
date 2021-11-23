@@ -40,6 +40,7 @@ async function getUser<T extends TUniqueUserField>(field: T, value: string) {
       password: true,
       role: true,
       department: true,
+      avatar: true,
     },
   });
 

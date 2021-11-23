@@ -51,6 +51,7 @@ async function getAllPosts() {
           id: true,
           content: true,
           createdAt: true,
+          userId: true,
           user: {
             select: {
               avatar: true,
