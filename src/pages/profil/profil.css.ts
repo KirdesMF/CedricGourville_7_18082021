@@ -1,3 +1,4 @@
+import { style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 
 export const main = utilities({
@@ -13,6 +14,13 @@ export const inner = utilities({
   marginInline: 'auto',
 });
 
+export const heading = style([
+  utilities({
+    display: 'flex',
+    gap: 'md',
+    alignItems: 'baseline',
+  }),
+]);
 export const buttons = utilities({
   display: 'flex',
   gap: 'md',

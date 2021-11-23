@@ -20,9 +20,6 @@ export function useCurrentUser() {
     () => Fetch.get<CurrentUser>('user'),
     {
       staleTime: convertHoursToMilliseconds(1),
-      onError: () => {
-        push('/');
-      },
     }
   );
 }

@@ -6,7 +6,6 @@ export const heading = recipe({
   base: {
     color: vars.colors['on-base-high-contrast'],
     lineHeight: 1.1,
-    width: 'min(100%, 20ch)',
   },
   variants: {
     transform: {
