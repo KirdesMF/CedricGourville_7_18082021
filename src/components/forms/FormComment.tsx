@@ -2,8 +2,12 @@ import { Comment } from 'p7_types';
 import { useForm } from 'react-hook-form';
 import { useCommentPost } from '../../api/post.api';
 import { socket } from '../../App';
+import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
-import { CustomInput } from '../Input/Input';
+import { Icon } from '../Icon/Icon';
+import { CustomInput, TextArea } from '../Input/Input';
+
+import * as styles from './form.css';
 
 export function FormComment({
   postId,
@@ -29,17 +33,18 @@ export function FormComment({
   };
 
   return (
-    <form onSubmit={handleSubmit(handleOnSubmit)}>
-      <CustomInput
-        type="text"
+    <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.comment}>
+      <TextArea
+        rows={1}
+        autoFocus
         register={register}
         errors={errors}
         name="content"
-        placeholder="content"
+        placeholder="your comment"
         label="content"
       />
       <Button variant={{ primary: true }} type="submit">
-        Comment
+        <Icon name="PaperPlaneIcon" />
       </Button>
     </form>
   );

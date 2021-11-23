@@ -1,6 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
+import { makeBreakpoint } from '../../utils/breakpoints.utils';
 
 export const header = style([
   utilities({
@@ -27,6 +28,15 @@ export const inner = style([
     gridTemplateColumns: 'repeat(3, 1fr)',
   },
 ]);
+
+export const groupomania = style({
+  display: 'none',
+  '@media': {
+    [makeBreakpoint('md')]: {
+      display: 'initial',
+    },
+  },
+});
 
 globalStyle(`${inner} > :first-child`, {
   justifySelf: 'start',

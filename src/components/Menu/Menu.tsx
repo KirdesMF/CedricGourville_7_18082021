@@ -23,13 +23,13 @@ const LINKS = [
   { name: 'home', href: '/' },
   { name: 'login', href: '/login' },
   { name: 'register', href: '/register' },
-];
+] as const;
 
 const LOG_LINKS = [
   { name: 'home', href: '/' },
   { name: 'profil', href: '/profil' },
   { name: 'feed', href: '/feed' },
-];
+] as const;
 
 export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
   const isDesktop = useMatchMedia(makeBreakpoint('md'));
@@ -55,19 +55,23 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
         </Button>
 
         <nav className={styles.nav}>
-          {mapLinks.map((element) => (
-            <Anchor
-              navLink
-              key={element.href}
-              to={element.href}
-              variant={{ color: 'primary' }}
-              onClick={() => handleMenu(false)}
-            >
-              <Span variant={{ size: 'xl', weight: 'bold', uppercase: true }}>
-                {element.name}
-              </Span>
-            </Anchor>
-          ))}
+          {mapLinks.map((element) => {
+            const href =
+              element.href === '/profil' ? `/profil/${user?.id}` : element.href;
+            return (
+              <Anchor
+                navLink
+                key={element.href}
+                to={href}
+                variant={{ color: 'primary' }}
+                onClick={() => handleMenu(false)}
+              >
+                <Span variant={{ size: 'xl', weight: 'bold', uppercase: true }}>
+                  {element.name}
+                </Span>
+              </Anchor>
+            );
+          })}
         </nav>
       </aside>
     </motion.div>

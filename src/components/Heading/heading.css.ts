@@ -6,11 +6,12 @@ export const heading = recipe({
   base: {
     color: vars.colors['on-base-high-contrast'],
     lineHeight: 1.1,
-    width: 'min(100%, 15ch)',
-    textTransform: 'uppercase',
-    marginBlockEnd: vars.spaces.xs,
+    width: 'min(100%, 20ch)',
   },
   variants: {
+    transform: {
+      uppercase: { textTransform: 'uppercase' },
+    },
     fontSize: {
       xs: utilities({ fontSize: 'xs' }),
       sm: utilities({ fontSize: 'sm' }),

@@ -10,6 +10,8 @@ export const main = utilities({
 export const inner = utilities({
   width: 'md',
   marginInline: 'auto',
+  display: 'grid',
+  gap: 'md',
 });
 
 export const feed = style([

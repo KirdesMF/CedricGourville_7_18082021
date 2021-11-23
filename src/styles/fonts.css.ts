@@ -23,8 +23,8 @@ export const fontsVars = createGlobalTheme(':root', {
     },
     variations: {
       thin: `'wght' 200`,
-      'semi-bold': `'wght' 700`,
-      bold: `'wght' 850`,
+      'semi-bold': `'wght' 650`,
+      bold: `'wght' 800`,
     },
   },
 

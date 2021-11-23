@@ -90,7 +90,7 @@ function ButtonOptions({
 type PostProps = {
   delay: number;
   post: TPost;
-  currentUser: Pick<User, 'id' | 'role'>;
+  currentUser: Pick<User, 'id' | 'role' | 'avatar' | 'department'>;
 };
 
 const variants: Variants = {
@@ -142,7 +142,7 @@ export function Post(props: PostProps) {
 
   return (
     <motion.article
-      className={styles.post}
+      className={styles.article}
       variants={variants}
       initial="initial"
       animate="animate"
@@ -176,11 +176,7 @@ export function Post(props: PostProps) {
         </Heading>
         <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
 
-        {media && (
-          <span className={styles.figure}>
-            <img className={styles.img} src={media} alt="" />
-          </span>
-        )}
+        {media && <img className={styles.img} src={media} alt="" />}
       </div>
 
       <div className={styles.interact}>
@@ -210,7 +206,7 @@ export function Post(props: PostProps) {
               <Avatar
                 className={styles.avatarComments}
                 key={e.id}
-                variant={{ size: 'small', radius: 'square' }}
+                variant={{ size: 'small', radius: 'full' }}
                 user={e.user}
               />
             ))}
@@ -237,7 +233,19 @@ export function Post(props: PostProps) {
         </div>
       )}
 
-      {isCommenting && <FormComment postId={id} userId={currentUser.id} />}
+      {isCommenting && (
+        <footer className={styles.form}>
+          <Avatar
+            className={styles.centered}
+            variant={{ size: 'small' }}
+            user={{
+              avatar: currentUser.avatar,
+              department: currentUser.department,
+            }}
+          />
+          <FormComment postId={id} userId={currentUser.id} />
+        </footer>
+      )}
     </motion.article>
   );
 }

@@ -14,10 +14,16 @@ type CurrentUser = Pick<
 >;
 
 export function useCurrentUser() {
+  const { push } = useHistory();
   return useQuery<CurrentUser, TError>(
     'user',
     () => Fetch.get<CurrentUser>('user'),
-    { staleTime: convertHoursToMilliseconds(1) }
+    {
+      staleTime: convertHoursToMilliseconds(1),
+      onError: () => {
+        push('/');
+      },
+    }
   );
 }
 

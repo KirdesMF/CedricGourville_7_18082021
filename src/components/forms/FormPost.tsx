@@ -5,7 +5,7 @@ import { utilities } from '../../styles/utilities.css';
 import { convertMegaBytesToBytes } from '../../utils/utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
-import { BasicInput, CustomInput, FileInput } from '../Input/Input';
+import { BasicInput, CustomInput, FileInput, TextArea } from '../Input/Input';
 import { Span } from '../Span/Span';
 
 type PostField = {
@@ -59,15 +59,16 @@ export function FormPost() {
         type="text"
         options={{ required: 'Please provide a title' }}
       />
-      <CustomInput
+      <TextArea
+        rows={1}
         register={register}
         errors={errors}
-        type="text"
         placeholder="What's new ?"
-        label="title"
+        label="content"
         name="content"
         options={{ required: 'Please provide something to say' }}
       />
+
       <FileInput
         name="media"
         register={register}
@@ -101,7 +102,7 @@ export function FormPost() {
 
       <Button variant={{ primary: true, shadow: true }} type="submit">
         Post
-        <Icon name="PaperPlaneIcon" />
+        <Icon name="PaperPlaneIcon" variant={{ size: 'xs' }} />
       </Button>
     </form>
   );

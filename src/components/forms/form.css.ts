@@ -12,3 +12,11 @@ export const flexField = style([
 globalStyle(`${flexField} > *`, {
   flex: 1,
 });
+
+export const comment = style([
+  utilities({
+    display: 'grid',
+    gap: 'md',
+  }),
+  { gridTemplateColumns: '1fr min-content' },
+]);

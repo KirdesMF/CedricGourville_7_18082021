@@ -3,8 +3,9 @@ import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 const border = `1px dashed ${vars.colors.base4}`;
+export const centered = style({ placeSelf: 'center' });
 
-export const post = style([
+export const article = style([
   utilities({
     display: 'grid',
     paddingInline: 'md',
@@ -13,7 +14,7 @@ export const post = style([
   }),
   {
     gridTemplateColumns: '48px 1fr',
-    columnGap: vars.spaces.md,
+    columnGap: vars.spaces.sm,
   },
 ]);
 
@@ -42,6 +43,8 @@ export const info = style([
 export const content = style([
   utilities({
     paddingBlock: 'md',
+    display: 'grid',
+    gap: 'sm',
   }),
   {
     gridColumn: 2,
@@ -73,27 +76,19 @@ export const buttons = style([
   }),
 ]);
 
-export const figure = style({
-  width: 'min(100%, 15rem)',
-  borderRadius: vars.radius.md,
-  aspectRatio: '4/3',
-  overflow: 'hidden',
-});
+export const figure = style([
+  {
+    overflow: 'hidden',
+    width: 'max-content',
+  },
+]);
 
 export const img = style({
-  objectFit: 'cover',
-  height: '100%',
-  width: '100%',
+  objectFit: 'contain',
+  maxHeight: '25rem',
   borderRadius: 'inherit',
   filter: `grayscale(50%)`,
   transition: `filter 500ms ease-in-out, transform 500ms ease`,
-
-  selectors: {
-    [`${post}:hover &`]: {
-      filter: `grayscale(10%)`,
-      transform: `scale(1.05)`,
-    },
-  },
 });
 
 export const avatars = style([
@@ -126,7 +121,20 @@ export const lastComment = style([
   },
 ]);
 
-export const centered = style({ placeSelf: 'center' });
+export const form = style([
+  utilities({
+    paddingBlock: 'md',
+    display: 'grid',
+    gap: 'md',
+    alignItems: 'center',
+  }),
+  {
+    gridTemplateColumns: '48px 1fr',
+    gridColumn: '1/-1',
+    gridRow: 5,
+    borderTop: border,
+  },
+]);
 
 export const list = style([
   utilities({

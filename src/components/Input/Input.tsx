@@ -11,6 +11,7 @@ import { utilities } from '../../styles/utilities.css';
 import { Icon } from '../Icon/Icon';
 
 export type TCustomInput<TFields> = {
+  autoFocus?: boolean;
   label: string;
   register: UseFormRegister<TFields>;
   name: FieldPath<TFields>;
@@ -19,7 +20,7 @@ export type TCustomInput<TFields> = {
 } & JSX.IntrinsicElements['input'];
 
 export function CustomInput<TFields>(props: TCustomInput<TFields>) {
-  const { label, register, name, options, errors, ...rest } = props;
+  const { label, register, name, options, errors, autoFocus, ...rest } = props;
 
   return (
     <label
@@ -30,7 +31,12 @@ export function CustomInput<TFields>(props: TCustomInput<TFields>) {
       })}
     >
       <span className={srOnly}>{label}</span>
-      <input {...register(name, options)} {...rest} className={styles.input} />
+      <input
+        autoFocus={autoFocus}
+        {...register(name, options)}
+        {...rest}
+        className={styles.input}
+      />
       {errors?.[name] && (
         <Span variant={{ color: 'secondary', size: 'xs', weight: 'thin' }}>
           {errors?.[name]?.message}
@@ -56,9 +62,14 @@ export function FileInput<TFields>(props: TCustomInput<TFields>) {
   const { label, register, name, options, errors, ...rest } = props;
 
   return (
-    <div className={utilities({ position: 'relative' })}>
+    <label
+      className={utilities({
+        display: 'inline-flex',
+        color: 'primary9',
+        borderRadius: 'xs',
+      })}
+    >
       <span className={srOnly}>{label}</span>
-
       <input
         className={styles.hidden}
         type="file"
@@ -66,16 +77,43 @@ export function FileInput<TFields>(props: TCustomInput<TFields>) {
         {...register(name, options)}
         {...rest}
       />
-      <label
-        className={utilities({
-          display: 'inline-flex',
-          color: 'primary9',
-          borderRadius: 'xs',
-        })}
-        htmlFor={name}
-      >
-        <Icon name="ImageIcon" variant={{ size: 'medium' }} />
-      </label>
-    </div>
+      <Icon name="ImageIcon" variant={{ size: 'medium' }} />
+    </label>
+  );
+}
+
+export type TCustomTextArea<TFields> = {
+  autoFocus?: boolean;
+  label: string;
+  register: UseFormRegister<TFields>;
+  name: FieldPath<TFields>;
+  options?: RegisterOptions<TFields>;
+  errors: FieldErrors;
+} & JSX.IntrinsicElements['textarea'];
+
+export function TextArea<TFields>(props: TCustomTextArea<TFields>) {
+  const { label, register, name, options, errors, autoFocus, ...rest } = props;
+
+  return (
+    <label
+      className={utilities({
+        display: 'grid',
+        gap: 'sm',
+        position: 'relative',
+      })}
+    >
+      <span className={srOnly}>{label}</span>
+      <textarea
+        autoFocus={autoFocus}
+        {...register(name, options)}
+        {...rest}
+        className={styles.input}
+      ></textarea>
+      {errors?.[name] && (
+        <Span variant={{ color: 'secondary', size: 'xs', weight: 'thin' }}>
+          {errors?.[name]?.message}
+        </Span>
+      )}
+    </label>
   );
 }

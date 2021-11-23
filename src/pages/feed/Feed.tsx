@@ -5,16 +5,20 @@ import { useCurrentUser } from '../../api/user.api';
 import { FormPost } from '../../components/forms/FormPost';
 import { Heading } from '../../components/Heading/Heading';
 import { Post } from '../../components/Post/Post';
+import { Span } from '../../components/Span/Span';
 import * as styles from './feed.css';
 
 export function Feed() {
-  const { data: user } = useCurrentUser();
+  const { data: currentUser } = useCurrentUser();
   const { data: posts } = usePosts();
 
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
-        <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>Feed</Heading>
+        <Heading variant={{ fontSize: 'lg', weight: 'bold' }}>
+          Welcome{' '}
+          <Span variant={{ gradient: true }}> {currentUser?.username}</Span>
+        </Heading>
 
         <FormPost />
 
@@ -25,10 +29,7 @@ export function Feed() {
                 key={post.id}
                 delay={idx}
                 post={post}
-                currentUser={{
-                  id: user?.id as string,
-                  role: user?.role as Role,
-                }}
+                currentUser={currentUser!}
               />
             ))}
           </motion.div>

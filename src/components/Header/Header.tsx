@@ -55,7 +55,12 @@ export function Header() {
             }}
           >
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
-            <Span variant={{ size: 'sm', weight: 'thin' }}>Groupomania</Span>
+            <Span
+              className={styles.groupomania}
+              variant={{ size: 'sm', weight: 'thin' }}
+            >
+              Groupomania
+            </Span>
           </Anchor>
 
           <aside className={styles.aside}>

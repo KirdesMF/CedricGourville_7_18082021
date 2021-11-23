@@ -28,6 +28,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "jsx-a11y/no-autofocus": "off",
     "jsx-a11y/label-has-associated-control": [
       2,
       {

@@ -6,6 +6,11 @@ export const icon = recipe({
   },
   variants: {
     size: {
+      xs: {
+        width: '0.725rem',
+        height: '0.725rem',
+      },
+
       small: {
         width: '1rem',
         height: '1rem',
