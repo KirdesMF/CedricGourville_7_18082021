@@ -43,7 +43,6 @@ export const button = recipe({
       true: [
         utilities({
           color: { default: 'warning', '@hover': 'warning-hover' },
-          background: { '@hover': 'base3' },
           paddingInline: 'xs',
           paddingBlock: 'xs',
         }),
@@ -57,6 +56,7 @@ export const button = recipe({
           paddingInline: 'sm',
           paddingBlock: 'sm',
         }),
+        { boxShadow: `0 0 2px ${vars.colors.base6}` },
       ],
     },
     base: {

@@ -53,7 +53,10 @@ globalStyle('img, picture', {
 globalStyle('input, button, textarea, select', {
   font: 'inherit',
   background: 'none',
+  padding: 0,
 });
+
+globalStyle('ul, li', { listStyle: 'none', padding: 0, margin: 0 });
 
 // Set body defaults
 globalStyle('body', {
@@ -69,3 +72,6 @@ globalStyle('#root', {
   display: 'grid',
   gridTemplateRows: 'min-content auto min-content',
 });
+
+globalStyle(':root.dark', { colorScheme: 'dark' });
+globalStyle(':root', { colorScheme: 'light' });

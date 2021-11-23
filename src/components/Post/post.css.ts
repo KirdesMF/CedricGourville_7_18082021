@@ -1,53 +1,77 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
+const border = `1px dashed ${vars.colors.base4}`;
+
 export const post = style([
   utilities({
-    display: 'flex',
-    gap: 'lg',
-    paddingBlock: 'md',
+    display: 'grid',
     paddingInline: 'md',
     background: 'base1',
+    borderRadius: 'xs',
   }),
   {
-    selectors: {
-      '&:not(:first-child)': {
-        borderTop: `0.5px solid ${vars.colors.base3}`,
-      },
-    },
+    gridTemplateColumns: '48px 1fr',
+    columnGap: vars.spaces.md,
   },
 ]);
 
-export const right = utilities({
-  flex: 1,
-  display: 'grid',
-  gap: 'md',
-});
+export const header = style([
+  utilities({
+    display: 'grid',
+    gap: 'md',
+    paddingBlock: 'md',
+    alignItems: 'center',
+  }),
+  {
+    borderBottom: border,
+    gridTemplateColumns: '48px 1fr min-content',
+    gridColumn: '1/-1',
+  },
+]);
 
-export const innerRight = utilities({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-});
+export const info = style([
+  utilities({
+    display: 'flex',
+    gap: 'sm',
+    alignItems: 'center',
+  }),
+]);
 
-export const info = utilities({
-  display: 'flex',
-  gap: 'sm',
-  alignItems: 'center',
-});
+export const content = style([
+  utilities({
+    paddingBlock: 'md',
+  }),
+  {
+    gridColumn: 2,
+    gridRow: 2,
+  },
+]);
 
 export const avatar = style({
   width: 'min-content',
   height: 'min-content',
-  alignSelf: 'start',
+  placeSelf: 'center',
 });
 
-export const buttons = utilities({
-  display: 'flex',
-  gap: 'sm',
-  alignItems: 'center',
-});
+export const interact = style([
+  utilities({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBlock: 'md',
+  }),
+  { gridColumn: 2, gridRow: 3 },
+]);
+
+export const buttons = style([
+  utilities({
+    display: 'flex',
+    gap: 'md',
+    alignItems: 'center',
+  }),
+]);
 
 export const figure = style({
   width: 'min(100%, 15rem)',
@@ -87,8 +111,46 @@ export const avatarComments = style({
   },
 });
 
-export const lastComment = utilities({
-  display: 'flex',
-  alignItems: 'baseline',
-  gap: 'xs',
-});
+export const lastComment = style([
+  utilities({
+    display: 'grid',
+    alignItems: 'center',
+    gap: 'md',
+    paddingBlock: 'md',
+  }),
+  {
+    borderTop: border,
+    gridRow: 4,
+    gridColumn: '1/-1',
+    gridTemplateColumns: '48px 1fr',
+  },
+]);
+
+export const centered = style({ placeSelf: 'center' });
+
+export const list = style([
+  utilities({
+    display: 'grid',
+    fontSize: 'xs',
+    fontVariationSettings: 'thin',
+    background: 'base4',
+    borderRadius: 'xs',
+  }),
+]);
+
+export const item = style([
+  utilities({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'xs',
+    paddingInline: 'md',
+    paddingBlock: 'sm',
+  }),
+  {
+    selectors: {
+      '&:not(:first-child)': {
+        borderTop: `1px solid ${vars.colors.primary6}`,
+      },
+    },
+  },
+]);

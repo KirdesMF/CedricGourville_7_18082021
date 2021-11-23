@@ -3,18 +3,21 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
+import { convertHoursToMilliseconds } from '../utils/utils';
 
 /**
  * get current user
  */
 type CurrentUser = Pick<
   User,
-  'id' | 'email' | 'username' | 'password' | 'role' | 'department'
+  'id' | 'email' | 'username' | 'password' | 'role' | 'department' | 'avatar'
 >;
 
 export function useCurrentUser() {
-  return useQuery<CurrentUser, TError>('user', () =>
-    Fetch.get<CurrentUser>('user')
+  return useQuery<CurrentUser, TError>(
+    'user',
+    () => Fetch.get<CurrentUser>('user'),
+    { staleTime: convertHoursToMilliseconds(1) }
   );
 }
 

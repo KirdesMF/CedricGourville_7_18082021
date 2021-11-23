@@ -15,6 +15,7 @@ export const inner = utilities({
 export const feed = style([
   utilities({
     display: 'grid',
+    gap: 'lg',
   }),
   {
     filter: `drop-shadow(0 0 2px ${vars.colors.shadow})`,

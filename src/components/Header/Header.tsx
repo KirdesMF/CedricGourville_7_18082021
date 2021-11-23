@@ -11,7 +11,11 @@ import { useCurrentUser } from '../../api/user.api';
 import { User } from 'p7_types';
 import { Avatar } from '../Avatar/Avatar';
 
-const AnchorAvatar = ({ user }: { user: User | undefined }) => {
+const AnchorAvatar = ({
+  user,
+}: {
+  user: Pick<User, 'id' | 'avatar' | 'department'> | undefined;
+}) => {
   if (!user) {
     return (
       <Anchor variant={{ color: 'base' }} to="/login">

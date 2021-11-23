@@ -7,7 +7,9 @@ import { TError, TPost } from '../types';
  * get all posts
  */
 export function usePosts() {
-  return useQuery<TPost[], TError>(['post'], () => Fetch.get<TPost[]>('post'));
+  return useQuery<TPost[], TError>(['post'], () => Fetch.get<TPost[]>('post'), {
+    staleTime: Infinity,
+  });
 }
 
 export function useCreatePost() {
