@@ -35,15 +35,6 @@ globalStyle('html:focus-within', {
   },
 });
 
-// Set body defaults
-globalStyle('body', {
-  textRendering: 'optimizeSpeed',
-  lineHeight: vars['line-heights'].reset,
-  background: vars.colors['bg-base'],
-  fontFamily: vars.fonts.family.global,
-  overflowX: 'hidden',
-});
-
 // anchors
 globalStyle('a:not([class])', {
   textDecorationSkipInk: 'auto',
@@ -61,8 +52,26 @@ globalStyle('img, picture', {
 
 globalStyle('input, button, textarea, select', {
   font: 'inherit',
+  background: 'none',
+  padding: 0,
 });
 
-globalStyle('html, body, #root', {
-  height: '100%',
+globalStyle('ul, li', { listStyle: 'none', padding: 0, margin: 0 });
+
+// Set body defaults
+globalStyle('body', {
+  textRendering: 'optimizeSpeed',
+  lineHeight: vars['line-heights'].reset,
+  overflowX: 'hidden',
+  background: vars.colors.base1,
+  fontFamily: vars.fonts.family.global,
 });
+
+globalStyle('#root', {
+  minHeight: '100vh',
+  display: 'grid',
+  gridTemplateRows: 'min-content auto min-content',
+});
+
+globalStyle(':root.dark', { colorScheme: 'dark' });
+globalStyle(':root', { colorScheme: 'light' });

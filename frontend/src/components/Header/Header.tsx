@@ -7,14 +7,13 @@ import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
-import { useAuth } from '../../context/auth.context';
+import { useCurrentUser } from '../../api/user.api';
+import { Avatar } from '../Avatar/Avatar';
 
-// TODO
-// handle user logged in case
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useTheme();
-  const { user } = useAuth();
+  const { data: user } = useCurrentUser();
 
   const handleTheme = () => {
     mode === 'dark' ? setMode('light') : setMode('dark');
@@ -26,21 +25,46 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <Anchor to={user ? '/profil' : '/login'}>
-            <Icon name="PersonIcon" variant={{ size: 'medium' }} />
-          </Anchor>
+          {user ? (
+            <Anchor to={`/users/${user.id}`}>
+              <Avatar
+                user={{
+                  avatar: user.avatar,
+                  department: user.department,
+                }}
+              />
+            </Anchor>
+          ) : (
+            <Anchor variant={{ color: 'base' }} to="/login">
+              <Icon name="PersonIcon" variant={{ size: 'medium' }} />
+            </Anchor>
+          )}
 
-          <Anchor to={user ? '/feed' : '/'} variant={{ gap: true }}>
+          <Anchor
+            to={user ? '/posts' : '/'}
+            variant={{
+              space: 'gap',
+              color: 'base',
+            }}
+          >
             <Icon name="Groupomania" variant={{ size: 'medium' }} />
-            <Span>Groupomania</Span>
+            <Span
+              className={styles.groupomania}
+              variant={{ size: 'sm', weight: 'thin' }}
+            >
+              Groupomania
+            </Span>
           </Anchor>
 
           <aside className={styles.aside}>
-            <Button onClick={() => handleMenu(true)}>
+            <Button
+              variant={{ discret: true }}
+              onClick={() => handleMenu(true)}
+            >
               <Icon name="HamburgerMenuIcon" variant={{ size: 'small' }} />
             </Button>
 
-            <Button onClick={handleTheme}>
+            <Button variant={{ discret: true }} onClick={handleTheme}>
               <Icon name="SunIcon" variant={{ size: 'small' }} />
             </Button>
           </aside>

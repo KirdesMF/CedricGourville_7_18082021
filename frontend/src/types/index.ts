@@ -1,29 +1,20 @@
-export type Department = 'DIRECTION' | 'TECH' | 'COM' | 'SOCIAL' | 'VISITOR';
-
-export type User = {
-  email: string;
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  department: Department;
-  bio: string;
-};
-
-export type Post = {
-  title: string;
-  content: string;
-};
-
-// TODO
-// type DATA should have more info
-// like createdAt updatedAt
-export type Data = {
-  user?: User;
-  message?: string;
-};
+import { Comment, Like, Post, User } from 'p7_types';
 
 export type TError = Error & {
   status: number;
   message: string;
 };
+
+type LikePost = {
+  likes: Pick<Like, 'id' | 'userId'>[];
+};
+
+type UserPost = {
+  user: Pick<User, 'username' | 'avatar' | 'department'>;
+};
+type CommentsPost = {
+  comments: (Pick<Comment, 'content' | 'createdAt' | 'id' | 'userId'> & {
+    user: Pick<User, 'avatar' | 'department'>;
+  })[];
+};
+export type TPost = Omit<Post, 'mediaId'> & UserPost & CommentsPost & LikePost;

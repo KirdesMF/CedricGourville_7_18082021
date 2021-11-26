@@ -33,6 +33,30 @@ async function post<T>(
   return await fetcher(new Request(`${HOST}/${path}`, options));
 }
 
+async function postFormData<T>(
+  path: string,
+  body: unknown,
+  options: RequestInit = {
+    method: 'POST',
+    body: body as BodyInit,
+    credentials: 'include',
+  }
+) {
+  return await fetcher<T>(new Request(`${HOST}/${path}`, options));
+}
+
+async function patchFormData<T>(
+  path: string,
+  body: unknown,
+  options: RequestInit = {
+    method: 'PATCH',
+    body: body as BodyInit,
+    credentials: 'include',
+  }
+): Promise<T> {
+  return await fetcher(new Request(`${HOST}/${path}`, options));
+}
+
 async function patch<T>(
   path: string,
   body: unknown,
@@ -45,14 +69,16 @@ async function patch<T>(
   return await fetcher(new Request(`${HOST}/${path}`, options));
 }
 
-async function deleted<T>(
+async function remove<T>(
   path: string,
+  body: unknown,
   options: RequestInit = {
     method: 'DELETE',
+    body: JSON.stringify(body),
     ...fetchOptions,
   }
 ): Promise<T> {
   return await fetcher(new Request(`${HOST}/${path}`, options));
 }
 
-export const Fetch = { get, post, patch, deleted };
+export const Fetch = { get, post, patch, remove, postFormData, patchFormData };

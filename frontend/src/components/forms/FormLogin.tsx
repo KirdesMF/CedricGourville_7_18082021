@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useLogUser } from '../../api/user.api';
-import { BasicInput, CustomInput } from '../../components/Input/Input';
+import { CustomInput } from '../../components/Input/Input';
 import { utilities } from '../../styles/utilities.css';
 import { cx } from '../../utils/classname.utils';
+import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
 
 type LoginFields = {
@@ -12,13 +14,14 @@ type LoginFields = {
 
 export function FormLogIn() {
   const { mutate, error } = useLogUser();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFields>({ mode: 'onChange' });
 
-  const handleOnSubmit = async (data: LoginFields) => {
+  const handleOnSubmit = (data: LoginFields) => {
     mutate(data);
   };
 
@@ -29,7 +32,7 @@ export function FormLogIn() {
         utilities({
           display: 'grid',
           gap: 'md',
-          maxWidth: '50ch',
+          width: 'lg',
           paddingBlock: 'sm',
         }),
       ])}
@@ -40,12 +43,12 @@ export function FormLogIn() {
         id="log"
         type="text"
         name="log"
-        placeholder="Enter your email or username"
+        placeholder="Email or username"
         label="Email"
         errors={errors}
         register={register}
         options={{
-          required: '❌ Please enter an email address or a username ⤴ ',
+          required: 'Please enter an email address or a username ⤴ ',
         }}
       />
 
@@ -53,17 +56,26 @@ export function FormLogIn() {
         name="password"
         id="password"
         type="password"
-        placeholder="Enter your password"
+        placeholder="Password"
         autoComplete="username"
         label="Password"
         register={register}
         errors={errors}
         options={{
-          required: '❌ Please enter your corresponding password ⤴ ',
+          required: 'Please enter your corresponding password ⤴ ',
         }}
       />
 
-      <BasicInput value="Send" type="submit" />
+      <Button
+        type="submit"
+        variant={{
+          primary: true,
+          shadow: true,
+        }}
+      >
+        Log in
+        <Icon name="Pencil1Icon" />
+      </Button>
     </form>
   );
 }

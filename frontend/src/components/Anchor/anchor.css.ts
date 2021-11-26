@@ -1,68 +1,65 @@
 import { style } from '@vanilla-extract/css';
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
-import { activeClassName } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
-export const baseAnchor = style({
-  display: 'inline-flex',
-  alignItems: 'center',
-  textTransform: 'capitalize',
-  whiteSpace: 'nowrap',
-  textUnderlineOffset: vars.spaces.xs,
-  appearance: 'none',
-
-  selectors: {
-    [`&:hover:not(${activeClassName})`]: {
-      textDecorationLine: 'underline',
-    },
+export const baseAnchor = style([
+  utilities({ display: 'inline-flex', alignItems: 'center' }),
+  {
+    textTransform: 'capitalize',
+    whiteSpace: 'nowrap',
+    textUnderlineOffset: vars.spaces.xs,
+    appearance: 'none',
   },
-});
+]);
+
+const btn = style([
+  utilities({
+    fontSize: 'sm',
+    fontVariationSettings: 'thin',
+    paddingInline: 'md',
+    paddingBlock: 'sm',
+    borderRadius: 'sm',
+  }),
+  {
+    filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,
+    transition: 'background 100ms ease',
+  },
+]);
 
 export const anchor = recipe({
-  base: [baseAnchor, utilities({ borderRadius: 'sm' })],
+  base: baseAnchor,
   variants: {
+    uppercase: { true: { textTransform: 'uppercase' } },
+    space: {
+      gap: utilities({ gap: 'sm' }),
+      between: utilities({ justifyContent: 'space-between' }),
+    },
     color: {
-      base: utilities({
-        color: {
-          default: 'on-base-low-contrast',
-          '@hover': 'on-base-high-contrast',
-        },
-      }),
-      primary: utilities({
-        color: {
-          default: 'on-primary-low-contrast',
-          '@hover': 'on-primary-high-contrast',
-        },
-      }),
-      secondary: utilities({
-        color: {
-          default: 'on-secondary-low-contrast',
-          '@hover': 'on-secondary-high-contrast',
-        },
-      }),
+      base: utilities({ color: 'on-base-high-contrast' }),
+      primary: utilities({ color: 'primary10' }),
+      secondary: utilities({ color: 'on-secondary-high-contrast' }),
+      success: utilities({ color: 'on-success-high-contrast' }),
     },
-    size: {
-      sm: utilities({ fontSize: 4 }),
-      lg: utilities({ fontSize: 5 }),
-      '2xl': utilities({ fontSize: 10 }),
-      inherit: { fontSize: 'inherit' },
+
+    btn: {
+      base: [
+        btn,
+        utilities({ background: { default: 'base2', '@hover': 'base3' } }),
+      ],
+      primary: [
+        btn,
+        utilities({
+          background: { default: 'primary6', '@hover': 'primary8' },
+        }),
+      ],
+      secondary: [
+        btn,
+        utilities({
+          background: { default: 'secondary6', '@hover': 'secondary8' },
+        }),
+      ],
     },
-    gap: {
-      true: utilities({ gap: 'sm' }),
-    },
-    weight: {
-      thin: { fontVariationSettings: vars.fonts.variations[200] },
-      bold: { fontVariationSettings: vars.fonts.variations[850] },
-    },
-    transform: {
-      uppercase: { textTransform: 'uppercase' },
-    },
-  },
-  defaultVariants: {
-    color: 'base',
-    size: 'inherit',
-    weight: 'thin',
   },
 });
 

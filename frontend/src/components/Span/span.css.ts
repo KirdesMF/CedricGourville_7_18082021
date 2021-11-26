@@ -1,25 +1,16 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 import { utilities } from '../../styles/utilities.css';
-import { makeBreakpoint } from '../../utils/breakpoints.utils';
-import { baseAnchor } from '../Anchor/anchor.css';
+import { vars } from '../../styles/vars.css';
 
 export const span = recipe({
-  base: {
-    margin: 0,
-    lineHeight: 1,
-
-    selectors: {
-      [`${baseAnchor} &`]: {
-        display: 'none',
-        '@media': {
-          [makeBreakpoint('md')]: {
-            display: 'initial',
-          },
-        },
-      },
+  base: [
+    utilities({ display: 'inline-flex', alignItems: 'center' }),
+    {
+      margin: 0,
     },
-  },
+  ],
   variants: {
+    uppercase: { true: { textTransform: 'uppercase' } },
     color: {
       base: utilities({ color: 'on-base-low-contrast' }),
       primary: utilities({ color: 'on-primary-low-contrast' }),
@@ -27,10 +18,25 @@ export const span = recipe({
       inherit: { color: 'inherit' },
     },
     size: {
-      xs: utilities({ fontSize: 2 }),
-      sm: utilities({ fontSize: 4 }),
-      lg: utilities({ fontSize: 5 }),
+      xs: utilities({ fontSize: 'xs' }),
+      sm: utilities({ fontSize: 'sm' }),
+      md: utilities({ fontSize: 'md' }),
+      lg: utilities({ fontSize: 'lg' }),
+      xl: utilities({ fontSize: 'xl' }),
       inherit: { fontSize: 'inherit' },
+    },
+    weight: {
+      thin: utilities({ fontVariationSettings: 'thin' }),
+      'semi-bold': utilities({ fontVariationSettings: 'semi-bold' }),
+      bold: utilities({ fontVariationSettings: 'bold' }),
+    },
+    gradient: {
+      true: {
+        background: `linear-gradient(to right, ${vars.colors.primary9}, ${vars.colors.secondary9})`,
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      },
     },
   },
   defaultVariants: {

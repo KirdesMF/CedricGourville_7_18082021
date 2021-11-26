@@ -1,50 +1,77 @@
-import { User } from 'p7_types';
+import { Comment, Like, Post, User } from 'p7_types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useHistory } from 'react-router';
-import { useAuth } from '../context/auth.context';
+import { useNavigate } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
+import { convertHoursToMilliseconds } from '../utils/utils';
 
-export type Department = 'DIRECTION' | 'TECH' | 'COM' | 'SOCIAL' | 'VISITOR';
+/**
+ * get current user
+ */
+export type CurrentUser = Pick<
+  User,
+  'id' | 'email' | 'username' | 'role' | 'department' | 'avatar'
+>;
 
-export function useUser() {
-  const { setUser } = useAuth();
-
-  return useQuery<User, TError>(['user'], () => Fetch.get('user'), {
-    onError: () => {
-      setUser(false);
-    },
+export function useCurrentUser() {
+  return useQuery<CurrentUser, TError>(['user'], () => Fetch.get('user'), {
+    staleTime: convertHoursToMilliseconds(1),
+    retry: false,
   });
 }
 
-export function useCreateUser() {
-  return useMutation<User, TError, User>((body) =>
-    Fetch.post('user/register', body)
-  );
+/**
+ * get user by id
+ */
+
+export type UserById = Omit<
+  User,
+  'role' | 'avatarId' | 'updatedAt' | 'email'
+> & {
+  likes: Like[];
+  posts: Post[];
+  comments: Comment[];
+};
+
+export function useUserId(id: string) {
+  return useQuery<UserById>([`user`, id], () => Fetch.get(`user/${id}`), {});
 }
 
-export function useCheckNotUsed() {
+/**
+ * create user
+ */
+
+type CreateUser = Pick<User, 'email' | 'username' | 'password'>;
+type ResponseCreateUser = Omit<User, 'password'>;
+
+export function useCreateUser() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
-  return useMutation<Record<string, string>, TError, Record<string, string>>(
-    (body) => Fetch.post('user/not-used', body),
+
+  return useMutation<ResponseCreateUser, TError, CreateUser>(
+    (body) => Fetch.post('user/register', body),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries('user');
+      onSuccess: (data) => {
+        queryClient.setQueriesData(['user'], data);
+        navigate('/posts');
       },
     }
   );
 }
 
+type LoginUser = Pick<User, 'email' | 'password'>;
+
 export function useLogUser() {
-  const { setUser } = useAuth();
-  const { push } = useHistory();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation<Record<string, string>, TError, Record<string, string>>(
-    (body) => Fetch.patch('user/login', body),
+    (body) => Fetch.post('user/login', body),
     {
-      onSuccess: () => {
-        setUser(true);
-        push('/feed');
+      onSuccess: (data) => {
+        queryClient.setQueriesData(['user'], data);
+
+        navigate('/posts');
       },
     }
   );
@@ -52,14 +79,41 @@ export function useLogUser() {
 
 export function useLogOutUser() {
   const queryClient = useQueryClient();
-  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
-  return useMutation(() => Fetch.deleted('user/logout'), {
+  return useMutation((body) => Fetch.remove('user/logout', body), {
     onSettled: () => {
-      queryClient.removeQueries('user');
-    },
-    onSuccess: () => {
-      setUser(false);
+      queryClient.resetQueries('user');
+      navigate('/');
     },
   });
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation<FormData, TError, FormData>(
+    (body) => Fetch.patchFormData('user/edit', body),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+        queryClient.invalidateQueries('user/:id');
+      },
+    }
+  );
+}
+
+export function useUnregisterUser() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation<Pick<User, 'id'>, TError, Pick<User, 'id'>>(
+    (body) => Fetch.remove('user/unregister', body),
+    {
+      onSuccess: () => {
+        queryClient.resetQueries('user');
+        navigate('/');
+      },
+    }
+  );
 }

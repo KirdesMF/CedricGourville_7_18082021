@@ -1,17 +1,22 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
 export const input = style([
+  utilities({
+    background: 'base2',
+    color: 'on-base-high-contrast',
+    fontSize: 'sm',
+    paddingInline: 'md',
+    paddingBlock: 'sm',
+    position: 'relative',
+  }),
   {
-    border: `1px solid ${vars.colors['on-base-high-contrast']}`,
-    background: 'none',
-    paddingInline: vars.spaces.md,
-    paddingBlock: vars.spaces.sm,
+    resize: 'vertical',
+    border: 'none',
     appearance: 'none',
+    borderBottom: `1px solid ${vars.colors.base9}`,
     WebkitTextFillColor: vars.colors['on-base-high-contrast'],
-    width: 'min(100%, 52ch)',
-    borderRadius: vars.radius.sm,
 
     ':focus': {
       outline: 'none',
@@ -27,17 +32,19 @@ export const input = style([
 
     '::placeholder': {
       fontStyle: 'italic',
-      fontVariationSettings: vars.fonts.variations[200],
+      fontVariationSettings: vars.fonts.variations.thin,
     },
   },
-  utilities({
-    background: 'ui-base',
-    color: 'on-base-high-contrast',
-    fontSize: 3,
-  }),
 ]);
 
-export const small = style([
-  { justifySelf: 'center' },
-  utilities({ color: 'on-base-high-contrast' }),
-]);
+export const hidden = style({
+  appearance: 'none',
+  position: 'absolute',
+  margin: 0,
+  width: 0,
+  height: 0,
+});
+
+globalStyle(`${hidden}:focus-visible ~ label`, {
+  boxShadow: `0 0 0 1px ${vars.colors['on-base-high-contrast']}`,
+});
