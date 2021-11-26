@@ -14,11 +14,7 @@ async function createPost(body: Post) {
 }
 
 async function deletePost(id: string) {
-  const likes = prisma.like.deleteMany({ where: { postId: id } });
-  const comments = prisma.comment.deleteMany({ where: { postId: id } });
-  const post = prisma.post.delete({ where: { id } });
-
-  await prisma.$transaction([comments, likes, post]);
+  await prisma.post.delete({ where: { id } });
 }
 
 async function updatePost(id: string, data: Post) {

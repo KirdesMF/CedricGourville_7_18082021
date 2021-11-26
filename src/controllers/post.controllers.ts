@@ -67,7 +67,7 @@ async function create(req: Request, res: Response, next: NextFunction) {
  * edit post
  */
 async function edit(req: Request, res: Response, next: NextFunction) {
-  const { id: postId, body } = req.body;
+  const { id: postId, ...body } = req.body;
   const file = req?.file;
   let post: Post;
 

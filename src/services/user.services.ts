@@ -1,9 +1,8 @@
 import { PrismaClient, User } from '@prisma/client';
 import { hash } from 'bcrypt';
 
-type TUniqueUserField = keyof Pick<User, 'id' | 'username' | 'email'>;
-
 const prisma = new PrismaClient();
+type TUniqueUserField = keyof Pick<User, 'id' | 'username' | 'email'>;
 
 // Create
 /**
@@ -11,13 +10,22 @@ const prisma = new PrismaClient();
  * @returns
  * @description create a user and hash the password
  */
-async function createUser(data: User) {
+async function createUser(data: Pick<User, 'email' | 'username' | 'password'>) {
   const { password, ...userData } = data;
   const hashedPassword = await hash(password, 10);
   const user = await prisma.user.create({
     data: {
       password: hashedPassword,
       ...userData,
+    },
+    select: {
+      id: true,
+      email: true,
+      username: true,
+      password: true,
+      role: true,
+      department: true,
+      avatar: true,
     },
   });
   return user;
@@ -30,7 +38,7 @@ async function createUser(data: User) {
  * @param value string | number depending on field
  * @returns User as promise
  */
-async function getUser<T extends TUniqueUserField>(field: T, value: string) {
+async function getUser(field: TUniqueUserField, value: string) {
   const user = await prisma.user.findUnique({
     where: { [field]: value },
     select: {
@@ -91,8 +99,8 @@ async function getAvatarId(id: string) {
  * @param data
  * @returns
  */
-async function updateUser<T extends TUniqueUserField>(
-  field: T,
+async function updateUser(
+  field: TUniqueUserField,
   value: string,
   data: Partial<User>
 ) {
@@ -112,15 +120,9 @@ async function updateUser<T extends TUniqueUserField>(
  * @returns
  */
 async function deleteUser(id: string) {
-  const comments = prisma.comment.deleteMany({
-    where: { userId: id },
-  });
-  const posts = prisma.post.deleteMany({ where: { userId: id } });
-  const user = prisma.user.delete({
+  await prisma.user.delete({
     where: { id },
   });
-
-  await prisma.$transaction([comments, posts, user]);
 }
 
 export const UserServices = {

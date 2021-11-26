@@ -10,13 +10,28 @@ import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
 /**
+ * utils
+ */
+function removePassword<T extends Partial<User>>(user: T) {
+  const { password, ...safeUser } = user;
+  return safeUser;
+}
+
+function signToken({ id, role }: { id: string; role: string }) {
+  return sign({ id, role }, process.env.SECRET || 'secret', {
+    expiresIn: config.jwt.expire,
+  });
+}
+
+/**
  * register user
  */
 async function register(req: Request, res: Response, next: NextFunction) {
-  const body = req.body as User;
+  const body = req.body as Pick<User, 'email' | 'username' | 'password'>;
   const errors = validationResult(req);
 
   try {
+    // check if there are errors
     if (!errors.isEmpty()) {
       const arr = errors.array();
       const message = arr.map((a) => a.msg).join(', ');
@@ -26,20 +41,20 @@ async function register(req: Request, res: Response, next: NextFunction) {
       );
     }
 
+    // create user
     const user = await UserServices.createUser(body);
-
     if (!user) {
       throw new ErrorHandler(httpStatus.serverError, '❌ Something went wrong');
     }
 
-    const token = sign({ id: user.id }, process.env.SECRET || 'secret', {
-      expiresIn: '12h',
-    });
+    // sign token
+    const token = signToken({ id: user.id, role: user.role });
 
+    // send response
     res
       .cookie('jwt', token, config.cookies)
       .status(httpStatus.created)
-      .json({ message: '✔ User successfully created', user });
+      .json(removePassword(user));
   } catch (error) {
     next(error);
   }
@@ -55,34 +70,60 @@ async function login(req: Request, res: Response, next: NextFunction) {
   const lastConnection = new Date();
 
   try {
+    // check if user exists
     const user = await UserServices.getUser(field, log);
-
     if (!user) {
       throw new ErrorHandler(httpStatus.forbidden, `❌ ${message}`);
     }
 
-    await UserServices.updateUser(field, user[field], {
-      lastConnection,
-    });
-
     // check password
     const isCorrectPassword = await compare(password, user.password);
-
     if (!isCorrectPassword) {
       throw new ErrorHandler(httpStatus.forbidden, `❌ Wrong Password`);
     }
 
-    const token = sign({ id: user.id }, process.env.SECRET || 'secret', {
-      expiresIn: config.jwt.expire,
+    // update last connection
+    await UserServices.updateUser(field, user[field], {
+      lastConnection,
     });
 
+    // sign token
+    const token = signToken({ id: user.id, role: user.role });
+
+    // send response
     res
       .cookie('jwt', token, config.cookies)
       .status(httpStatus.OK)
-      .json({ message: `🎉 Successfully connected`, user });
+      .json(removePassword(user));
   } catch (error) {
     next(error);
   }
+}
+
+/**
+ * check looged user
+ */
+async function logged(req: Request, res: Response, next: NextFunction) {
+  if (req.cookies.jwt || req.headers.cookie) {
+    const token = req.cookies.jwt as string;
+    const { id } = verify(
+      token,
+      process.env.SECRET || ('secret' as string)
+    ) as JwtPayload;
+
+    const user = await UserServices.getUser('id', id);
+
+    if (user) {
+      return res.status(httpStatus.accepted).json(removePassword(user));
+    }
+  }
+
+  return next(
+    new ErrorHandler(
+      httpStatus.unauthorized,
+      '❌ Session expired or User not logged in'
+    )
+  );
 }
 
 /**
@@ -140,7 +181,7 @@ async function edit(req: Request, res: Response, next: NextFunction) {
 
     res
       .status(httpStatus.OK)
-      .json({ message: `🎉 Successfully updated`, user });
+      .json({ message: `🎉 Successfully updated`, user: removePassword(user) });
   } catch (error) {
     next(error);
   }
@@ -175,30 +216,6 @@ async function unRegister(req: Request, res: Response, next: NextFunction) {
   } catch (error) {
     next(error);
   }
-}
-
-async function logged(req: Request, res: Response, next: NextFunction) {
-  if (req.cookies.jwt || req.headers.cookie) {
-    const token = req.cookies.jwt as string;
-    const { id } = verify(
-      token,
-      process.env.SECRET || ('secret' as string)
-    ) as JwtPayload;
-
-    const user = await UserServices.getUser('id', id);
-
-    if (user) {
-      const { password: _, ...safe } = user;
-      return res.status(httpStatus.OK).json(safe);
-    }
-  }
-
-  return next(
-    new ErrorHandler(
-      httpStatus.unauthorized,
-      '❌ Session expired or User not logged in'
-    )
-  );
 }
 
 export const UserControllers = {

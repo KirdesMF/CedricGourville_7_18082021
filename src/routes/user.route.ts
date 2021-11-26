@@ -11,11 +11,11 @@ export function userRouter(app: Application) {
 
   router.get('/', UserControllers.logged);
   router.get('/:id', UserControllers.getUserById);
-  router.post('/login', UserControllers.login);
-  router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
 
+  router.post('/login', UserControllers.login);
   router.post('/register', validationRegister, UserControllers.register);
 
+  router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
   router.delete('/logout', authorization, UserControllers.logout);
   router.delete('/unregister', authorization, UserControllers.unRegister);
 
