@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { Anchor } from '../../components/Anchor/Anchor';
 import { FormLogIn } from '../../components/forms/FormLogin';
 import { Guides } from '../../components/Guides/Guides';
@@ -10,26 +11,33 @@ import * as styles from './login.css';
 // handle error message
 export function Login() {
   return (
-    <main className={styles.main}>
-      <Guides />
-      <div className={styles.inner}>
-        <section className={styles.section}>
-          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
-            Connect to your <Span variant={{ gradient: true }}>profile</Span>
-          </Heading>
+    <>
+      <Helmet>
+        <title>Groupomania - Login</title>
+        <meta name="description" content="Groupomania - Login" />
+      </Helmet>
 
-          <FormLogIn />
+      <main className={styles.main}>
+        <Guides />
+        <div className={styles.inner}>
+          <section className={styles.section}>
+            <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
+              Connect to your <Span variant={{ gradient: true }}>profile</Span>
+            </Heading>
 
-          <Paragraph variant={{ size: 'sm' }}>
-            First time here ?{' '}
-            <Anchor variant={{ color: 'primary' }} to="/register">
-              <Span variant={{ size: 'xs' }}>Create your account</Span>
-            </Anchor>
-          </Paragraph>
-        </section>
+            <FormLogIn />
 
-        <Illustration />
-      </div>
-    </main>
+            <Paragraph variant={{ size: 'sm' }}>
+              First time here ?{' '}
+              <Anchor variant={{ color: 'primary' }} to="/register">
+                <Span variant={{ size: 'xs' }}>Create your account</Span>
+              </Anchor>
+            </Paragraph>
+          </section>
+
+          <Illustration />
+        </div>
+      </main>
+    </>
   );
 }

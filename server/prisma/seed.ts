@@ -9,7 +9,7 @@ async function seed() {
     create: {
       email: 'admin@groupomania.com',
       username: 'admin',
-      password: '12345678',
+      password: process.env.ADMIN_PASSWORD,
       posts: {
         create: {
           title: 'First post',

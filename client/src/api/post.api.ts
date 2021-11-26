@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Fetch } from '../utils/fetcher.utils';
-import type { Comment, Like, Post, User } from '@server/types';
+import type { Comment, Like, Post } from '@server/types';
 import type { TError, TPost } from '../types';
 
 /**
