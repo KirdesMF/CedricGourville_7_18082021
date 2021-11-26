@@ -1,11 +1,10 @@
-import { Comment } from 'p7_types';
+import type { Comment } from '@server/types';
 import { useForm } from 'react-hook-form';
 import { useCommentPost } from '../../api/post.api';
 import { socket } from '../../App';
-import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
-import { CustomInput, TextArea } from '../Input/Input';
+import { TextArea } from '../Input/Input';
 
 import * as styles from './form.css';
 
@@ -25,9 +24,12 @@ export function FormComment({
 
   const { mutate } = useCommentPost();
 
-  const handleOnSubmit = (data: Comment) => {
-    const values = { ...data, postId, userId };
-    mutate(values);
+  const handleOnSubmit = (data: Pick<Comment, 'content'>) => {
+    mutate({
+      content: data.content,
+      postId,
+      userId,
+    });
     reset();
     socket.emit('new-comment', postId);
   };

@@ -5,7 +5,7 @@ const fetchOptions = {
   headers: new Headers({ 'Content-Type': 'application/json' }),
 } as const;
 
-async function fetcher<T>(req: RequestInfo): Promise<T> {
+async function fetcher(req: RequestInfo) {
   const res = await fetch(req);
   const body = await res.json();
 
@@ -41,8 +41,8 @@ async function postFormData<T>(
     body: body as BodyInit,
     credentials: 'include',
   }
-) {
-  return await fetcher<T>(new Request(`${HOST}/${path}`, options));
+): Promise<T> {
+  return await fetcher(new Request(`${HOST}/${path}`, options));
 }
 
 async function patchFormData<T>(

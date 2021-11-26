@@ -1,19 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Fetch } from '../utils/fetcher.utils';
-import { Comment, Like, Post } from 'p7_types';
-import { TError, TPost } from '../types';
+import type { Comment, Like, Post, User } from '@server/types';
+import type { TError, TPost } from '../types';
 
 /**
  * get all posts
  */
+
 export function usePosts() {
-  return useQuery<TPost[], TError>(['post'], () => Fetch.get<TPost[]>('post'));
+  return useQuery(['post'], () => Fetch.get<TPost[]>('post'));
 }
 
 export function useCreatePost() {
   const queryClient = useQueryClient();
 
-  return useMutation<FormData, unknown, FormData>(
+  return useMutation<FormData, TError, FormData>(
     (body) => Fetch.postFormData('post', body),
     {
       onSuccess: () => {
@@ -42,9 +43,12 @@ export function useDeletePost() {
 /**
  * comment post
  */
+
+type TCommentPost = Pick<Comment, 'content' | 'postId' | 'userId'>;
+
 export function useCommentPost() {
   const queryClient = useQueryClient();
-  return useMutation<Comment, TError, Comment>(
+  return useMutation<Comment, TError, TCommentPost>(
     (body) => Fetch.post('post/comment', body),
     {
       onSuccess: () => {

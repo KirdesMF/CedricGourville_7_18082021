@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "docker:dev:start": "docker-compose up -d",
-    "docker:dev:stop": "docker-compose down --rmi all",
+    "docker:dev:stop": "docker-compose down",
     "docker:build:start": "docker-compose -f docker-compose.prod.yml up -d",
     "docker:build:stop": "docker-compose -f docker-compose.prod.yml down",
     "docker:clean": "docker system prune --volumes -f"

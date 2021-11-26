@@ -1,20 +1,20 @@
-import { Comment, Like, Post, User } from '@server/types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
 import { convertHoursToMilliseconds } from '../utils/utils';
+import type { Comment, Like, Post, User } from '@server/types';
 
 /**
  * get current user
  */
-export type CurrentUser = Pick<
+type TCurrentUser = Pick<
   User,
   'id' | 'email' | 'username' | 'role' | 'department' | 'avatar'
 >;
 
 export function useCurrentUser() {
-  return useQuery<CurrentUser, TError>(['user'], () => Fetch.get('user'), {
+  return useQuery(['user'], () => Fetch.get<TCurrentUser>('user'), {
     staleTime: convertHoursToMilliseconds(1),
     retry: false,
   });
@@ -23,32 +23,27 @@ export function useCurrentUser() {
 /**
  * get user by id
  */
-
-export type UserById = Omit<
-  User,
-  'role' | 'avatarId' | 'updatedAt' | 'email'
-> & {
+type TUserById = Omit<User, 'role' | 'avatarId' | 'updatedAt' | 'email'> & {
   likes: Like[];
   posts: Post[];
   comments: Comment[];
 };
 
 export function useUserId(id: string) {
-  return useQuery<UserById>([`user`, id], () => Fetch.get(`user/${id}`), {});
+  return useQuery([`user`, id], () => Fetch.get<TUserById>(`user/${id}`));
 }
 
 /**
  * create user
  */
-
-type CreateUser = Pick<User, 'email' | 'username' | 'password'>;
-type ResponseCreateUser = Omit<User, 'password'>;
+type TCreateUser = Pick<User, 'email' | 'username' | 'password'>;
+type TResponseCreateUser = Omit<User, 'password'>;
 
 export function useCreateUser() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  return useMutation<ResponseCreateUser, TError, CreateUser>(
+  return useMutation<TResponseCreateUser, TError, TCreateUser>(
     (body) => Fetch.post('user/register', body),
     {
       onSuccess: (data) => {
@@ -59,36 +54,48 @@ export function useCreateUser() {
   );
 }
 
-type LoginUser = Pick<User, 'email' | 'password'>;
+/**
+ * login user
+ */
+type TLoginUser = Pick<User, 'email' | 'password'>;
+type TResponseLoginUser = Omit<User, 'password'>;
 
 export function useLogUser() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  return useMutation<Record<string, string>, TError, Record<string, string>>(
+  return useMutation<TResponseLoginUser, TError, TLoginUser>(
     (body) => Fetch.post('user/login', body),
     {
       onSuccess: (data) => {
         queryClient.setQueriesData(['user'], data);
-
         navigate('/posts');
       },
     }
   );
 }
 
+/**
+ * logout user
+ */
 export function useLogOutUser() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation((body) => Fetch.remove('user/logout', body), {
-    onSettled: () => {
-      queryClient.resetQueries('user');
-      navigate('/');
-    },
-  });
+  return useMutation<Pick<User, 'id'>, TError, Pick<User, 'id'>>(
+    (body) => Fetch.remove('user/logout', body),
+    {
+      onSettled: () => {
+        queryClient.resetQueries('user');
+        navigate('/');
+      },
+    }
+  );
 }
 
+/**
+ * update user
+ */
 export function useUpdateUser() {
   const queryClient = useQueryClient();
 
@@ -103,6 +110,9 @@ export function useUpdateUser() {
   );
 }
 
+/**
+ * delete user
+ */
 export function useUnregisterUser() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
