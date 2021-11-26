@@ -1,4 +1,4 @@
-import { Comment, Like, Post, User } from 'p7_types';
+import { Comment, Like, Post, User } from '@server/types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { TError } from '../types';

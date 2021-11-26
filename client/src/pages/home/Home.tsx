@@ -5,7 +5,6 @@ import { Icon } from '../../components/Icon/Icon';
 import { Illustration } from '../../components/Illustration/Illustration';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { Span } from '../../components/Span/Span';
-import { utilities } from '../../styles/utilities.css';
 import * as styles from './home.css';
 
 export function Home() {

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@server/types": ["../server/node_modules/@prisma/client"] },
     "target": "esnext",
     "lib": ["DOM", "DOM.Iterable", "esnext"],
     "allowJs": false,
@@ -16,5 +18,6 @@
     "jsx": "preserve",
     "types": ["vite/client"]
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
 }

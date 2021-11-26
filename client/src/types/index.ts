@@ -1,4 +1,4 @@
-import { Comment, Like, Post, User } from 'p7_types';
+import { Comment, Like, Post, User } from '@server/types';
 
 export type TError = Error & {
   status: number;

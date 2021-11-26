@@ -1,12 +1,10 @@
 import { motion, Variants } from 'framer-motion';
-import { User } from 'p7_types';
 import { useState } from 'react';
 import {
   useDeletePost,
   useLikePost,
   useRemoveLikePost,
 } from '../../api/post.api';
-import { TPost } from '../../types';
 import { convertDate, convertDateToTime } from '../../utils/utils';
 import { Anchor } from '../Anchor/Anchor';
 import { Avatar } from '../Avatar/Avatar';
@@ -19,6 +17,9 @@ import { Paragraph } from '../Paragraph/Paragraph';
 import { Popover } from '../Popover/Popover';
 import { Span } from '../Span/Span';
 import * as styles from './post.css';
+
+import type { User } from '@server/types';
+import type { TPost } from '../../types';
 
 function ButtonOptions({
   isAdminOrUserOwner,
