@@ -27,8 +27,8 @@ const LINKS = [
 
 const LOG_LINKS = [
   { name: 'home', href: '/' },
-  { name: 'profil', href: '/profil' },
-  { name: 'feed', href: '/feed' },
+  { name: 'profile', href: '/users' },
+  { name: 'posts', href: '/posts' },
 ] as const;
 
 export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
@@ -57,7 +57,7 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
         <nav className={styles.nav}>
           {mapLinks.map((element) => {
             const href =
-              element.href === '/profil' ? `/profil/${user?.id}` : element.href;
+              element.href === '/users' ? `/users/${user?.id}` : element.href;
             return (
               <Anchor
                 navLink

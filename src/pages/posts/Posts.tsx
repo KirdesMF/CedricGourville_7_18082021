@@ -1,14 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Role } from 'p7_types';
 import { usePosts } from '../../api/post.api';
 import { useCurrentUser } from '../../api/user.api';
 import { FormPost } from '../../components/forms/FormPost';
 import { Heading } from '../../components/Heading/Heading';
 import { Post } from '../../components/Post/Post';
 import { Span } from '../../components/Span/Span';
-import * as styles from './feed.css';
+import * as styles from './posts.css';
 
-export function Feed() {
+export function Posts() {
   const { data: currentUser } = useCurrentUser();
   const { data: posts } = usePosts();
 

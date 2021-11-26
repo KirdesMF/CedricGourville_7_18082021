@@ -8,27 +8,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { Menu } from '../Menu/Menu';
 import { Span } from '../Span/Span';
 import { useCurrentUser } from '../../api/user.api';
-import { User } from 'p7_types';
 import { Avatar } from '../Avatar/Avatar';
-
-const AnchorAvatar = ({
-  user,
-}: {
-  user: Pick<User, 'id' | 'avatar' | 'department'> | undefined;
-}) => {
-  if (!user) {
-    return (
-      <Anchor variant={{ color: 'base' }} to="/login">
-        <Icon name="PersonIcon" variant={{ size: 'medium' }} />
-      </Anchor>
-    );
-  }
-  return (
-    <Anchor to={`/profil/${user.id}`}>
-      <Avatar user={{ avatar: user.avatar, department: user.department }} />
-    </Anchor>
-  );
-};
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,10 +25,23 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <AnchorAvatar user={user} />
+          {user ? (
+            <Anchor to={`/users/${user.id}`}>
+              <Avatar
+                user={{
+                  avatar: user.avatar,
+                  department: user.department,
+                }}
+              />
+            </Anchor>
+          ) : (
+            <Anchor variant={{ color: 'base' }} to="/login">
+              <Icon name="PersonIcon" variant={{ size: 'medium' }} />
+            </Anchor>
+          )}
 
           <Anchor
-            to={user ? '/feed' : '/'}
+            to={user ? '/posts' : '/'}
             variant={{
               space: 'gap',
               color: 'base',

@@ -1,10 +1,5 @@
 import { Comment, Like, Post, User } from 'p7_types';
 
-export type Data = {
-  user?: User;
-  message?: string;
-};
-
 export type TError = Error & {
   status: number;
   message: string;

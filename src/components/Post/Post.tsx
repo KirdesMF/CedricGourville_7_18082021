@@ -150,7 +150,7 @@ export function Post(props: PostProps) {
       custom={delay}
     >
       <header className={styles.header}>
-        <Anchor className={styles.avatar} to={`/profil/${userId}`}>
+        <Anchor className={styles.avatar} to={`/users/${userId}`}>
           <Avatar user={{ avatar, department }} />
         </Anchor>
 
@@ -177,6 +177,8 @@ export function Post(props: PostProps) {
         <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
 
         {media && <img className={styles.img} src={media} alt="" />}
+
+        <Anchor to={`${id}`}>More</Anchor>
       </div>
 
       <div className={styles.interact}>

@@ -47,12 +47,7 @@ export function Anchor({
 
   if (navLink) {
     return (
-      <NavLink
-        {...props}
-        exact
-        activeClassName={activeClassName}
-        className={cls}
-      >
+      <NavLink {...props} className={cls} end>
         {children}
       </NavLink>
     );

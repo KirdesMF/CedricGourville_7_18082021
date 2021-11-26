@@ -13,21 +13,21 @@ import { FormProfile } from '../../components/forms/FormProfile';
 import { Heading } from '../../components/Heading/Heading';
 import { Icon } from '../../components/Icon/Icon';
 import { Span } from '../../components/Span/Span';
-import * as styles from './profil.css';
+import * as styles from './user-profile.css';
 
 const notProvided = '...';
 
-export function Profil() {
-  const { id } = useParams<{ id: string }>();
+export function UserProfile() {
+  const { userId } = useParams();
   const { mutate: logout } = useLogOutUser();
   const { mutate: unregister } = useUnregisterUser();
-  const { data: user } = useUserId(id);
+  const { data: user } = useUserId(userId as string);
   const { data: currentUser } = useCurrentUser();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditing = () => setIsEditing((prev) => !prev);
   const handleLogout = () => logout();
-  const handleUnregister = () => unregister({ id: user!.id });
+  const handleUnregister = () => user && unregister({ id: user.id });
 
   const isAdmin = currentUser?.role === 'ADMIN';
   const isCurrentUser = currentUser?.id === user?.id;
@@ -65,8 +65,8 @@ export function Profil() {
           <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
             Profile's <Span variant={{ size: 'lg' }}>{user?.username}</Span>
           </Heading>
-          <Anchor variant={{ color: 'primary' }} to="/feed">
-            Feed
+          <Anchor variant={{ color: 'primary' }} to="/posts">
+            Posts
             <Icon name="ChevronRightIcon" />
           </Anchor>
         </div>

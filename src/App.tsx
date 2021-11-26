@@ -1,13 +1,13 @@
 import './styles/reset.css';
 
 import { Header } from './components/Header/Header';
-import { Routes } from './routes/Routes';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { Footer } from './components/Footer/Footer';
 import { Doodle } from './components/Doodle/Doodle';
+import { AppRouter } from './routes/router';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,9 +45,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <Doodle />
       <Header />
-      <Routes />
+      <AppRouter />
       <Footer />
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

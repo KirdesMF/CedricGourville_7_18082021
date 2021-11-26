@@ -41,8 +41,8 @@ async function postFormData<T>(
     body: body as BodyInit,
     credentials: 'include',
   }
-): Promise<T> {
-  return await fetcher(new Request(`${HOST}/${path}`, options));
+) {
+  return await fetcher<T>(new Request(`${HOST}/${path}`, options));
 }
 
 async function patchFormData<T>(
