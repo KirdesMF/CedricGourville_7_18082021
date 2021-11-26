@@ -1,0 +1,67 @@
+{
+  "name": "cedricgourville_7_18082021_backend",
+  "version": "1.0.0",
+  "description": "P7 OpenclassRoom Backend",
+  "scripts": {
+    "prisma:studio": "npx prisma studio",
+    "prisma:dev": "prisma generate",
+    "prisma:prod": "prisma migrate deploy",
+    "prisma:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev",
+    "dev": "ts-node-dev --respawn --transpile-only --exit-child --cache-directory src/.cache src/app.ts --watch",
+    "build": "rm -rf dist && tsc",
+    "start:dev": "npm run prisma:dev &&  npm run dev",
+    "start:prod": "npm run prisma:prod && node dist/app.js",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml",
+    "docker:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml",
+    "docker:dev:start": "npm run docker:dev -- up -d",
+    "docker:dev:stop": "npm run docker:dev -- down --rmi local",
+    "docker:build:start": "npm run docker:build -- up -d",
+    "docker:build:stop": "npm run docker:build -- down",
+    "docker:clean": "docker system prune -a --volumes -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KirdesMF/CedricGourville_7_18082021_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KirdesMF/CedricGourville_7_18082021_backend/issues"
+  },
+  "homepage": "https://github.com/KirdesMF/CedricGourville_7_18082021_backend#readme",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/imagekit": "^3.1.2",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^16.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "concurrently": "^6.4.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "prisma": "^3.5.0",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.5.0",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.1.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "imagekit": "^3.2.3",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.3",
+    "socket.io": "^4.4.0"
+  }
+}
