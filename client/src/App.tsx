@@ -47,7 +47,7 @@ export default function App() {
       <Header />
       <AppRouter />
       <Footer />
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

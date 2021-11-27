@@ -12,81 +12,13 @@ import { Button } from '../Button/Button';
 import { FormComment } from '../forms/FormComment';
 import { Heading } from '../Heading/Heading';
 import { Icon } from '../Icon/Icon';
-import { Modal } from '../Modal/Modal';
 import { Paragraph } from '../Paragraph/Paragraph';
-import { Popover } from '../Popover/Popover';
 import { Span } from '../Span/Span';
 import * as styles from './post.css';
 
 import type { User } from '@server/types';
 import type { TPost } from '../../types';
-
-function ButtonOptions({
-  isAdminOrUserOwner,
-  deletePost,
-}: {
-  isAdminOrUserOwner: boolean;
-  deletePost: () => void;
-}) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModal = (isOpen: boolean) => setIsModalOpen(isOpen);
-
-  const handleRemove = () => {
-    deletePost();
-    handleModal(false);
-  };
-
-  return (
-    <>
-      <Popover.Wrapper>
-        <Popover.Trigger>
-          <Button variant={{ discret: true }}>
-            <Icon name="DotsVerticalIcon" />
-          </Button>
-        </Popover.Trigger>
-
-        <Popover.Content>
-          <ul className={styles.list}>
-            <li className={styles.item}>
-              <Button
-                onClick={() => handleModal(true)}
-                variant={{ ghost: true }}
-              >
-                <Icon name="FlagIcon" />
-                Report
-              </Button>
-            </li>
-            {isAdminOrUserOwner && (
-              <li className={styles.item}>
-                <Button
-                  onClick={() => handleModal(true)}
-                  variant={{ warning: true }}
-                >
-                  <Icon name="TrashIcon" />
-                  Delete
-                </Button>
-              </li>
-            )}
-          </ul>
-        </Popover.Content>
-      </Popover.Wrapper>
-
-      <Modal isOpen={isModalOpen}>
-        <div>
-          <Button variant={{ secondary: true }} onClick={handleRemove}>
-            Confirm
-          </Button>
-          <Button
-            variant={{ primary: true }}
-            onClick={() => handleModal(false)}
-          >
-            Cancel
-          </Button>
-        </div>
-      </Modal>
-    </>
-  );
-}
+import { ButtonOptions } from '../ButtonOptions/ButtonOptions';
 
 type PostProps = {
   delay: number;
