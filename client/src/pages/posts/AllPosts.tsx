@@ -8,7 +8,7 @@ import { Post } from '../../components/Post/Post';
 import { Span } from '../../components/Span/Span';
 import * as styles from './posts.css';
 
-export function Posts() {
+export function AllPosts() {
   const { data: currentUser } = useCurrentUser();
   const { data: posts } = usePosts();
 

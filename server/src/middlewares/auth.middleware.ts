@@ -1,13 +1,10 @@
 import { NextFunction, Response, Request } from 'express';
 import { verify } from 'jsonwebtoken';
+import type { TokenVerify } from '../types';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
-import type { Role } from '.prisma/client';
 
-type TokenVerify = {
-  id: string;
-  role: Role;
-};
+const SECRET = process.env.SECRET || 'secret';
 
 export async function authorization(
   req: Request,
@@ -17,19 +14,53 @@ export async function authorization(
   try {
     const token = req.cookies?.jwt;
     if (!token) {
-      throw new ErrorHandler(httpStatus.unauthorized, 'User not authorized');
+      throw new ErrorHandler(httpStatus.unauthorized, 'Token is expired');
     }
 
-    const { id, role } = verify(
-      token,
-      process.env.SECRET || 'secret'
-    ) as TokenVerify;
+    const { userId } = verify(token, SECRET) as TokenVerify;
+    req.userId = userId;
 
-    if (!id || !role) {
-      throw new ErrorHandler(httpStatus.unauthorized, 'User not authorized');
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export function isAuthenticated(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const token = req.cookies?.jwt;
+    if (!token) {
+      throw new ErrorHandler(httpStatus.forbidden, 'Token is expired');
     }
 
-    req.userId = id;
+    const user = verify(token, SECRET) as TokenVerify;
+    if (!user) {
+      throw new ErrorHandler(
+        httpStatus.forbidden,
+        'Something went wrong with token'
+      );
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+export function isAdmin(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { role } = req.user;
+    if (role !== 'ADMIN') {
+      throw new ErrorHandler(
+        httpStatus.forbidden,
+        'You are not authorized to perform this action'
+      );
+    }
 
     next();
   } catch (error) {

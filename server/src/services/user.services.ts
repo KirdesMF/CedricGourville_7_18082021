@@ -10,7 +10,9 @@ type TUniqueUserField = keyof Pick<User, 'id' | 'username' | 'email'>;
  * @returns
  * @description create a user and hash the password
  */
-async function createUser(data: Pick<User, 'email' | 'username' | 'password'>) {
+export async function createUser(
+  data: Pick<User, 'email' | 'username' | 'password'>
+) {
   const { password, ...userData } = data;
   const hashedPassword = await hash(password, 10);
   const user = await prisma.user.create({
@@ -38,7 +40,7 @@ async function createUser(data: Pick<User, 'email' | 'username' | 'password'>) {
  * @param value string | number depending on field
  * @returns User as promise
  */
-async function getUser(field: TUniqueUserField, value: string) {
+export async function getUser(field: TUniqueUserField, value: string) {
   const user = await prisma.user.findUnique({
     where: { [field]: value },
     select: {
@@ -55,7 +57,7 @@ async function getUser(field: TUniqueUserField, value: string) {
   return user;
 }
 
-async function getUserById(id: string) {
+export async function getUserById(id: string) {
   const user = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -80,7 +82,7 @@ async function getUserById(id: string) {
 /**
  * get avatar id
  */
-async function getAvatarId(id: string) {
+export async function getAvatarId(id: string) {
   const user = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -99,7 +101,7 @@ async function getAvatarId(id: string) {
  * @param data
  * @returns
  */
-async function updateUser(
+export async function updateUser(
   field: TUniqueUserField,
   value: string,
   data: Partial<User>
@@ -119,17 +121,8 @@ async function updateUser(
  * @param value
  * @returns
  */
-async function deleteUser(id: string) {
+export async function deleteUser(id: string) {
   await prisma.user.delete({
     where: { id },
   });
 }
-
-export const UserServices = {
-  createUser,
-  deleteUser,
-  getUser,
-  getUserById,
-  getAvatarId,
-  updateUser,
-};

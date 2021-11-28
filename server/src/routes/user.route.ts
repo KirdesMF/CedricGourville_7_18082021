@@ -1,6 +1,6 @@
 import { Application, Router } from 'express';
-import { UserControllers } from '../controllers/user.controllers';
-import { authorization } from '../middlewares/auth.middleware';
+import * as UserControllers from '../controllers/user.controllers';
+import { isAuthenticated } from '../middlewares/auth.middleware';
 import { multerAvatar } from '../middlewares/multer.middleware';
 import { validationRegister } from '../middlewares/validation.middlewares';
 
@@ -9,15 +9,15 @@ export function userRouter(app: Application) {
 
   app.use('/user', router);
 
-  router.get('/', UserControllers.logged);
-  router.get('/:id', UserControllers.getUserById);
+  router.get('/', isAuthenticated, UserControllers.getCurrentUser);
+  router.get('/:id', isAuthenticated, UserControllers.getUserById);
 
   router.post('/login', UserControllers.login);
   router.post('/register', validationRegister, UserControllers.register);
 
-  router.patch('/edit', authorization, multerAvatar, UserControllers.edit);
-  router.delete('/logout', authorization, UserControllers.logout);
-  router.delete('/unregister', authorization, UserControllers.unRegister);
+  router.patch('/edit', isAuthenticated, multerAvatar, UserControllers.edit);
+  router.delete('/logout', isAuthenticated, UserControllers.logout);
+  router.delete('/unregister', isAuthenticated, UserControllers.unRegister);
 
   return app;
 }

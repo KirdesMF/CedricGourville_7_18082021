@@ -36,6 +36,8 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
   const { data: user } = useCurrentUser();
   const mapLinks = user ? LOG_LINKS : LINKS;
 
+  const isAdmin = user?.role === 'ADMIN';
+
   return (
     <motion.div
       variants={variants}
@@ -72,6 +74,19 @@ export function Menu({ handleMenu }: { handleMenu: (v: boolean) => void }) {
               </Anchor>
             );
           })}
+
+          {isAdmin && (
+            <Anchor
+              navLink
+              to={'/admin'}
+              variant={{ color: 'primary' }}
+              onClick={() => handleMenu(false)}
+            >
+              <Span variant={{ size: 'xl', weight: 'bold', uppercase: true }}>
+                {'Admin'}
+              </Span>
+            </Anchor>
+          )}
         </nav>
       </aside>
     </motion.div>

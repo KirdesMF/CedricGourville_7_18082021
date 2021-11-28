@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Menu, MenuButton, MenuList, MenuItem } from '@reach/menu-button';
+import '@reach/menu-button/styles.css';
 import { srOnly } from '../../styles/helpers.css';
 import * as styles from './button-options.css';
 import { Modal } from '../Modal/Modal';

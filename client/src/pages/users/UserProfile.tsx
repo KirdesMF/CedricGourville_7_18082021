@@ -13,7 +13,7 @@ import { FormProfile } from '../../components/forms/FormProfile';
 import { Heading } from '../../components/Heading/Heading';
 import { Icon } from '../../components/Icon/Icon';
 import { Span } from '../../components/Span/Span';
-import * as styles from './user-profile.css';
+import * as styles from './users.css';
 
 const notProvided = '...';
 
@@ -26,37 +26,11 @@ export function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditing = () => setIsEditing((prev) => !prev);
-  const handleLogout = () => logout();
-  const handleUnregister = () => user && unregister({ id: user.id });
+  const handleLogout = () => currentUser && logout({ id: currentUser.id });
+  const handleUnregister = () =>
+    currentUser && unregister({ id: currentUser.id });
 
-  const isAdmin = currentUser?.role === 'ADMIN';
   const isCurrentUser = currentUser?.id === user?.id;
-
-  function renderButtons() {
-    if (isCurrentUser) {
-      return (
-        <>
-          <Button variant={{ primary: true }} onClick={handleEditing}>
-            Edit profile
-          </Button>
-          <Button variant={{ primary: true }} onClick={handleLogout}>
-            Log out
-          </Button>
-          <Button variant={{ primary: true }} onClick={handleUnregister}>
-            Unregister
-          </Button>
-        </>
-      );
-    } else if (isAdmin) {
-      return (
-        <>
-          <Button variant={{ primary: true }} onClick={handleUnregister}>
-            Unregister
-          </Button>
-        </>
-      );
-    } else return null;
-  }
 
   return (
     <main className={styles.main}>
@@ -83,14 +57,26 @@ export function UserProfile() {
         </div>
 
         <div>
-          <p>Likes: {user?.likes.length}</p>
-          <p>Posts: {user?.posts.length}</p>
-          <p>Comments: {user?.comments.length}</p>
+          <p>Likes: {user?.likes?.length}</p>
+          <p>Posts: {user?.posts?.length}</p>
+          <p>Comments: {user?.comments?.length}</p>
         </div>
 
         {isEditing && <FormProfile />}
 
-        <div className={styles.buttons}>{renderButtons()}</div>
+        {isCurrentUser && (
+          <div className={styles.buttons}>
+            <Button variant={{ primary: true }} onClick={handleEditing}>
+              Edit profile
+            </Button>
+            <Button variant={{ primary: true }} onClick={handleLogout}>
+              Log out
+            </Button>
+            <Button variant={{ primary: true }} onClick={handleUnregister}>
+              Unregister
+            </Button>
+          </div>
+        )}
       </div>
     </main>
   );

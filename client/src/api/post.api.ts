@@ -6,11 +6,13 @@ import type { TError, TPost } from '../types';
 /**
  * get all posts
  */
-
 export function usePosts() {
   return useQuery(['post'], () => Fetch.get<TPost[]>('post'));
 }
 
+/**
+ * create a new post
+ */
 export function useCreatePost() {
   const queryClient = useQueryClient();
 
@@ -43,7 +45,6 @@ export function useDeletePost() {
 /**
  * comment post
  */
-
 type TCommentPost = Pick<Comment, 'content' | 'postId' | 'userId'>;
 
 export function useCommentPost() {
@@ -61,18 +62,19 @@ export function useCommentPost() {
 /**
  * like post
  */
+type TLikePost = Pick<Like, 'postId' | 'userId'>;
+
 export function useLikePost() {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    Pick<Like, 'userId' | 'postId'>,
-    TError,
-    Pick<Like, 'userId' | 'postId'>
-  >((body) => Fetch.post('post/like', body), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('post');
-    },
-  });
+  return useMutation<TLikePost, TError, TLikePost>(
+    (body) => Fetch.post('post/like', body),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('post');
+      },
+    }
+  );
 }
 
 /**

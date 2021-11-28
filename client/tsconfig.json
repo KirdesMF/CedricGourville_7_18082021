@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@server/types": ["../server/node_modules/@prisma/client"],
-      "~/*": ["src/*"]
+      "~/*": ["./src/*"]
     },
     "target": "esnext",
     "lib": ["DOM", "DOM.Iterable", "esnext"],

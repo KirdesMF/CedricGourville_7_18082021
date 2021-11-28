@@ -1,5 +1,5 @@
 // import { User } from 'p7_types';
-import { Department } from 'p7_types';
+import { Department } from '@server/types';
 import { useForm } from 'react-hook-form';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';

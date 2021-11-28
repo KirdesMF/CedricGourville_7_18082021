@@ -38,7 +38,7 @@ async function getOne(req: Request, res: Response, next: NextFunction) {
 async function create(req: Request, res: Response, next: NextFunction) {
   const body = req.body as Post;
   const file = req?.file;
-  const userId = req?.userId;
+  const { userId } = req.user;
   let post: Post;
 
   try {

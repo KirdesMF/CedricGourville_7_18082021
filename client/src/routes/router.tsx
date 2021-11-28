@@ -1,13 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router';
+import { Loading } from '../components/Loading/Loading';
 import { useCurrentUser } from '../api/user.api';
 import { Dashboard } from '../pages/Dashboard';
 import { Home } from '../pages/home/Home';
 import { Login } from '../pages/login/Login';
 import { Page404 } from '../pages/Page404';
 import { PagePost } from '../pages/PagePost';
-import { Posts } from '../pages/posts/Posts';
+import { AllPosts } from '../pages/posts/AllPosts';
 import { Register } from '../pages/register/Register';
-import { UserProfile } from '../pages/user-profile/UserProfile';
+import { UserProfile } from '../pages/users/UserProfile';
 import { Users } from '../pages/users/Users';
 
 type RequiredAuthProps = {
@@ -15,12 +16,18 @@ type RequiredAuthProps = {
 };
 
 function RequiredAuth({ children }: RequiredAuthProps) {
-  const { data } = useCurrentUser();
+  const { data, isLoading } = useCurrentUser();
+
+  if (isLoading) return <Loading />;
+
   return data ? children : <Navigate to="/login" />;
 }
 
 function RequiredAdminAuth({ children }: RequiredAuthProps) {
-  const { data } = useCurrentUser();
+  const { data, isLoading } = useCurrentUser();
+
+  if (isLoading) return <Loading />;
+
   return data && data.role ? children : <Navigate to="/posts" />;
 }
 
@@ -39,7 +46,7 @@ export function AppRouter() {
           index
           element={
             <RequiredAuth>
-              <Posts />
+              <AllPosts />
             </RequiredAuth>
           }
         />
@@ -75,7 +82,7 @@ export function AppRouter() {
 
       {/** admin */}
       <Route
-        path="admin"
+        path="/admin"
         element={
           <RequiredAdminAuth>
             <Dashboard />

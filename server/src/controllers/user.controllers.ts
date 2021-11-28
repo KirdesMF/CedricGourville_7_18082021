@@ -2,10 +2,10 @@ import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { NextFunction, Response, Request } from 'express';
 import { validationResult } from 'express-validator';
-import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { config } from '../config/config';
 import { ImageKitServices } from '../services/imagekit.services';
-import { UserServices } from '../services/user.services';
+import * as UserServices from '../services/user.services';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
@@ -17,8 +17,8 @@ function removePassword<T extends Partial<User>>(user: T) {
   return safeUser;
 }
 
-function signToken({ id, role }: { id: string; role: string }) {
-  return sign({ id, role }, process.env.SECRET || 'secret', {
+function signToken({ userId, role }: { userId: string; role: string }) {
+  return sign({ userId, role }, process.env.SECRET || 'secret', {
     expiresIn: config.jwt.expire,
   });
 }
@@ -26,7 +26,11 @@ function signToken({ id, role }: { id: string; role: string }) {
 /**
  * register user
  */
-async function register(req: Request, res: Response, next: NextFunction) {
+export async function register(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const body = req.body as Pick<User, 'email' | 'username' | 'password'>;
   const errors = validationResult(req);
 
@@ -48,7 +52,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
     }
 
     // sign token
-    const token = signToken({ id: user.id, role: user.role });
+    const token = signToken({ userId: user.id, role: user.role });
 
     // send response
     res
@@ -63,7 +67,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
 /**
  * login user
  */
-async function login(req: Request, res: Response, next: NextFunction) {
+export async function login(req: Request, res: Response, next: NextFunction) {
   const { password, log } = req.body as Record<string, string>;
   const field = log.includes('@') ? 'email' : 'username';
   const message = `We did not find this ${field}`;
@@ -88,7 +92,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
     });
 
     // sign token
-    const token = signToken({ id: user.id, role: user.role });
+    const token = signToken({ userId: user.id, role: user.role });
 
     // send response
     res
@@ -103,36 +107,48 @@ async function login(req: Request, res: Response, next: NextFunction) {
 /**
  * check looged user
  */
-async function logged(req: Request, res: Response, next: NextFunction) {
-  if (req.cookies.jwt || req.headers.cookie) {
-    const token = req.cookies.jwt as string;
-    const { id } = verify(
-      token,
-      process.env.SECRET || ('secret' as string)
-    ) as JwtPayload;
+export async function getCurrentUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { userId } = req.user;
 
-    const user = await UserServices.getUser('id', id);
+  try {
+    const user = await UserServices.getUser('id', userId);
 
-    if (user) {
-      return res.status(httpStatus.accepted).json(removePassword(user));
+    if (!user) {
+      throw new ErrorHandler(
+        httpStatus.unauthorized,
+        '❌ Session expired or User not logged in'
+      );
     }
-  }
 
-  return next(
-    new ErrorHandler(
-      httpStatus.unauthorized,
-      '❌ Session expired or User not logged in'
-    )
-  );
+    res.status(httpStatus.accepted).json(removePassword(user));
+  } catch (error) {
+    next(error);
+  }
 }
 
 /**
  * get user by id
  */
-async function getUserById(req: Request, res: Response, next: NextFunction) {
+export async function getUserById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id } = req.params;
   try {
     const user = await UserServices.getUserById(id);
+
+    if (!user) {
+      throw new ErrorHandler(
+        httpStatus.unauthorized,
+        '❌ This user does not exist or something went wrong'
+      );
+    }
+
     res.status(httpStatus.OK).json(user);
   } catch (error) {
     next(error);
@@ -142,21 +158,27 @@ async function getUserById(req: Request, res: Response, next: NextFunction) {
 /**
  * update user
  */
-async function edit(req: Request, res: Response, next: NextFunction) {
-  const userId = req?.userId;
-  const body = req.body as User;
+export async function edit(req: Request, res: Response, next: NextFunction) {
+  const { userId } = req.user;
+  const data = req.body as Partial<User>;
   const file = req?.file;
   let user: User;
 
   try {
-    if (!file) user = await UserServices.updateUser('id', userId, body);
-    else {
+    if (!file) {
+      // if there is no file like images, update user
+      user = await UserServices.updateUser('id', userId, data);
+    } else {
+      // get avatar id
       const currentAvatarId = await UserServices.getAvatarId(userId);
+
+      // upload img to imagekit
       const { avatar, avatarId } = await ImageKitServices.upload(
         file,
         'avatar'
       );
 
+      // throw if there is an issue
       if (!avatar) {
         throw new ErrorHandler(
           httpStatus.serverError,
@@ -164,24 +186,25 @@ async function edit(req: Request, res: Response, next: NextFunction) {
         );
       }
 
+      // if image correctly upload delete old ones
       if (currentAvatarId && avatarId) {
         await ImageKitServices.remove(currentAvatarId);
       }
 
+      // update the user
       user = await UserServices.updateUser('id', userId, {
-        ...body,
+        ...data,
         avatar,
         avatarId,
       });
     }
 
+    // throw if something wrong with db
     if (!user) {
       throw new ErrorHandler(httpStatus.serverError, 'User not updated');
     }
 
-    res
-      .status(httpStatus.OK)
-      .json({ message: `🎉 Successfully updated`, user: removePassword(user) });
+    res.status(httpStatus.OK).json(removePassword(user));
   } catch (error) {
     next(error);
   }
@@ -190,7 +213,7 @@ async function edit(req: Request, res: Response, next: NextFunction) {
 /**
  * log out user
  */
-async function logout(req: Request, res: Response, next: NextFunction) {
+export async function logout(req: Request, res: Response, next: NextFunction) {
   res
     .clearCookie('jwt')
     .status(httpStatus.OK)
@@ -202,7 +225,11 @@ async function logout(req: Request, res: Response, next: NextFunction) {
 /**
  * delete user
  */
-async function unRegister(req: Request, res: Response, next: NextFunction) {
+export async function unRegister(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { userId } = req;
   try {
     const avatarId = await UserServices.getAvatarId(userId);
@@ -217,13 +244,3 @@ async function unRegister(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
-
-export const UserControllers = {
-  login,
-  edit,
-  getUserById,
-  logout,
-  register,
-  unRegister,
-  logged,
-};
