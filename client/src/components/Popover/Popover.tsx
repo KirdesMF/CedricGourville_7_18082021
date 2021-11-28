@@ -1,56 +1,38 @@
-import {
-  cloneElement,
-  createContext,
-  Dispatch,
-  ReactElement,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import { Root, Trigger, Content } from '@radix-ui/react-popover';
+import { Button } from '../Button/Button';
+import { Dialog } from '../Dialog/Dialog';
+import { Icon } from '../Icon/Icon';
 import * as styles from './popover.css';
 
-type TPopoverContext = {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
-
-const PopoverContext = createContext<TPopoverContext>({} as TPopoverContext);
-const usePopover = () => useContext(PopoverContext);
-
-function PopoverProvider({ children }: { children: ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const values = { isOpen, setIsOpen };
-
+export function Popover() {
   return (
-    <PopoverContext.Provider value={values}>{children}</PopoverContext.Provider>
+    <Root>
+      <Trigger asChild>
+        <span>
+          <Icon name="DotsVerticalIcon" />
+        </span>
+      </Trigger>
+
+      <Content asChild>
+        <ul className={styles.list}>
+          <Dialog description="Are you sure to report this post ?">
+            <li className={styles.item}>
+              <Button variant={{ ghost: true }}>
+                <Icon name="FlagIcon" />
+                Report
+              </Button>
+            </li>
+          </Dialog>
+          <Dialog description="Are you sure to delete this post ?">
+            <li className={styles.item}>
+              <Button variant={{ warning: true }}>
+                <Icon name="TrashIcon" />
+                Delete
+              </Button>
+            </li>
+          </Dialog>
+        </ul>
+      </Content>
+    </Root>
   );
 }
-
-function Wrapper({ children }: { children: ReactNode }) {
-  return (
-    <PopoverProvider>
-      <div className={styles.wrapper}>{children}</div>
-    </PopoverProvider>
-  );
-}
-
-type TriggerChildren = {
-  onClick: () => void;
-};
-
-function Trigger({ children }: { children: ReactElement<TriggerChildren> }) {
-  const { setIsOpen } = usePopover();
-  const handleClick = () => setIsOpen((prev) => !prev);
-
-  return <>{cloneElement(children, { onClick: handleClick })}</>;
-}
-
-function Content({ children }: { children: ReactNode }) {
-  const { isOpen } = usePopover();
-
-  if (!isOpen) return null;
-  return <div className={styles.popover}>{children}</div>;
-}
-
-export const Popover = { Wrapper, Trigger, Content };

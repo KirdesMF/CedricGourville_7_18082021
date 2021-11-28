@@ -1,4 +1,5 @@
 import * as styles from './icon.css';
+import { forwardRef } from 'react';
 import { IconVariants } from './icon.css';
 import {
   Cross2Icon,
@@ -92,7 +93,7 @@ type IconProps = {
   variant?: IconVariants;
 };
 
-export function Icon({ name, variant }: IconProps) {
-  const Component = icons[name];
-  return <Component className={styles.icon(variant)}></Component>;
-}
+export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
+  const Component = icons[props.name];
+  return <Component ref={ref} className={styles.icon(props.variant)} />;
+});

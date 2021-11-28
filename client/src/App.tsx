@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { Footer } from './components/Footer/Footer';
 import { Doodle } from './components/Doodle/Doodle';
 import { AppRouter } from './routes/router';
+import { HelmetProvider } from 'react-helmet-async';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient({
@@ -43,10 +44,12 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Doodle />
-      <Header />
-      <AppRouter />
-      <Footer />
+      <HelmetProvider>
+        <Doodle />
+        <Header />
+        <AppRouter />
+        <Footer />
+      </HelmetProvider>
       {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );

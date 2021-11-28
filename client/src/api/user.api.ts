@@ -14,9 +14,15 @@ type TCurrentUser = Pick<
 >;
 
 export function useCurrentUser() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   return useQuery(['user'], () => Fetch.get<TCurrentUser>('user'), {
     staleTime: convertHoursToMilliseconds(1),
     retry: false,
+    onError: () => {
+      navigate('/login');
+    },
   });
 }
 

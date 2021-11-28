@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Anchor } from '../../components/Anchor/Anchor';
 import { FormLogIn } from '../../components/forms/FormLogin';
 import { Guides } from '../../components/Guides/Guides';

@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Anchor } from '../../components/Anchor/Anchor';
 import { Guides } from '../../components/Guides/Guides';
 import { Heading } from '../../components/Heading/Heading';
@@ -8,6 +8,7 @@ import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { Span } from '../../components/Span/Span';
 import * as styles from './home.css';
 
+// FIXME: use helmet async
 export function Home() {
   return (
     <>

@@ -1,17 +1,30 @@
 import { style } from '@vanilla-extract/css';
-import { utilities } from '../../styles/utilities.css';
+import { vars } from '~/styles/vars.css';
+import { utilities } from '~/styles/utilities.css';
 
-export const wrapper = utilities({
-  position: 'relative',
-});
-
-export const popover = style([
+export const list = style([
   utilities({
-    position: 'absolute',
+    display: 'grid',
+    fontSize: 'xs',
+    fontVariationSettings: 'thin',
+    background: 'base4',
+    borderRadius: 'xs',
+  }),
+]);
+
+export const item = style([
+  utilities({
+    display: 'flex',
+    alignItems: 'center',
+    gap: 'xs',
+    paddingInline: 'md',
+    paddingBlock: 'sm',
   }),
   {
-    top: '100%',
-    right: 0,
-    marginBlockStart: '0.5rem',
+    selectors: {
+      '&:not(:first-child)': {
+        borderTop: `1px solid ${vars.colors.primary6}`,
+      },
+    },
   },
 ]);

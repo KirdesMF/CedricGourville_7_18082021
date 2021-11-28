@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { usePosts } from '../../api/post.api';
 import { useCurrentUser } from '../../api/user.api';
 import { FormPost } from '../../components/forms/FormPost';

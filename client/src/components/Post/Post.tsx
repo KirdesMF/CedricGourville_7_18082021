@@ -18,7 +18,8 @@ import * as styles from './post.css';
 
 import type { User } from '@server/types';
 import type { TPost } from '../../types';
-import { ButtonOptions } from '../ButtonOptions/ButtonOptions';
+import { ToolTip } from '../Tooltip/Tooltip';
+import { Popover } from '../Popover/Popover';
 
 type PostProps = {
   delay: number;
@@ -82,6 +83,7 @@ export function Post(props: PostProps) {
       exit="exit"
       custom={delay}
     >
+      {/** header */}
       <header className={styles.header}>
         <Anchor className={styles.avatar} to={`/users/${userId}`}>
           <Avatar user={{ avatar, department }} />
@@ -97,12 +99,10 @@ export function Post(props: PostProps) {
           </Span>
         </div>
 
-        <ButtonOptions
-          isAdminOrUserOwner={isAdminOrUserOwner}
-          deletePost={handleDelete}
-        />
+        <Popover />
       </header>
 
+      {/** content */}
       <div className={styles.content}>
         <Heading as="h2" variant={{ fontSize: 'md', weight: 'semi-bold' }}>
           {title}
@@ -114,27 +114,35 @@ export function Post(props: PostProps) {
         <Anchor to={`${id}`}>More</Anchor>
       </div>
 
+      {/** buttons */}
       <div className={styles.interact}>
         <div className={styles.buttons}>
-          <Button
-            variant={hasCommented ? { liked: true } : { ghost: true }}
-            onClick={handleComment}
-          >
-            <Icon name="ChatBubbleIcon" />
-            <Span variant={{ size: 'xs', weight: 'thin' }}>
-              {comments.length}
-            </Span>
-          </Button>
+          <ToolTip content="comments">
+            <Button
+              variant={hasCommented ? { liked: true } : { ghost: true }}
+              onClick={handleComment}
+            >
+              <Icon name="ChatBubbleIcon" />
+              <Span variant={{ size: 'xs', weight: 'thin' }}>
+                {comments.length}
+              </Span>
+            </Button>
+          </ToolTip>
 
-          <Button
-            onClick={handleLike}
-            variant={hasLiked ? { liked: true } : { ghost: true }}
-          >
-            <Icon name="HeartIcon" />
-            <Span variant={{ size: 'xs', weight: 'thin' }}>{likes.length}</Span>
-          </Button>
+          <ToolTip content="likes">
+            <Button
+              onClick={handleLike}
+              variant={hasLiked ? { liked: true } : { ghost: true }}
+            >
+              <Icon name="HeartIcon" />
+              <Span variant={{ size: 'xs', weight: 'thin' }}>
+                {likes.length}
+              </Span>
+            </Button>
+          </ToolTip>
         </div>
 
+        {/** comments avatar */}
         {avatarsComment && (
           <div className={styles.avatars}>
             {avatarsComment.map((e) => (
@@ -149,11 +157,12 @@ export function Post(props: PostProps) {
         )}
       </div>
 
+      {/** last comment */}
       {lastComment && (
         <div className={styles.lastComment}>
           <Anchor
             className={styles.centered}
-            to={`/profil/${lastComment.userId}`}
+            to={`/users/${lastComment.userId}`}
           >
             <Avatar variant={{ size: 'small' }} user={lastComment.user} />
           </Anchor>
@@ -168,6 +177,7 @@ export function Post(props: PostProps) {
         </div>
       )}
 
+      {/** comment form */}
       {isCommenting && (
         <footer className={styles.form}>
           <Avatar
