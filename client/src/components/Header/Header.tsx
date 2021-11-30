@@ -26,13 +26,14 @@ export function Header() {
       <header className={styles.header}>
         <div className={styles.inner}>
           {user ? (
-            <Anchor to={`/users/${user.id}`}>
+            <Anchor variant={{ space: 'gap' }} to={`/users/${user.id}`}>
               <Avatar
                 user={{
                   avatar: user.avatar,
                   department: user.department,
                 }}
               />
+              <Span>{user.username}</Span>
             </Anchor>
           ) : (
             <Anchor variant={{ color: 'base' }} to="/login">

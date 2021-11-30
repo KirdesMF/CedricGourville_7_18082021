@@ -136,7 +136,7 @@ export function Post(props: PostProps) {
         </Anchor>
 
         <div className={styles.info}>
-          <Anchor variant={{ color: 'base' }} to={`/profil/${userId}`}>
+          <Anchor variant={{ color: 'base' }} to={`/users/${userId}`}>
             <Span variant={{ weight: 'thin', size: 'sm' }}>{username}</Span>
           </Anchor>
 
