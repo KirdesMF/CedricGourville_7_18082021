@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Fetch } from '../utils/fetcher.utils';
 import type { Comment, Like, Post } from '@server/types';
 import type { TError, TPost } from '../types';
+import toast from 'react-hot-toast';
 
 /**
  * get all posts
@@ -28,6 +29,7 @@ export function useCreatePost() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
+        toast.success('Post created');
       },
     }
   );
@@ -44,6 +46,7 @@ export function useDeletePost() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
+        toast.success('Post deleted');
       },
     }
   );
@@ -61,6 +64,7 @@ export function useCommentPost() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
+        toast.success('Comment posted');
       },
     }
   );
@@ -79,6 +83,7 @@ export function useLikePost() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
+        toast.success('Post liked');
       },
     }
   );
@@ -95,6 +100,7 @@ export function useRemoveLikePost() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
+        toast.success('Post unliked');
       },
     }
   );

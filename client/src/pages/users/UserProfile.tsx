@@ -52,19 +52,48 @@ export function UserProfile() {
           <Avatar user={{ avatar: user.avatar, department: user.department }} />
         )}
 
-        <div>
-          <p>Username: {user?.username || notProvided}</p>
-          <p>Firstname: {user?.firstName || notProvided}</p>
-          <p>Lastname: {user?.lastName || notProvided}</p>
-          <p>Bio: {user?.bio || notProvided}</p>
-          <p>Department: {user?.department}</p>
-        </div>
+        <section className={styles.section}>
+          <Heading variant={{ fontSize: 'md', weight: 'thin' }} as="h2">
+            Info
+          </Heading>
 
-        <div>
-          <p>Likes: {user?.likes?.length}</p>
-          <p>Posts: {user?.posts?.length}</p>
-          <p>Comments: {user?.comments?.length}</p>
-        </div>
+          <div>
+            <p>Username: {user?.username || notProvided}</p>
+            <p>Firstname: {user?.firstName || notProvided}</p>
+            <p>Lastname: {user?.lastName || notProvided}</p>
+            <p>Bio: {user?.bio || notProvided}</p>
+            <p>Department: {user?.department}</p>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <Heading variant={{ fontSize: 'md', weight: 'thin' }} as="h2">
+            Network
+          </Heading>
+
+          <div>
+            <div>
+              <Icon name="HeartIcon" />
+              <ul>
+                {user?.likes?.map((like) => (
+                  <li key={like.id}>{like.postId}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <Icon name="ArchiveIcon" />
+              <ul>
+                {user?.posts?.map((post) => (
+                  <li key={post.id}>{post.title}</li>
+                ))}
+              </ul>
+            </div>
+            <p>
+              <Icon name="ChatBubbleIcon" />
+              {user?.comments?.length}
+            </p>
+          </div>
+        </section>
 
         {isCurrentUser && (
           <div className={styles.buttons}>

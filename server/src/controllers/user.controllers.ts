@@ -1,7 +1,6 @@
 import { User } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { NextFunction, Response, Request } from 'express';
-import { validationResult } from 'express-validator';
 import { sign } from 'jsonwebtoken';
 import { config } from '../config/config';
 import { ImageKitServices } from '../services/imagekit.services';
@@ -32,19 +31,8 @@ export async function register(
   next: NextFunction
 ) {
   const body = req.body as Pick<User, 'email' | 'username' | 'password'>;
-  const errors = validationResult(req);
 
   try {
-    // check if there are errors
-    if (!errors.isEmpty()) {
-      const arr = errors.array();
-      const message = arr.map((a) => a.msg).join(', ');
-      throw new ErrorHandler(
-        httpStatus.badRequest,
-        `Can you check this: ${message}`
-      );
-    }
-
     // create user
     const user = await UserServices.createUser(body);
     if (!user) {

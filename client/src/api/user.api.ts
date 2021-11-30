@@ -4,6 +4,7 @@ import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
 import { convertHoursToMilliseconds } from '../utils/utils';
 import type { Comment, Like, Post, User } from '@server/types';
+import toast from 'react-hot-toast';
 
 /**
  * get current user
@@ -63,6 +64,7 @@ export function useCreateUser() {
       onSuccess: (data) => {
         queryClient.setQueriesData(['user'], data);
         navigate('/posts');
+        toast.success('User created successfully');
       },
     }
   );
@@ -87,6 +89,7 @@ export function useLogUser() {
       onSuccess: (data) => {
         queryClient.setQueriesData(['user'], data);
         navigate('/posts');
+        toast.success('User logged successfully');
       },
     }
   );
@@ -102,9 +105,10 @@ export function useLogOutUser() {
   return useMutation<Pick<User, 'id'>, TError, Pick<User, 'id'>>(
     (body) => Fetch.remove('user/logout', body),
     {
-      onSettled: () => {
+      onSuccess: () => {
         queryClient.resetQueries('user');
         navigate('/');
+        toast.success('Logout successfully');
       },
     }
   );
@@ -122,6 +126,7 @@ export function useUpdateUser() {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
         queryClient.invalidateQueries('user/:id');
+        toast.success('User updated');
       },
     }
   );

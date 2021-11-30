@@ -57,24 +57,15 @@ export function AppRouter() {
       </Route>
 
       {/** users */}
-      <Route path="/users">
-        <Route
-          index
-          element={
-            <RequiredAuth>
-              <Users />
-            </RequiredAuth>
-          }
-        />
-        <Route
-          path=":userId"
-          element={
-            <RequiredAuth>
-              <UserProfile />
-            </RequiredAuth>
-          }
-        />
-      </Route>
+
+      <Route
+        path="/users/:userId"
+        element={
+          <RequiredAuth>
+            <UserProfile />
+          </RequiredAuth>
+        }
+      />
 
       {/** admin */}
       <Route
