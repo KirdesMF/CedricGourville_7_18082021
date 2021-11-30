@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { Loading } from '../components/Loading/Loading';
 import { useCurrentUser } from '../api/user.api';
-import { Dashboard } from '../pages/Dashboard';
 import { Home } from '../pages/home/Home';
 import { Login } from '../pages/login/Login';
 import { Page404 } from '../pages/Page404';
@@ -10,6 +9,7 @@ import { Register } from '../pages/register/Register';
 import { UserProfile } from '../pages/users/UserProfile';
 import { Users } from '../pages/users/Users';
 import { PostDetails } from '../pages/posts/PostDetails';
+import { Dashboard } from '../pages/admin/Dashboard';
 
 type RequiredAuthProps = {
   children: JSX.Element;
@@ -17,17 +17,13 @@ type RequiredAuthProps = {
 
 function RequiredAuth({ children }: RequiredAuthProps) {
   const { data, isLoading } = useCurrentUser();
-
   if (isLoading) return <Loading />;
-
   return data ? children : <Navigate to="/login" />;
 }
 
 function RequiredAdminAuth({ children }: RequiredAuthProps) {
   const { data, isLoading } = useCurrentUser();
-
   if (isLoading) return <Loading />;
-
   return data && data.role ? children : <Navigate to="/posts" />;
 }
 

@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
-import { vars } from '~/styles/vars.css';
-import { utilities } from '~/styles/utilities.css';
+import { vars } from '../../styles/vars.css';
+import { utilities } from '../../styles/utilities.css';
 
 export const list = style([
   utilities({
