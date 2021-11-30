@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
-import { CustomInput } from '../Input/Input';
+import { CustomInput, TextArea } from '../Input/Input';
 import { CustomSelect } from '../Select/Select';
 
 type ProfileField = {
@@ -85,10 +85,9 @@ export function FormProfile() {
         placeholder="Last Name"
       />
 
-      <CustomInput
+      <TextArea
         register={register}
         errors={errors}
-        type="text"
         name="bio"
         label="Bio"
         placeholder="Bio"

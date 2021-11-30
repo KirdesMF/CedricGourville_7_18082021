@@ -37,7 +37,6 @@ export function FormComment({
   return (
     <form onSubmit={handleSubmit(handleOnSubmit)} className={styles.comment}>
       <TextArea
-        rows={1}
         autoFocus
         register={register}
         errors={errors}
