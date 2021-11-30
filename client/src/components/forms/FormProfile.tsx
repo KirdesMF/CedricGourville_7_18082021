@@ -62,6 +62,15 @@ export function FormProfile() {
         register={register}
         errors={errors}
         type="text"
+        name="username"
+        label="Username"
+        placeholder="username"
+      />
+
+      <CustomInput
+        register={register}
+        errors={errors}
+        type="text"
         name="firstName"
         label="First Name"
         placeholder="First Name"

@@ -36,8 +36,11 @@ export function UserProfile() {
     <main className={styles.main}>
       <div className={styles.inner}>
         <div className={styles.heading}>
-          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
-            Profile's <Span variant={{ size: 'lg' }}>{user?.username}</Span>
+          <Heading variant={{ fontSize: 'lg', weight: 'bold' }}>
+            User's profile{' '}
+            <Span variant={{ size: 'lg', gradient: true }}>
+              {user?.username}
+            </Span>
           </Heading>
           <Anchor variant={{ color: 'primary' }} to="/posts">
             Posts
@@ -50,6 +53,7 @@ export function UserProfile() {
         )}
 
         <div>
+          <p>Username: {user?.username || notProvided}</p>
           <p>Firstname: {user?.firstName || notProvided}</p>
           <p>Lastname: {user?.lastName || notProvided}</p>
           <p>Bio: {user?.bio || notProvided}</p>

@@ -7,6 +7,7 @@ import {
 import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { Span } from '../Span/Span';
+import * as styles from './select.css';
 
 export type TCustomInput<TFields> = {
   label: string;
@@ -39,7 +40,12 @@ export function CustomSelect<TFields>(props: TCustomInput<TFields>) {
   return (
     <label className={utilities({ display: 'grid', gap: 'xs' })}>
       <span className={srOnly}>{label}</span>
-      <select defaultValue="" {...rest} {...register(name, options)}>
+      <select
+        className={styles.select}
+        defaultValue=""
+        {...rest}
+        {...register(name, options)}
+      >
         <Placeholder text={customPlaceholder} />
         {choices.map((c) => (
           <option key={c} value={c}>

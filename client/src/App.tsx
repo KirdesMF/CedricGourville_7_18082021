@@ -1,7 +1,7 @@
 import './styles/reset.css';
 
 import { Header } from './components/Header/Header';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { io } from 'socket.io-client';
 import { useEffect } from 'react';
 import { Footer } from './components/Footer/Footer';
@@ -9,11 +9,21 @@ import { Doodle } from './components/Doodle/Doodle';
 import { AppRouter } from './routes/router';
 import { HelmetProvider } from 'react-helmet-async';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import toast, { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { notifyOnChangeProps: 'tracked' },
   },
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query.state.data !== undefined) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+      }
+    },
+  }),
 });
 
 // TODO
@@ -49,6 +59,7 @@ export default function App() {
         <Header />
         <AppRouter />
         <Footer />
+        <Toaster />
       </HelmetProvider>
       {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>

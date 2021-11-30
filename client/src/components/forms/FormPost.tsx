@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useCreatePost } from '../../api/post.api';
 import { socket } from '../../App';
 import { utilities } from '../../styles/utilities.css';
 import { convertMegaBytesToBytes } from '../../utils/utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
-import { BasicInput, CustomInput, FileInput, TextArea } from '../Input/Input';
-import { Span } from '../Span/Span';
+import { CustomInput, FileInput, TextArea } from '../Input/Input';
 
 type PostField = {
   title: string;
@@ -17,7 +17,7 @@ type PostField = {
 const MAX_FILE_SIZE = convertMegaBytesToBytes(2.5);
 
 export function FormPost() {
-  const { mutate } = useCreatePost();
+  const { mutate, isError, isSuccess } = useCreatePost();
 
   const {
     handleSubmit,
@@ -43,6 +43,9 @@ export function FormPost() {
     reset();
     socket.emit('new-post');
   };
+
+  if (isError) toast('Error while creating post');
+  if (isSuccess) toast('Post created successfully');
 
   return (
     <form
