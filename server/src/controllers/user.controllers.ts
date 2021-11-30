@@ -247,7 +247,7 @@ export async function unRegister(
   res: Response,
   next: NextFunction
 ) {
-  const { userId } = req;
+  const { userId } = req.user;
   try {
     const avatarId = await UserServices.getAvatarId(userId);
     if (avatarId) await ImageKitServices.remove(avatarId);
@@ -255,6 +255,29 @@ export async function unRegister(
 
     res
       .clearCookie('jwt')
+      .status(httpStatus.OK)
+      .json({ message: '👋 user successfully  deleted' });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * delete user from admin
+ */
+export async function deleteUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { id } = req.body;
+
+  try {
+    const avatarId = await UserServices.getAvatarId(id);
+    if (avatarId) await ImageKitServices.remove(avatarId);
+    await UserServices.deleteUser(id);
+
+    res
       .status(httpStatus.OK)
       .json({ message: '👋 user successfully  deleted' });
   } catch (error) {

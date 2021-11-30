@@ -19,6 +19,11 @@ export function userRouter(app: Application) {
   router.patch('/edit', isAuthenticated, multerAvatar, UserControllers.edit);
   router.delete('/logout', isAuthenticated, UserControllers.logout);
   router.delete('/unregister', isAuthenticated, UserControllers.unRegister);
+  router.delete(
+    '/admin/unregister',
+    isAuthenticated,
+    UserControllers.deleteUser
+  );
 
   return app;
 }
