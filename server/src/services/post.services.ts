@@ -79,7 +79,45 @@ async function getMediaId(id: string) {
 }
 
 async function getPost(id: string) {
-  const post = await prisma.post.findUnique({ where: { id } });
+  const post = await prisma.post.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      content: true,
+      media: true,
+      createdAt: true,
+      userId: true,
+      user: {
+        select: {
+          username: true,
+          avatar: true,
+          department: true,
+        },
+      },
+      comments: {
+        orderBy: { createdAt: 'asc' },
+        select: {
+          id: true,
+          content: true,
+          createdAt: true,
+          userId: true,
+          user: {
+            select: {
+              avatar: true,
+              department: true,
+            },
+          },
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+          userId: true,
+        },
+      },
+    },
+  });
   return post;
 }
 

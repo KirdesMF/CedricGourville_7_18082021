@@ -23,7 +23,7 @@ async function getAll(req: Request, res: Response, next: NextFunction) {
  * get one post by id
  */
 async function getOne(req: Request, res: Response, next: NextFunction) {
-  const id = req.body?.id;
+  const { id } = req.params;
   try {
     const post = await PostServices.getPost(id);
     res.status(200).json(post);

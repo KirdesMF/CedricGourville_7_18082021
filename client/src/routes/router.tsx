@@ -5,11 +5,11 @@ import { Dashboard } from '../pages/Dashboard';
 import { Home } from '../pages/home/Home';
 import { Login } from '../pages/login/Login';
 import { Page404 } from '../pages/Page404';
-import { PagePost } from '../pages/PagePost';
 import { AllPosts } from '../pages/posts/AllPosts';
 import { Register } from '../pages/register/Register';
 import { UserProfile } from '../pages/users/UserProfile';
 import { Users } from '../pages/users/Users';
+import { PostDetails } from '../pages/posts/PostDetails';
 
 type RequiredAuthProps = {
   children: JSX.Element;
@@ -54,7 +54,7 @@ export function AppRouter() {
           path=":postId"
           element={
             <RequiredAuth>
-              <PagePost />
+              <PostDetails />
             </RequiredAuth>
           }
         />

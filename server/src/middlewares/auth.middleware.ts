@@ -14,7 +14,10 @@ export async function authorization(
   try {
     const token = req.cookies?.jwt;
     if (!token) {
-      throw new ErrorHandler(httpStatus.unauthorized, 'Token is expired');
+      throw new ErrorHandler(
+        httpStatus.unauthorized,
+        'Token is expired or user disconnected'
+      );
     }
 
     const { userId } = verify(token, SECRET) as TokenVerify;
@@ -34,7 +37,7 @@ export function isAuthenticated(
   try {
     const token = req.cookies?.jwt;
     if (!token) {
-      throw new ErrorHandler(httpStatus.forbidden, 'Token is expired');
+      throw new ErrorHandler(httpStatus.forbidden, 'User not logged in');
     }
 
     const user = verify(token, SECRET) as TokenVerify;

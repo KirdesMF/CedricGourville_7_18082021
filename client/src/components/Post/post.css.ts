@@ -106,7 +106,12 @@ export const avatarComments = style({
   },
 });
 
-export const lastComment = style([
+export const wrapperComments = style({
+  gridRow: 4,
+  gridColumn: '1/-1',
+});
+
+export const comment = style([
   utilities({
     display: 'grid',
     alignItems: 'center',

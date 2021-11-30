@@ -5,10 +5,15 @@ export type TError = Error & {
   message: string;
 };
 
+export type PostComment = Pick<
+  Comment,
+  'content' | 'createdAt' | 'id' | 'userId'
+> & {
+  user: Pick<User, 'avatar' | 'department'>;
+};
+
 export type TPost = Omit<Post, 'mediaId'> & {
   likes: Pick<Like, 'id' | 'userId'>[];
   user: Pick<User, 'username' | 'avatar' | 'department'>;
-  comments: (Pick<Comment, 'content' | 'createdAt' | 'id' | 'userId'> & {
-    user: Pick<User, 'avatar' | 'department'>;
-  })[];
+  comments: PostComment[];
 };

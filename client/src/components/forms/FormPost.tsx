@@ -17,7 +17,7 @@ type PostField = {
 const MAX_FILE_SIZE = convertMegaBytesToBytes(2.5);
 
 export function FormPost() {
-  const { mutate, isError, isSuccess } = useCreatePost();
+  const { mutate, isError } = useCreatePost();
 
   const {
     handleSubmit,
@@ -45,7 +45,6 @@ export function FormPost() {
   };
 
   if (isError) toast('Error while creating post');
-  if (isSuccess) toast('Post created successfully');
 
   return (
     <form

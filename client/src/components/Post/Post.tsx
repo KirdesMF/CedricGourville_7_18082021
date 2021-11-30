@@ -17,7 +17,7 @@ import { Span } from '../Span/Span';
 import * as styles from './post.css';
 
 import type { User } from '@server/types';
-import type { TPost } from '../../types';
+import type { PostComment, TPost } from '../../types';
 import { ToolTip } from '../Tooltip/Tooltip';
 import { Popover } from '../Popover/Popover';
 
@@ -25,6 +25,7 @@ type PostProps = {
   delay: number;
   post: TPost;
   currentUser: Pick<User, 'id' | 'role' | 'avatar' | 'department'>;
+  details?: boolean;
 };
 
 const variants: Variants = {
@@ -38,8 +39,26 @@ const variants: Variants = {
   exit: { opacity: 0 },
 };
 
+function Comments({ comment }: { comment: PostComment }) {
+  return (
+    <div className={styles.comment}>
+      <Anchor className={styles.centered} to={`/users/${comment.userId}`}>
+        <Avatar variant={{ size: 'small' }} user={comment.user} />
+      </Anchor>
+
+      <Paragraph variant={{ size: 'sm' }}>
+        <small>
+          {convertDate(comment.createdAt)} -{' '}
+          {convertDateToTime(comment.createdAt)} -{' '}
+        </small>
+        {comment.content}
+      </Paragraph>
+    </div>
+  );
+}
+
 export function Post(props: PostProps) {
-  const { delay, currentUser, post } = props;
+  const { delay, currentUser, post, details = false } = props;
   const {
     id,
     userId,
@@ -63,11 +82,12 @@ export function Post(props: PostProps) {
   const avatarsComment = comments.filter((_, i) => i < 5);
   const lastComment = comments[comments.length - 1];
 
+  // TODO add this to popover
   const isAdminOrUserOwner =
     userId === currentUser.id || currentUser.role === 'ADMIN';
+  const handleDelete = () => deletePost({ id });
 
   const handleComment = () => setIsCommenting((prev) => !prev);
-  const handleDelete = () => deletePost({ id });
   const handleLike = () => {
     hasLiked
       ? unlike({ id: hasLiked.id })
@@ -158,24 +178,19 @@ export function Post(props: PostProps) {
       </div>
 
       {/** last comment */}
-      {lastComment && (
-        <div className={styles.lastComment}>
-          <Anchor
-            className={styles.centered}
-            to={`/users/${lastComment.userId}`}
-          >
-            <Avatar variant={{ size: 'small' }} user={lastComment.user} />
-          </Anchor>
-
-          <Paragraph variant={{ size: 'sm' }}>
-            <small>
-              {convertDate(lastComment.createdAt)} -{' '}
-              {convertDateToTime(lastComment.createdAt)} -{' '}
-            </small>
-            {lastComment.content}
-          </Paragraph>
+      {!details && lastComment ? (
+        <div className={styles.wrapperComments}>
+          <Comments comment={lastComment} />
         </div>
-      )}
+      ) : null}
+
+      {details && comments ? (
+        <div className={styles.wrapperComments}>
+          {comments.map((comment) => (
+            <Comments key={comment.id} comment={comment} />
+          ))}
+        </div>
+      ) : null}
 
       {/** comment form */}
       {isCommenting && (

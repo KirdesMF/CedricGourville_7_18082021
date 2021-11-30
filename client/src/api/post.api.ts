@@ -11,6 +11,13 @@ export function usePosts() {
 }
 
 /**
+ * get one post
+ */
+export function usePostId(id: string) {
+  return useQuery([`post`, id], () => Fetch.get<TPost>(`post/${id}`));
+}
+
+/**
  * create a new post
  */
 export function useCreatePost() {
