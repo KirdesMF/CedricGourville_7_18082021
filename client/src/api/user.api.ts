@@ -34,7 +34,16 @@ type TUserById = Omit<User, 'role' | 'avatarId' | 'updatedAt' | 'email'> & {
 };
 
 export function useUserId(id: string) {
-  return useQuery([`user`, id], () => Fetch.get<TUserById>(`user/${id}`));
+  return useQuery([`user`, id], () =>
+    Fetch.get<TUserById>(`user/details/${id}`)
+  );
+}
+
+/**
+ * get all users
+ */
+export function useUsers() {
+  return useQuery(['users'], () => Fetch.get<User[]>('user/all'));
 }
 
 /**

@@ -61,7 +61,7 @@ export default function App() {
         <Footer />
         <Toaster />
       </HelmetProvider>
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

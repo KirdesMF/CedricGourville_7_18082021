@@ -156,6 +156,23 @@ export async function getUserById(
 }
 
 /**
+ * get all users
+ */
+export async function getAllUsers(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const users = await UserServices.getAllUsers();
+
+    res.status(httpStatus.OK).json(users);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
  * update user
  */
 export async function edit(req: Request, res: Response, next: NextFunction) {

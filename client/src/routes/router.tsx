@@ -24,7 +24,7 @@ function RequiredAuth({ children }: RequiredAuthProps) {
 function RequiredAdminAuth({ children }: RequiredAuthProps) {
   const { data, isLoading } = useCurrentUser();
   if (isLoading) return <Loading />;
-  return data && data.role ? children : <Navigate to="/posts" />;
+  return data && data.role === 'ADMIN' ? children : <Navigate to="/posts" />;
 }
 
 export function AppRouter() {

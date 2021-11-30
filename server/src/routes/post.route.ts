@@ -10,7 +10,7 @@ export function postRouter(app: Application) {
 
   app.use('/post', router);
 
-  router.get('/', PostController.getAll);
+  router.get('/', isAuthenticated, PostController.getAll);
   router.get('/:id', PostController.getOne);
 
   router.post('/', isAuthenticated, multerMedia, PostController.create);

@@ -126,3 +126,12 @@ export async function deleteUser(id: string) {
     where: { id },
   });
 }
+
+/**
+ * get all users
+ */
+export async function getAllUsers() {
+  const users = await prisma.user.findMany();
+
+  return users;
+}
