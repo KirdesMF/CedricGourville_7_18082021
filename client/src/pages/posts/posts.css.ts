@@ -24,3 +24,11 @@ export const feed = style([
     marginBlockStart: vars.spaces.lg,
   },
 ]);
+
+export const heading = style([
+  utilities({
+    display: 'flex',
+    gap: 'md',
+    alignItems: 'baseline',
+  }),
+]);

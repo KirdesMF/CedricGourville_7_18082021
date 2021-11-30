@@ -4,7 +4,11 @@ import { Dialog } from '../Dialog/Dialog';
 import { Icon } from '../Icon/Icon';
 import * as styles from './popover.css';
 
-export function Popover() {
+type PopoverProps = {
+  isAdminOrUser: boolean;
+  handleDeletePost: () => void;
+};
+export function Popover({ isAdminOrUser, handleDeletePost }: PopoverProps) {
   return (
     <Root>
       <Trigger asChild>
@@ -23,14 +27,19 @@ export function Popover() {
               </Button>
             </li>
           </Dialog>
-          <Dialog description="Are you sure to delete this post ?">
-            <li className={styles.item}>
-              <Button variant={{ warning: true }}>
-                <Icon name="TrashIcon" />
-                Delete
-              </Button>
-            </li>
-          </Dialog>
+          {isAdminOrUser && (
+            <Dialog
+              description="Are you sure to delete this post ?"
+              handleDeletePost={handleDeletePost}
+            >
+              <li className={styles.item}>
+                <Button variant={{ warning: true }}>
+                  <Icon name="TrashIcon" />
+                  Delete
+                </Button>
+              </li>
+            </Dialog>
+          )}
         </ul>
       </Content>
     </Root>

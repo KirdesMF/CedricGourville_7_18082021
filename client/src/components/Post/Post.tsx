@@ -82,16 +82,42 @@ export function Post(props: PostProps) {
   const avatarsComment = comments.filter((_, i) => i < 5);
   const lastComment = comments[comments.length - 1];
 
-  // TODO add this to popover
   const isAdminOrUserOwner =
     userId === currentUser.id || currentUser.role === 'ADMIN';
-  const handleDelete = () => deletePost({ id });
+  const handleDeletePost = () => deletePost({ id });
 
   const handleComment = () => setIsCommenting((prev) => !prev);
   const handleLike = () => {
     hasLiked
       ? unlike({ id: hasLiked.id })
       : like({ userId: currentUser.id, postId: id });
+  };
+
+  const Content = ({ detail }: { detail: boolean }) => {
+    if (detail) {
+      return (
+        <div className={styles.content}>
+          <Heading as="h2" variant={{ fontSize: 'md', weight: 'semi-bold' }}>
+            {title}
+          </Heading>
+          <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
+
+          {media && <img className={styles.img} src={media} alt="" />}
+
+          {!details && <Anchor to={`${id}`}>More</Anchor>}
+        </div>
+      );
+    }
+    return (
+      <Anchor to={`${id}`} className={styles.content}>
+        <Heading as="h2" variant={{ fontSize: 'md', weight: 'semi-bold' }}>
+          {title}
+        </Heading>
+        <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
+
+        {media && <img className={styles.img} src={media} alt="" />}
+      </Anchor>
+    );
   };
 
   return (
@@ -119,20 +145,14 @@ export function Post(props: PostProps) {
           </Span>
         </div>
 
-        <Popover />
+        <Popover
+          isAdminOrUser={isAdminOrUserOwner}
+          handleDeletePost={handleDeletePost}
+        />
       </header>
 
       {/** content */}
-      <div className={styles.content}>
-        <Heading as="h2" variant={{ fontSize: 'md', weight: 'semi-bold' }}>
-          {title}
-        </Heading>
-        <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
-
-        {media && <img className={styles.img} src={media} alt="" />}
-
-        <Anchor to={`${id}`}>More</Anchor>
-      </div>
+      <Content detail={details} />
 
       {/** buttons */}
       <div className={styles.interact}>
