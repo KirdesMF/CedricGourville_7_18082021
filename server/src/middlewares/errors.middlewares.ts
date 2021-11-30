@@ -28,14 +28,14 @@ function responder(
 ) {
   const status = err.status || httpStatus.serverError;
   const message = err.message || 'Something went wrong';
-
+  console.log(err);
   if (err instanceof PrismaClientKnownRequestError) {
     const field = getFieldFromPrismaError(err.message);
 
     if (err.code === 'P2002') {
       return res
         .status(status)
-        .json({ status, message: `${err.message} already in use` });
+        .json({ status, message: `${field} already in use` });
     }
   }
   return res.status(status).json({ status, message });

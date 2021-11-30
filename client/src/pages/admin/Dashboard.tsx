@@ -1,6 +1,5 @@
 import {
   useCurrentUser,
-  useUnregisterUser,
   useUnregisterUserByAdmin,
   useUsers,
 } from '../../api/user.api';

@@ -71,14 +71,17 @@ export function useCreateUser() {
 /**
  * login user
  */
-type TLoginUser = Pick<User, 'email' | 'password'>;
+export type TLoginFields = {
+  log: string;
+  password: string;
+};
 type TResponseLoginUser = Omit<User, 'password'>;
 
 export function useLogUser() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  return useMutation<TResponseLoginUser, TError, TLoginUser>(
+  return useMutation<TResponseLoginUser, TError, TLoginFields>(
     (body) => Fetch.post('user/login', body),
     {
       onSuccess: (data) => {

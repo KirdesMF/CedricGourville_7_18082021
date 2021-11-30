@@ -1,4 +1,4 @@
-import { User } from 'p7_types';
+import { User } from '@server/types';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateUser } from '../../api/user.api';

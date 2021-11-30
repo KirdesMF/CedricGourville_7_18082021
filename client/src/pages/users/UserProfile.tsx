@@ -66,8 +66,6 @@ export function UserProfile() {
           <p>Comments: {user?.comments?.length}</p>
         </div>
 
-        {isEditing && <FormProfile />}
-
         {isCurrentUser && (
           <div className={styles.buttons}>
             <Button variant={{ primary: true }} onClick={handleEditing}>
@@ -81,6 +79,8 @@ export function UserProfile() {
             </Button>
           </div>
         )}
+
+        {isEditing && <FormProfile />}
       </div>
     </main>
   );

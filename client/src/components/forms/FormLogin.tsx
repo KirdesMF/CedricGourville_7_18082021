@@ -6,11 +6,7 @@ import { cx } from '../../utils/classname.utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
-
-type LoginFields = {
-  log: string;
-  password: string;
-};
+import type { TLoginFields } from '../../api/user.api';
 
 export function FormLogIn() {
   const { mutate, error } = useLogUser();
@@ -19,9 +15,9 @@ export function FormLogIn() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFields>({ mode: 'onChange' });
+  } = useForm<TLoginFields>({ mode: 'onChange' });
 
-  const handleOnSubmit = (data: LoginFields) => {
+  const handleOnSubmit = (data: TLoginFields) => {
     mutate(data);
   };
 
