@@ -216,6 +216,28 @@ export async function edit(req: Request, res: Response, next: NextFunction) {
 }
 
 /**
+ * update user department
+ */
+export async function updateDepartment(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { id, department } = req.body as Pick<User, 'department' | 'id'>;
+
+  try {
+    const user = await UserServices.updateUser('id', id, { department });
+
+    if (!user) {
+      throw new ErrorHandler(httpStatus.serverError, 'User not updated');
+    }
+
+    res.status(httpStatus.OK).json(removePassword(user));
+  } catch (error) {
+    next(error);
+  }
+}
+/**
  * log out user
  */
 export async function logout(req: Request, res: Response, next: NextFunction) {

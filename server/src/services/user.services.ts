@@ -131,7 +131,11 @@ export async function deleteUser(id: string) {
  * get all users
  */
 export async function getAllUsers() {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({
+    orderBy: {
+      department: 'asc',
+    },
+  });
 
   return users;
 }

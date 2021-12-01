@@ -17,8 +17,6 @@ export const item = style([
     display: 'flex',
     alignItems: 'center',
     gap: 'xs',
-    paddingInline: 'md',
-    paddingBlock: 'sm',
   }),
   {
     selectors: {
@@ -28,3 +26,8 @@ export const item = style([
     },
   },
 ]);
+
+export const button = utilities({
+  paddingBlock: 'md',
+  paddingInline: 'lg',
+});

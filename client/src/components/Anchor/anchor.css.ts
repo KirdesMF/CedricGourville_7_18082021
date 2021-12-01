@@ -6,7 +6,6 @@ import { vars } from '../../styles/vars.css';
 export const baseAnchor = style([
   utilities({ display: 'inline-flex', alignItems: 'center' }),
   {
-    textTransform: 'capitalize',
     whiteSpace: 'nowrap',
     textUnderlineOffset: vars.spaces.xs,
     appearance: 'none',

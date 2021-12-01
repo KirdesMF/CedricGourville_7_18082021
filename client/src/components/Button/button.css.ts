@@ -20,6 +20,12 @@ const base = style([
 export const button = recipe({
   base,
   variants: {
+    fullSize: {
+      true: {
+        width: '100%',
+        height: '100%',
+      },
+    },
     shadow: {
       true: {
         filter: `drop-shadow(1px 2px 2px ${vars.colors.shadow})`,

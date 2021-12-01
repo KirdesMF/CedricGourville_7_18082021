@@ -54,7 +54,6 @@ globalStyle('input, button, textarea, select', {
   font: 'inherit',
   background: 'none',
   padding: 0,
-  appearance: 'none',
 });
 
 globalStyle('ul, li', { listStyle: 'none', padding: 0, margin: 0 });

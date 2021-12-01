@@ -125,8 +125,28 @@ export function useUpdateUser() {
     {
       onSuccess: () => {
         queryClient.invalidateQueries('user');
-        queryClient.invalidateQueries('user/:id');
+        queryClient.invalidateQueries('user/details/:id');
         toast.success('User updated');
+      },
+    }
+  );
+}
+
+/**
+ * update user departement
+ */
+type TUpdateUserDepartment = Pick<User, 'department' | 'id'>;
+
+export function useUpdateUserDepartment() {
+  const queryClient = useQueryClient();
+
+  return useMutation<TUpdateUserDepartment, TError, TUpdateUserDepartment>(
+    (body) => Fetch.patch('user/edit/department', body),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('user');
+        queryClient.resetQueries('users');
+        toast.success('User department updated');
       },
     }
   );

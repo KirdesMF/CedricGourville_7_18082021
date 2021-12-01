@@ -31,6 +31,13 @@ export function userRouter(app: Application) {
   );
 
   router.patch('/edit', isAuthenticated, multerAvatar, UserControllers.edit);
+  router.patch(
+    '/edit/department',
+    isAuthenticated,
+    isAdmin,
+    UserControllers.updateDepartment
+  );
+
   router.delete('/logout', isAuthenticated, UserControllers.logout);
   router.delete('/unregister', isAuthenticated, UserControllers.unRegister);
   router.delete(

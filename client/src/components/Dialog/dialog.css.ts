@@ -39,6 +39,13 @@ export const close = style([
   },
 ]);
 
+export const wrapperRadio = style([
+  utilities({
+    display: 'grid',
+  }),
+  { textTransform: 'capitalize' },
+]);
+
 export const confirm = utilities({
   display: 'flex',
   gap: 'sm',

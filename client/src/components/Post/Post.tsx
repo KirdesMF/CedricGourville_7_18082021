@@ -19,7 +19,7 @@ import * as styles from './post.css';
 import type { User } from '@server/types';
 import type { PostComment, TPost } from '../../types';
 import { ToolTip } from '../Tooltip/Tooltip';
-import { Popover } from '../Popover/Popover';
+import { PopoverPost } from '../Popover/Popover';
 
 type PostProps = {
   delay: number;
@@ -145,9 +145,9 @@ export function Post(props: PostProps) {
           </Span>
         </div>
 
-        <Popover
+        <PopoverPost
           isAdminOrUser={isAdminOrUserOwner}
-          handleDeletePost={handleDeletePost}
+          deletePost={handleDeletePost}
         />
       </header>
 
