@@ -43,7 +43,7 @@ function Comments({ comment }: { comment: PostComment }) {
   return (
     <div className={styles.comment}>
       <Anchor className={styles.centered} to={`/users/${comment.userId}`}>
-        <Avatar variant={{ size: 'small' }} user={comment.user} />
+        <Avatar variant={{ size: 'small', ring: 2 }} user={comment.user} />
       </Anchor>
 
       <Paragraph variant={{ size: 'sm' }}>
@@ -132,7 +132,7 @@ export function Post(props: PostProps) {
       {/** header */}
       <header className={styles.header}>
         <Anchor className={styles.avatar} to={`/users/${userId}`}>
-          <Avatar user={{ avatar, department }} />
+          <Avatar variant={{ ring: 3 }} user={{ avatar, department }} />
         </Anchor>
 
         <div className={styles.info}>

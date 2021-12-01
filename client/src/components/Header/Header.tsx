@@ -28,6 +28,7 @@ export function Header() {
           {user ? (
             <Anchor variant={{ space: 'gap' }} to={`/users/${user.id}`}>
               <Avatar
+                variant={{ ring: 3 }}
                 user={{
                   avatar: user.avatar,
                   department: user.department,

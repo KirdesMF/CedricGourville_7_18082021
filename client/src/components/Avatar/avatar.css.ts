@@ -25,6 +25,10 @@ export const avatar = recipe({
       full: utilities({ borderRadius: 'full' }),
       square: utilities({ borderRadius: 'md' }),
     },
+    ring: {
+      2: { boxShadow: `0 0 0 2px ${vars.colors.primary10}` },
+      3: { boxShadow: `0 0 0 3px ${vars.colors.primary10}` },
+    },
   },
   defaultVariants: {
     size: 'medium',
