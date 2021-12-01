@@ -59,8 +59,9 @@ export function BasicInput({
 }
 
 export function FileInput<TFields>(props: TCustomInput<TFields>) {
-  const { label, register, name, options, errors: _, ...rest } = props;
+  const { label, register, name, options, errors, ...rest } = props;
 
+  console.log(errors);
   return (
     <>
       <label
@@ -88,6 +89,11 @@ export function FileInput<TFields>(props: TCustomInput<TFields>) {
           {...rest}
         />
       </label>
+      {errors?.[name] && (
+        <Span variant={{ color: 'secondary', size: 'xs', weight: 'thin' }}>
+          {errors?.[name]?.message}
+        </Span>
+      )}
     </>
   );
 }

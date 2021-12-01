@@ -29,7 +29,7 @@ export const preview = style({
 
 export const previewProfile = style({
   width: '15rem',
-  maxHeight: '15rem',
+  height: '15rem',
   objectFit: 'cover',
   borderRadius: '50%',
 });

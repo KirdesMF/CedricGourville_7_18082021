@@ -43,6 +43,9 @@ export function FormComment({
         name="content"
         placeholder="your comment"
         label="content"
+        options={{
+          required: "Can't be empty",
+        }}
       />
       <Button variant={{ primary: true }} type="submit">
         <Icon name="PaperPlaneIcon" />

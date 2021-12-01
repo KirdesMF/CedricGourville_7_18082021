@@ -1,6 +1,7 @@
 // import { User } from 'p7_types';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FILE_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
@@ -77,6 +78,12 @@ export function FormProfile({ setIsEditing }: ProfileForm) {
         name="username"
         label="Username"
         placeholder="username"
+        options={{
+          minLength: {
+            value: 2,
+            message: 'Username must be at least 2 characters',
+          },
+        }}
       />
 
       <CustomInput
@@ -86,6 +93,12 @@ export function FormProfile({ setIsEditing }: ProfileForm) {
         name="firstName"
         label="First Name"
         placeholder="First Name"
+        options={{
+          minLength: {
+            value: 2,
+            message: 'First Name must be at least 2 character',
+          },
+        }}
       />
 
       <CustomInput
@@ -95,6 +108,12 @@ export function FormProfile({ setIsEditing }: ProfileForm) {
         name="lastName"
         label="Last Name"
         placeholder="Last Name"
+        options={{
+          minLength: {
+            value: 2,
+            message: 'Last Name must be at least 2 character',
+          },
+        }}
       />
 
       <TextArea
@@ -103,6 +122,12 @@ export function FormProfile({ setIsEditing }: ProfileForm) {
         name="bio"
         label="Bio"
         placeholder="Bio"
+        options={{
+          minLength: {
+            value: 2,
+            message: 'Biographie must be at least 2 character',
+          },
+        }}
       />
 
       <div
@@ -118,6 +143,21 @@ export function FormProfile({ setIsEditing }: ProfileForm) {
           errors={errors}
           label="avatar pic"
           placeholder="Add a pic profile"
+          options={{
+            validate: {
+              size: (files) => {
+                if (typeof files !== 'object') return true;
+                return files[0]?.size < MAX_FILE_SIZE || 'Max 2.5MB';
+              },
+              format: (files) => {
+                if (typeof files !== 'object') return true;
+                return (
+                  FILE_TYPES.includes(files[0]?.type) ||
+                  'Only PNG, JPEG, SVG, WEBP, GIF'
+                );
+              },
+            },
+          }}
         />
 
         <Button variant={{ primary: true, shadow: true }} type="submit">

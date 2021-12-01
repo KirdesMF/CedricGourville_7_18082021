@@ -1,10 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import { FILE_TYPES, MAX_FILE_SIZE } from '../../utils/constants';
 import { useCreatePost } from '../../api/post.api';
 import { socket } from '../../App';
 import { utilities } from '../../styles/utilities.css';
-import { convertMegaBytesToBytes } from '../../utils/utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { CustomInput, FileInput, TextArea } from '../Input/Input';
@@ -16,10 +15,8 @@ type PostField = {
   media: FileList;
 };
 
-const MAX_FILE_SIZE = convertMegaBytesToBytes(2.5);
-
 export function FormPost() {
-  const { mutate, isError } = useCreatePost();
+  const { mutate } = useCreatePost();
   const [srcPreview, setSrcPreview] = useState<string | null>(null);
 
   const {
@@ -95,6 +92,21 @@ export function FormPost() {
           errors={errors}
           label="file pic"
           placeholder="Add a pic"
+          options={{
+            validate: {
+              size: (files) => {
+                if (typeof files !== 'object') return true;
+                return files[0]?.size < MAX_FILE_SIZE || 'Max 2.5MB';
+              },
+              format: (files) => {
+                if (typeof files !== 'object') return true;
+                return (
+                  FILE_TYPES.includes(files[0]?.type) ||
+                  'Only PNG, JPEG, SVG, WEBP, GIF'
+                );
+              },
+            },
+          }}
         />
 
         <Button variant={{ primary: true, shadow: true }} type="submit">
