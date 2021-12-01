@@ -1,7 +1,7 @@
 import { Application, Router } from 'express';
-import { CommentControllers } from '../controllers/comment.controllers';
-import { LikeControllers } from '../controllers/like.controllers';
-import { PostController } from '../controllers/post.controllers';
+import * as CommentControllers from '../controllers/comment.controllers';
+import * as LikeControllers from '../controllers/like.controllers';
+import * as PostController from '../controllers/post.controllers';
 import { isAuthenticated } from '../middlewares/auth.middleware';
 import { multerMedia } from '../middlewares/multer.middleware';
 

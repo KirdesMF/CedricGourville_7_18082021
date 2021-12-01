@@ -49,6 +49,9 @@ or you can use the following command:
 
 After installing the dependencies, you can start the server and the client in a docker container:
 
+ℹ️ Docker will install all dependencies inside the containers, the first time it can take a some times.
+and you may have to wait a few minutes that mysql is ready.
+
 In dev mode, you'll have 4 containers:
 
 - client 1 container

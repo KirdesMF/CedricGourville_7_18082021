@@ -3,7 +3,7 @@ import { NextFunction, Response, Request } from 'express';
 import { CommentServices } from '../services/comment.services';
 import { httpStatus } from '../utils/http-status';
 
-async function create(req: Request, res: Response, next: NextFunction) {
+export async function create(req: Request, res: Response, next: NextFunction) {
   const body = req.body as Comment;
   try {
     const comments = await CommentServices.create(body);
@@ -13,5 +13,3 @@ async function create(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
-
-export const CommentControllers = { create };

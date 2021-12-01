@@ -20,6 +20,7 @@ const queryClient = new QueryClient({
       if (query.state.data !== undefined) {
         if (error instanceof Error) {
           toast.error(error.message);
+          console.log(query);
         }
       }
     },

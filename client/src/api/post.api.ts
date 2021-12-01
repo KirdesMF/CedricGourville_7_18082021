@@ -31,6 +31,9 @@ export function useCreatePost() {
         queryClient.invalidateQueries('post');
         toast.success('Post created');
       },
+      onError: (err) => {
+        toast.error(err.message);
+      },
     }
   );
 }
@@ -47,6 +50,9 @@ export function useDeletePost() {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
         toast.success('Post deleted');
+      },
+      onError: (err) => {
+        toast.error(err.message);
       },
     }
   );
@@ -85,6 +91,9 @@ export function useLikePost() {
         queryClient.invalidateQueries('post');
         toast.success('Post liked');
       },
+      onError: (err) => {
+        toast.error(err.message);
+      },
     }
   );
 }
@@ -101,6 +110,9 @@ export function useRemoveLikePost() {
       onSuccess: () => {
         queryClient.invalidateQueries('post');
         toast.success('Post unliked');
+      },
+      onError: (err) => {
+        toast.error(err.message);
       },
     }
   );

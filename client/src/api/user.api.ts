@@ -66,6 +66,9 @@ export function useCreateUser() {
         navigate('/posts');
         toast.success('User created successfully');
       },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     }
   );
 }
@@ -90,6 +93,9 @@ export function useLogUser() {
         queryClient.setQueriesData(['user'], data);
         navigate('/posts');
         toast.success('User logged successfully');
+      },
+      onError: (error) => {
+        toast.error(error.message);
       },
     }
   );
@@ -128,6 +134,9 @@ export function useUpdateUser() {
         queryClient.invalidateQueries('user/details/:id');
         toast.success('User updated');
       },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     }
   );
 }
@@ -148,6 +157,9 @@ export function useUpdateUserDepartment() {
         queryClient.resetQueries('users');
         toast.success('User department updated');
       },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     }
   );
 }
@@ -166,6 +178,9 @@ export function useUnregisterUser() {
         queryClient.resetQueries('user');
         navigate('/');
       },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     }
   );
 }
@@ -180,6 +195,9 @@ export function useUnregisterUserByAdmin() {
       onSuccess: () => {
         queryClient.resetQueries('user');
         navigate('/admin');
+      },
+      onError: (error) => {
+        toast.error(error.message);
       },
     }
   );

@@ -3,7 +3,11 @@ import { Like } from '.prisma/client';
 import { LikeServices } from '../services/like.services';
 import { httpStatus } from '../utils/http-status';
 
-async function getLikesPost(req: Request, res: Response, next: NextFunction) {
+export async function getLikesPost(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id } = req.body;
 
   try {
@@ -14,7 +18,11 @@ async function getLikesPost(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function likePost(req: Request, res: Response, next: NextFunction) {
+export async function likePost(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const data = req.body as Like;
   try {
     await LikeServices.createLike(data);
@@ -24,7 +32,11 @@ async function likePost(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-async function unLikePost(req: Request, res: Response, next: NextFunction) {
+export async function unLikePost(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const { id } = req.body;
   try {
     await LikeServices.deleteLike(id);

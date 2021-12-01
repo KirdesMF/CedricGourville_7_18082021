@@ -53,10 +53,9 @@ export function FormPost() {
 
     mutate(form);
     reset();
+    setSrcPreview(null);
     socket.emit('new-post');
   };
-
-  if (isError) toast('Error while creating post');
 
   return (
     <form
