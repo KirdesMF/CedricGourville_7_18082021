@@ -1,9 +1,12 @@
 // import { User } from 'p7_types';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
 import { CustomInput, FileInput, TextArea } from '../Input/Input';
+import * as styles from './form.css';
 
 type ProfileField = {
   firstName: string;
@@ -14,7 +17,11 @@ type ProfileField = {
   password: string;
 };
 
-export function FormProfile() {
+type ProfileForm = {
+  setIsEditing: (isEditing: boolean) => void;
+};
+
+export function FormProfile({ setIsEditing }: ProfileForm) {
   const {
     handleSubmit,
     register,
@@ -22,7 +29,17 @@ export function FormProfile() {
     formState: { errors },
   } = useForm<ProfileField>();
 
-  const { mutate } = useUpdateUser();
+  const [srcPreview, setSrcPreview] = useState<string | null>(null);
+
+  const handleOnchangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSrcPreview(URL.createObjectURL(e.target.files?.[0]));
+  };
+
+  const handleResetFileInput = () => {
+    reset({ avatar: undefined });
+    setSrcPreview(null);
+  };
+  const { mutate, isSuccess } = useUpdateUser();
 
   const handleOnSubmit = (data: ProfileField) => {
     const form = new FormData();
@@ -38,8 +55,14 @@ export function FormProfile() {
     });
 
     mutate(form);
-    reset();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsEditing(false);
+      reset();
+    }
+  }, [isSuccess]);
 
   return (
     <form
@@ -89,6 +112,7 @@ export function FormProfile() {
         })}
       >
         <FileInput
+          onChange={handleOnchangeFileInput}
           name="avatar"
           register={register}
           errors={errors}
@@ -100,6 +124,19 @@ export function FormProfile() {
           Update your profil
         </Button>
       </div>
+
+      {srcPreview && (
+        <div>
+          <img className={styles.previewProfile} src={srcPreview} alt="" />
+          <Button
+            type="button"
+            onClick={handleResetFileInput}
+            variant={{ ghost: true }}
+          >
+            <Icon name="Cross2Icon" variant={{ size: 'xs' }} />
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

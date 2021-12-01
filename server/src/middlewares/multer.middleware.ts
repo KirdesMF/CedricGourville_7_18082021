@@ -4,7 +4,7 @@ import { convertMegaBytesToBytes } from '../utils/utils';
 
 const EXTENSION = {
   media: /.(jpg|png|jpeg|svg|gif|avif|webp)$/gi,
-  avatar: /.(jpg|png|jpeg|svg|avif|webp)$/gi,
+  avatar: /.(jpg|png|jpeg|svg|avif|webp|gif)$/gi,
 };
 
 const MAX_SIZE_MEDIA = convertMegaBytesToBytes(2.5);

@@ -9,7 +9,6 @@ import * as styles from './input.css';
 import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { Icon } from '../Icon/Icon';
-import { Button } from '../Button/Button';
 
 export type TCustomInput<TFields> = {
   autoFocus?: boolean;
@@ -60,29 +59,36 @@ export function BasicInput({
 }
 
 export function FileInput<TFields>(props: TCustomInput<TFields>) {
-  const { label, register, name, options, ...rest } = props;
+  const { label, register, name, options, errors: _, ...rest } = props;
 
   return (
-    <label
-      className={utilities({
-        display: 'inline-flex',
-        color: 'primary9',
-        borderRadius: 'xs',
-      })}
-    >
-      <span className={srOnly}>{label}</span>
-      <input
-        className={styles.hidden}
-        type="file"
-        id="file"
-        {...register(name, options)}
-        {...rest}
-      />
-      <Button variant={{ primary: true, shadow: true }}>
+    <>
+      <label
+        className={utilities({
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 'sm',
+          color: 'primary9',
+          borderRadius: 'xs',
+          background: { default: 'primary5', '@hover': 'primary7' },
+          paddingInline: 'md',
+          paddingBlock: 'sm',
+          fontSize: 'sm',
+          fontVariationSettings: 'thin',
+        })}
+      >
+        <span className={srOnly}>{label}</span>
         Picture
         <Icon name="ImageIcon" variant={{ size: 'xs' }} />
-      </Button>
-    </label>
+        <input
+          className={styles.hidden}
+          type="file"
+          id={name}
+          {...register(name, options)}
+          {...rest}
+        />
+      </label>
+    </>
   );
 }
 

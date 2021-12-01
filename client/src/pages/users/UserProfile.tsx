@@ -36,8 +36,8 @@ export function UserProfile() {
     <main className={styles.main}>
       <div className={styles.inner}>
         <div className={styles.heading}>
-          <Heading variant={{ fontSize: 'lg', weight: 'bold' }}>
-            User's profile{' '}
+          <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
+            Profile{' '}
             <Span variant={{ size: 'lg', gradient: true }}>
               {user?.username}
             </Span>
@@ -109,7 +109,7 @@ export function UserProfile() {
           </div>
         )}
 
-        {isEditing && <FormProfile />}
+        {isEditing && <FormProfile setIsEditing={setIsEditing} />}
       </div>
     </main>
   );

@@ -20,8 +20,6 @@ export function Dashboard() {
   );
   const newUsers = users?.filter((user) => user.department === 'VISITOR');
 
-  console.log(newUsers);
-
   return (
     <main className={styles.main}>
       <div className={styles.inner}>

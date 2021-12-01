@@ -20,3 +20,16 @@ export const comment = style([
   }),
   { gridTemplateColumns: '1fr min-content' },
 ]);
+
+export const preview = style({
+  width: 'min(100%, 100vw - 2rem)',
+  maxHeight: '15rem',
+  objectFit: 'cover',
+});
+
+export const previewProfile = style({
+  width: '15rem',
+  maxHeight: '15rem',
+  objectFit: 'cover',
+  borderRadius: '50%',
+});

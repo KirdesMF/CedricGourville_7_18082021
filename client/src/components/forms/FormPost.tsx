@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useCreatePost } from '../../api/post.api';
@@ -7,6 +8,7 @@ import { convertMegaBytesToBytes } from '../../utils/utils';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { CustomInput, FileInput, TextArea } from '../Input/Input';
+import * as styles from './form.css';
 
 type PostField = {
   title: string;
@@ -18,6 +20,7 @@ const MAX_FILE_SIZE = convertMegaBytesToBytes(2.5);
 
 export function FormPost() {
   const { mutate, isError } = useCreatePost();
+  const [srcPreview, setSrcPreview] = useState<string | null>(null);
 
   const {
     handleSubmit,
@@ -25,6 +28,15 @@ export function FormPost() {
     reset,
     formState: { errors },
   } = useForm<PostField>();
+
+  const handleOnchangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSrcPreview(URL.createObjectURL(e.target.files?.[0]));
+  };
+
+  const handleResetFileInput = () => {
+    reset({ media: undefined });
+    setSrcPreview(null);
+  };
 
   const handleOnSubmit = (data: PostField) => {
     const form = new FormData();
@@ -78,34 +90,12 @@ export function FormPost() {
         })}
       >
         <FileInput
+          onChange={handleOnchangeFileInput}
           name="media"
           register={register}
           errors={errors}
           label="file pic"
           placeholder="Add a pic"
-          options={{
-            required: false,
-            validate: {
-              size: (value) => {
-                if (typeof value === 'object') {
-                  return (
-                    (value[0] && value[0]?.size < MAX_FILE_SIZE) ||
-                    'Max file size 2.5 Mo pls'
-                  );
-                }
-                return true;
-              },
-              format: (value) => {
-                if (typeof value === 'object') {
-                  return (
-                    value[0]?.name.match(/.(jpg|png)$/gi) ||
-                    'only jpg and png allowed'
-                  );
-                }
-                return true;
-              },
-            },
-          }}
         />
 
         <Button variant={{ primary: true, shadow: true }} type="submit">
@@ -113,6 +103,19 @@ export function FormPost() {
           <Icon name="PaperPlaneIcon" variant={{ size: 'xs' }} />
         </Button>
       </div>
+
+      {srcPreview && (
+        <div>
+          <img className={styles.preview} src={srcPreview} alt="" />
+          <Button
+            type="button"
+            onClick={handleResetFileInput}
+            variant={{ ghost: true }}
+          >
+            <Icon name="Cross2Icon" variant={{ size: 'xs' }} />
+          </Button>
+        </div>
+      )}
     </form>
   );
 }
