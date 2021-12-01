@@ -8,6 +8,7 @@ import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
 import { utilities } from '../../styles/utilities.css';
+import { PASSWORD_REGEX } from '../../utils/constants';
 
 type UserFields = User & { confirmPassword: string };
 
@@ -74,8 +75,12 @@ export function FormRegister() {
         register={register}
         errors={errors}
         options={{
-          required: 'Please enter your password ⤴',
-          minLength: { value: 8, message: 'At least 8 characters required' },
+          required: 'Please enter an email address ⤴ ',
+          pattern: {
+            value: PASSWORD_REGEX,
+            message:
+              'Password must contains 8 chars, upper and lower case, at least one number and one special char',
+          },
         }}
       />
 

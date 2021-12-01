@@ -19,7 +19,7 @@ export function useCurrentUser() {
 
   return useQuery(['user'], () => Fetch.get<TCurrentUser>('user'), {
     staleTime: convertHoursToMilliseconds(1),
-    retry: false,
+    retry: convertHoursToMilliseconds(1),
     onError: () => {
       navigate('/login');
     },
@@ -130,7 +130,7 @@ export function useUpdateUser() {
     (body) => Fetch.patchFormData('user/edit', body),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('user');
+        queryClient.resetQueries('user');
         queryClient.invalidateQueries('user/details/:id');
         toast.success('User updated');
       },

@@ -3,6 +3,15 @@ import { checkSchema, Schema, validationResult } from 'express-validator';
 import { ErrorHandler } from '../utils/error.utils';
 import { httpStatus } from '../utils/http-status';
 
+// more secure regex password must be :
+// more than 8 chars
+// at least one number
+// at least one special character
+// at least one uppercase  and one lowercase letter
+
+// prettier-ignore
+export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
 const registerValidatorSchema: Schema = {
   email: {
     in: 'body',
@@ -23,9 +32,15 @@ const registerValidatorSchema: Schema = {
   password: {
     in: 'body',
     notEmpty: true,
-    isLength: {
-      errorMessage: 'Please provide a strong password at least 8 characters',
-      options: { min: 8 },
+    custom: {
+      options: (value: string) => {
+        if (!PASSWORD_REGEX.test(value)) {
+          throw new Error(
+            'Password must be more than 8 chars, at least one number, at least one special character, at least one uppercase and one lowercase letter'
+          );
+        }
+        return true;
+      },
     },
   },
   username: {
