@@ -45,6 +45,8 @@ or you can use the following command:
 
 ⚠️ This project needs `docker` and `docker-compose` to be installed on your machine.
 
+ℹ️ Docker will install all dependencies inside the containers, the first time it can take a some times.
+
 After installing the dependencies, you can start the server and the client in a docker container:
 
 In dev mode, you'll have 4 containers:
