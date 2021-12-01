@@ -100,6 +100,7 @@ You can run the following command to shutdown the containers:
 
 - Frontend can also be start outside of a docker container, but it's not recommended. I have encountered some issues with authorisations, so I recommend to use docker for now
 - I need to push docker images to docker hub, so during installation, you may see some warnings
+- Images are stored in the cloud (ImageKit.io), to ensure that, I create a docker volume to store images before send them to the cloud, it helps me to avoid the cost of storing images on the local machine, and I can controll the size of the images on the backend (free plan on Imagekit.io so I try to keep the size of the images under 2.5Mo)
 
 ## Deploy
 
@@ -111,6 +112,7 @@ You can run the following command to shutdown the containers:
 - docker hub
 - deploy
 - socket
+- ⚠️ fix ts path import in client
 
 ## COULD BE COOL
 
