@@ -9,6 +9,7 @@ import * as styles from './input.css';
 import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { Icon } from '../Icon/Icon';
+import { Button } from '../Button/Button';
 
 export type TCustomInput<TFields> = {
   autoFocus?: boolean;
@@ -59,7 +60,7 @@ export function BasicInput({
 }
 
 export function FileInput<TFields>(props: TCustomInput<TFields>) {
-  const { label, register, name, options, errors, ...rest } = props;
+  const { label, register, name, options, ...rest } = props;
 
   return (
     <label
@@ -77,7 +78,10 @@ export function FileInput<TFields>(props: TCustomInput<TFields>) {
         {...register(name, options)}
         {...rest}
       />
-      <Icon name="ImageIcon" variant={{ size: 'medium' }} />
+      <Button variant={{ primary: true, shadow: true }}>
+        Picture
+        <Icon name="ImageIcon" variant={{ size: 'xs' }} />
+      </Button>
     </label>
   );
 }

@@ -71,41 +71,48 @@ export function FormPost() {
         options={{ required: 'Please provide something to say' }}
       />
 
-      <FileInput
-        name="media"
-        register={register}
-        errors={errors}
-        label="file pic"
-        placeholder="Add a pic"
-        options={{
-          required: false,
-          // validate: {
-          //   size: (value) => {
-          //     if (typeof value === 'object') {
-          //       return (
-          //         (value[0] && value[0]?.size < MAX_FILE_SIZE) ||
-          //         'Max file size 2.5 Mo pls'
-          //       );
-          //     }
-          //     return true;
-          //   },
-          //   format: (value) => {
-          //     if (typeof value === 'object') {
-          //       return (
-          //         value[0]?.name.match(/.(jpg|png)$/gi) ||
-          //         'only jpg and png allowed'
-          //       );
-          //     }
-          //     return true;
-          //   },
-          // },
-        }}
-      />
+      <div
+        className={utilities({
+          display: 'flex',
+          gap: 'md',
+        })}
+      >
+        <FileInput
+          name="media"
+          register={register}
+          errors={errors}
+          label="file pic"
+          placeholder="Add a pic"
+          options={{
+            required: false,
+            validate: {
+              size: (value) => {
+                if (typeof value === 'object') {
+                  return (
+                    (value[0] && value[0]?.size < MAX_FILE_SIZE) ||
+                    'Max file size 2.5 Mo pls'
+                  );
+                }
+                return true;
+              },
+              format: (value) => {
+                if (typeof value === 'object') {
+                  return (
+                    value[0]?.name.match(/.(jpg|png)$/gi) ||
+                    'only jpg and png allowed'
+                  );
+                }
+                return true;
+              },
+            },
+          }}
+        />
 
-      <Button variant={{ primary: true, shadow: true }} type="submit">
-        Post
-        <Icon name="PaperPlaneIcon" variant={{ size: 'xs' }} />
-      </Button>
+        <Button variant={{ primary: true, shadow: true }} type="submit">
+          Post
+          <Icon name="PaperPlaneIcon" variant={{ size: 'xs' }} />
+        </Button>
+      </div>
     </form>
   );
 }

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateUser } from '../../api/user.api';
 import { utilities } from '../../styles/utilities.css';
 import { Button } from '../Button/Button';
-import { CustomInput, TextArea } from '../Input/Input';
+import { CustomInput, FileInput, TextArea } from '../Input/Input';
 
 type ProfileField = {
   firstName: string;
@@ -81,18 +81,25 @@ export function FormProfile() {
         label="Bio"
         placeholder="Bio"
       />
-      <CustomInput
-        type="file"
-        name="avatar"
-        register={register}
-        errors={errors}
-        label="avatar pic"
-        placeholder="Add a pic profile"
-      />
 
-      <Button variant={{ primary: true }} type="submit">
-        Update your profil
-      </Button>
+      <div
+        className={utilities({
+          display: 'flex',
+          gap: 'md',
+        })}
+      >
+        <FileInput
+          name="avatar"
+          register={register}
+          errors={errors}
+          label="avatar pic"
+          placeholder="Add a pic profile"
+        />
+
+        <Button variant={{ primary: true, shadow: true }} type="submit">
+          Update your profil
+        </Button>
+      </div>
     </form>
   );
 }

@@ -7,9 +7,10 @@ export const list = style([
     display: 'grid',
     fontSize: 'xs',
     fontVariationSettings: 'thin',
-    background: 'base4',
+    background: 'base2',
     borderRadius: 'xs',
   }),
+  { boxShadow: `0 0 0 1px ${vars.colors.shadow}` },
 ]);
 
 export const item = style([

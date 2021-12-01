@@ -142,6 +142,8 @@ export function Post(props: PostProps) {
 
           <Span variant={{ size: 'sm', color: 'primary' }}>
             {convertDate(createdAt)}
+            {' - '}
+            {convertDateToTime(createdAt)}
           </Span>
         </div>
 

@@ -79,6 +79,7 @@ export function Dashboard() {
           </section>
         )}
 
+        {/** all users */}
         <section className={styles.section}>
           <Heading as="h2" variant={{ fontSize: 'md' }}>
             All Users
@@ -131,6 +132,7 @@ export function Dashboard() {
           </table>
         </section>
 
+        {/** all posts */}
         <section className={styles.section}>
           <Heading as="h2" variant={{ fontSize: 'md' }}>
             All Posts
@@ -158,7 +160,8 @@ export function Dashboard() {
                   </td>
                   <td className={styles.border}>
                     <span data-label="Created at" className={styles.td}>
-                      {convertDate(post.createdAt!)}
+                      {convertDate(post.createdAt!)}{' '}
+                      {convertDateToTime(post.createdAt!)}
                     </span>
                   </td>
 

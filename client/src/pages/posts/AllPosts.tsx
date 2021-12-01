@@ -10,7 +10,9 @@ import * as styles from './posts.css';
 
 export function AllPosts() {
   const { data: currentUser } = useCurrentUser();
-  const { data: posts } = usePosts();
+  const { data: posts, isLoading } = usePosts();
+
+  isLoading && <p>Loading...</p>;
 
   return (
     <>
@@ -30,14 +32,16 @@ export function AllPosts() {
 
           <AnimatePresence>
             <motion.div className={styles.feed}>
-              {posts?.map((post, idx) => (
-                <Post
-                  key={post.id}
-                  delay={idx}
-                  post={post}
-                  currentUser={currentUser!}
-                />
-              ))}
+              {posts?.map((post, idx) => {
+                return (
+                  <Post
+                    key={post.id}
+                    delay={idx}
+                    post={post}
+                    currentUser={currentUser!}
+                  />
+                );
+              })}
             </motion.div>
           </AnimatePresence>
         </div>
