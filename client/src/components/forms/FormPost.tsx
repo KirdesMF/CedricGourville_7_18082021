@@ -67,7 +67,13 @@ export function FormPost() {
         name="title"
         label="title"
         type="text"
-        options={{ required: 'Please provide a title' }}
+        options={{
+          required: 'Please provide a title',
+          minLength: {
+            value: 2,
+            message: 'At least 2 characters required',
+          },
+        }}
       />
       <TextArea
         rows={1}
@@ -76,7 +82,13 @@ export function FormPost() {
         placeholder="What's new ?"
         label="content"
         name="content"
-        options={{ required: 'Please provide something to say' }}
+        options={{
+          required: 'Please provide something to say',
+          minLength: {
+            value: 2,
+            message: 'At least 2 characters required',
+          },
+        }}
       />
 
       <div
@@ -96,10 +108,12 @@ export function FormPost() {
             validate: {
               size: (files) => {
                 if (typeof files !== 'object') return true;
+                if (files.length === 0) return true;
                 return files[0]?.size < MAX_FILE_SIZE || 'Max 2.5MB';
               },
               format: (files) => {
                 if (typeof files !== 'object') return true;
+                if (files.length === 0) return true;
                 return (
                   FILE_TYPES.includes(files[0]?.type) ||
                   'Only PNG, JPEG, SVG, WEBP, GIF'

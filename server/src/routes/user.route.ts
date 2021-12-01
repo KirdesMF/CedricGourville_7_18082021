@@ -6,6 +6,7 @@ import {
   validationLogin,
   validationMiddleware,
   validationRegister,
+  validationUpdateUser,
 } from '../middlewares/validation.middlewares';
 
 export function userRouter(app: Application) {
@@ -30,7 +31,15 @@ export function userRouter(app: Application) {
     UserControllers.register
   );
 
-  router.patch('/edit', isAuthenticated, multerAvatar, UserControllers.edit);
+  router.patch(
+    '/edit',
+    isAuthenticated,
+    multerAvatar,
+    validationUpdateUser,
+    validationMiddleware,
+    UserControllers.edit
+  );
+
   router.patch(
     '/edit/department',
     isAuthenticated,

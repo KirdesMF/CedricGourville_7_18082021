@@ -62,8 +62,84 @@ const LoginValidatorSchema: Schema = {
   },
 };
 
-export const validationLogin = checkSchema(LoginValidatorSchema);
+const CreatePostValidatorSchema: Schema = {
+  title: {
+    in: 'body',
+    notEmpty: true,
+    isLength: {
+      errorMessage: 'Please provide a title with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+  content: {
+    in: 'body',
+    notEmpty: true,
+    isLength: {
+      errorMessage: 'Please provide a content with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+};
+
+const UpdateUserValidatorSchema: Schema = {
+  username: {
+    in: 'body',
+    optional: {
+      options: { nullable: true },
+    },
+    isLength: {
+      errorMessage: 'Please provide a username with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+  firstName: {
+    in: 'body',
+    optional: {
+      options: { nullable: true },
+    },
+    isLength: {
+      errorMessage: 'Please provide a first name with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+  lastName: {
+    in: 'body',
+    optional: {
+      options: { nullable: true },
+    },
+    isLength: {
+      errorMessage: 'Please provide a last name with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+  bio: {
+    in: 'body',
+    optional: {
+      options: { nullable: true },
+    },
+    isLength: {
+      errorMessage: 'Please provide a bio with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+};
+
+const CommentValidatorSchema: Schema = {
+  content: {
+    in: 'body',
+    notEmpty: true,
+    isLength: {
+      errorMessage: 'Please provide a content with at least 2 characters',
+      options: { min: 2 },
+    },
+  },
+};
+
 export const validationRegister = checkSchema(registerValidatorSchema);
+export const validationLogin = checkSchema(LoginValidatorSchema);
+export const validationCreatePost = checkSchema(CreatePostValidatorSchema);
+export const validationUpdateUser = checkSchema(UpdateUserValidatorSchema);
+export const validationComment = checkSchema(CommentValidatorSchema);
 
 export async function validationMiddleware(
   req: Request,

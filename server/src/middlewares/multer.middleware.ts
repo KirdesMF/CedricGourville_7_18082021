@@ -3,12 +3,12 @@ import { ErrorHandler } from '../utils/error.utils';
 import { convertMegaBytesToBytes } from '../utils/utils';
 
 const EXTENSION = {
-  media: /.(jpg|png|jpeg|svg|gif|avif|webp)$/gi,
-  avatar: /.(jpg|png|jpeg|svg|avif|webp|gif)$/gi,
+  media: /.(jpg|png|jpeg|svg|gif|webp)$/gi,
+  avatar: /.(jpg|png|jpeg|svg|webp|gif)$/gi,
 };
 
 const MAX_SIZE_MEDIA = convertMegaBytesToBytes(2.5);
-const MAX_SIZE_AVATAR = convertMegaBytesToBytes(2);
+const MAX_SIZE_AVATAR = convertMegaBytesToBytes(2.5);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
