@@ -13,5 +13,3 @@ Stop docker dev => `docker-compose down`
 The front dev server can also be launch via npm: `npm run dev` but you may need to `npm install` first
 
 🚧 Work in Progress 🚧
-
-[Backend Repo](https://github.com/KirdesMF/CedricGourville_7_18082021_backend)
