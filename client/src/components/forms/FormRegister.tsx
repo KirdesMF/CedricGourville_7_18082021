@@ -8,7 +8,7 @@ import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Span } from '../Span/Span';
 import { utilities } from '../../styles/utilities.css';
-import { PASSWORD_REGEX } from '../../utils/constants';
+import { PASSWORD_REGEX, REGEX_EMAIL } from '../../utils/constants';
 
 type UserFields = User & { confirmPassword: string };
 
@@ -46,7 +46,10 @@ export function FormRegister() {
         errors={errors}
         options={{
           required: 'Please enter an email address ⤴ ',
-          pattern: { value: /.+@.+/, message: 'Provide a valid email' },
+          pattern: {
+            value: REGEX_EMAIL,
+            message: 'Provide a groupomania valid email',
+          },
         }}
       />
 

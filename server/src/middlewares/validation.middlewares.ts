@@ -10,7 +10,8 @@ import { httpStatus } from '../utils/http-status';
 // at least one uppercase  and one lowercase letter
 
 // prettier-ignore
-export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+const REGEX_EMAIL = /.+@groupomania.com+/;
 
 const registerValidatorSchema: Schema = {
   email: {
@@ -21,7 +22,7 @@ const registerValidatorSchema: Schema = {
     errorMessage: 'Invalid adress mail',
     custom: {
       options: (value: string) => {
-        if (!value.includes('@groupomania.com')) {
+        if (!REGEX_EMAIL.test(value)) {
           throw new Error('You must use a groupomania email');
         }
 

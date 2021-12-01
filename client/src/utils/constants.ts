@@ -17,3 +17,5 @@ export const FILE_TYPES = [
 // at least one uppercase  and one lowercase letter
 export const PASSWORD_REGEX =
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+export const REGEX_EMAIL = /.+@groupomania.com+/;
