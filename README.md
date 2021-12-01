@@ -1,8 +1,27 @@
-push db: `cd backend && npx prisma db push && cd ..`
-
-migrate: `cd backend && npx prisma migrate dev`
-
 # P7 Groupomania OpenClassroom
+
+## Stack
+
+you can find all dependencies in package.json
+
+### Client
+
+- react
+- radix ui
+- radix icon + some heroicons
+- react hooks form
+- react-query
+- react-router-dom
+- socket.io
+
+### Server
+
+- bcrypt
+- cookie-parser
+- cors
+- express
+- multer
+- prisma
 
 ## Installation
 
@@ -64,6 +83,10 @@ from you IDE, you'll' have to toggle the `host` in the `.env` file before runnin
 Once the seed is done, you can start the front application in the browser [http://localhost:3000](http://localhost:3000/)
 and you'll have new user and post (see `server/prisma/seed.ts`)
 
+## Database
+
+you can use prisma studio (see [http://localhost:5555/](http://localhost:5555/)), to edit a user, post, like, comment, etc.
+
 ## Shutdown
 
 You can run the following command to shutdown the containers:
@@ -75,8 +98,23 @@ You can run the following command to shutdown the containers:
 
 🚧 In progress 🚧
 
-Frontend can also be start outside of a docker container, but it's not recommended. I have encountered some issues with authorisations, so I recommend to use docker for now
+- Frontend can also be start outside of a docker container, but it's not recommended. I have encountered some issues with authorisations, so I recommend to use docker for now
+- I need to push docker images to docker hub, so during installation, you may see some warnings
 
 ## Deploy
 
 🚧 In progress 🚧
+
+## TODO
+
+- EN / FR
+- docker hub
+- deploy
+- socket
+
+## COULD BE COOL
+
+- lazy loading posts
+- add a chat
+- take pictures from device / cam
+- add multiple images to post
