@@ -47,7 +47,11 @@ export function Anchor({
 
   if (navLink) {
     return (
-      <NavLink {...props} className={cls} end>
+      <NavLink
+        {...props}
+        className={({ isActive }) => (isActive ? activeClassName : cls)}
+        end
+      >
         {children}
       </NavLink>
     );
