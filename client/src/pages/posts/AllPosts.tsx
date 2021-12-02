@@ -36,10 +36,10 @@ export function AllPosts() {
 
           <AnimatePresence>
             <motion.div className={styles.feed}>
-              {posts?.map((post, idx) => {
+              {posts?.map((post) => {
                 return (
                   <Fragment key={post.id}>
-                    <Post delay={idx} post={post} currentUser={currentUser!} />
+                    <Post post={post} currentUser={currentUser!} />
                     <hr className={styles.hr} />
                   </Fragment>
                 );

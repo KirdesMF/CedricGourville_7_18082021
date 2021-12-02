@@ -22,21 +22,15 @@ import { ToolTip } from '../Tooltip/Tooltip';
 import { PopoverPost } from '../Popover/Popover';
 
 type PostProps = {
-  delay: number;
   post: TPost;
   currentUser: Pick<User, 'id' | 'role' | 'avatar' | 'department'>;
   details?: boolean;
 };
 
 const variants: Variants = {
-  initial: { opacity: 0 },
-  animate: (delay: number) => ({
-    opacity: 1,
-    transition: {
-      delay: delay * 0.1,
-    },
-  }),
-  exit: { opacity: 0 },
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.2 } },
+  exit: { opacity: 0, y: 20 },
 };
 
 function Comments({ comment }: { comment: PostComment }) {
@@ -58,7 +52,7 @@ function Comments({ comment }: { comment: PostComment }) {
 }
 
 export function Post(props: PostProps) {
-  const { delay, currentUser, post, details = false } = props;
+  const { currentUser, post, details = false } = props;
   const {
     id,
     userId,
@@ -133,9 +127,9 @@ export function Post(props: PostProps) {
       className={styles.article}
       variants={variants}
       initial="initial"
-      animate="animate"
       exit="exit"
-      custom={delay}
+      whileInView="animate"
+      viewport={{ once: true }}
     >
       {/** header */}
       <header className={styles.header}>
