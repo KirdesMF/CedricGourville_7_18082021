@@ -124,6 +124,8 @@ You can run the following command to shutdown the containers:
 - Create a user
 - Update a user
 - Delete a user
+- Log a user
+- Log out a user
 
 ### Post
 
@@ -137,6 +139,7 @@ You can run the following command to shutdown the containers:
 
 - Delete a post
 - Delete user
+- edit a user
 
 ## TODO
 
