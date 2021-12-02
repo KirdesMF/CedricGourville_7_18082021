@@ -55,12 +55,12 @@ globalStyle(`${thead} th`, {
 
 export const tbody = style({
   display: 'block',
-  background: vars.colors.primary5,
+  background: vars.colors.base3,
   marginBlockEnd: '1rem',
   boxShadow: `1px 2px 3px ${vars.colors.shadow}`,
   selectors: {
     [`&:nth-child(even)`]: {
-      backgroundColor: vars.colors.base3,
+      backgroundColor: vars.colors.base5,
     },
   },
 

@@ -30,7 +30,6 @@ type PostProps = {
 const variants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.2 } },
-  exit: { opacity: 0, y: 20 },
 };
 
 function Comments({ comment }: { comment: PostComment }) {
@@ -127,7 +126,6 @@ export function Post(props: PostProps) {
       className={styles.article}
       variants={variants}
       initial="initial"
-      exit="exit"
       whileInView="animate"
       viewport={{ once: true }}
     >

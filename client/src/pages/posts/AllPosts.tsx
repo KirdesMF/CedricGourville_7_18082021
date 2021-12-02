@@ -34,18 +34,16 @@ export function AllPosts() {
 
           <Separator />
 
-          <AnimatePresence>
-            <motion.div className={styles.feed}>
-              {posts?.map((post) => {
-                return (
-                  <Fragment key={post.id}>
-                    <Post post={post} currentUser={currentUser!} />
-                    <hr className={styles.hr} />
-                  </Fragment>
-                );
-              })}
-            </motion.div>
-          </AnimatePresence>
+          <section className={styles.feed}>
+            {posts?.map((post) => {
+              return (
+                <Fragment key={post.id}>
+                  <Post post={post} currentUser={currentUser!} />
+                  <hr className={styles.hr} />
+                </Fragment>
+              );
+            })}
+          </section>
         </div>
       </main>
     </>
