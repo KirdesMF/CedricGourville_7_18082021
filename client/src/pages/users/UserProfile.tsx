@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
-import { Separator } from '../../components/Separator/Separator';
+import { Separator } from '@app/components/Separator/Separator';
 import {
   useCurrentUser,
   useLogOutUser,
   useUnregisterUser,
   useUserId,
-} from '../../api/user.api';
-import { Anchor } from '../../components/Anchor/Anchor';
-import { Avatar } from '../../components/Avatar/Avatar';
-import { Button } from '../../components/Button/Button';
-import { FormProfile } from '../../components/forms/FormProfile';
-import { Heading } from '../../components/Heading/Heading';
-import { Icon } from '../../components/Icon/Icon';
-import { Span } from '../../components/Span/Span';
+} from '@app/api/user.api';
+import { Anchor } from '@app/components/Anchor/Anchor';
+import { Avatar } from '@app/components/Avatar/Avatar';
+import { Button } from '@app/components/Button/Button';
+import { FormProfile } from '@app/components/forms/FormProfile';
+import { Heading } from '@app/components/Heading/Heading';
+import { Icon } from '@app/components/Icon/Icon';
+import { Span } from '@app/components/Span/Span';
 import * as styles from './users.css';
 
 const notProvided = '...';
@@ -126,12 +126,6 @@ export function UserProfile() {
             <span>
               <Icon name="ChatBubbleIcon" variant={{ size: 'large' }} />
               {user?.comments?.length}
-            </span>
-          </article>
-
-          <article className={styles.article}>
-            <span>
-              <Icon name="Groupomania" variant={{ size: 'large' }} />
             </span>
           </article>
         </section>
