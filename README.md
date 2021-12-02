@@ -111,14 +111,44 @@ You can run the following command to shutdown the containers:
 
 🚧 In progress 🚧
 
+## Functionnalities
+
+### User
+
+- Create a user
+- Update a user
+- Delete a user
+
+### Post
+
+- Create a post
+- Delete a post
+- Comment on a post
+- Like a post
+- UnLike a post
+
+### Admin
+
+- Delete a post
+- Delete user
+
 ## TODO
+
+### Post
+
+- Edit a post
+- Edit a comment
+- Report a post
+- Report a comment
+- give user permission to add alt text to images
+
+### Other
 
 - EN / FR
 - docker hub
 - deploy
 - socket
-- ⚠️ fix ts path import in client
-- give user permission to add alt text to images
+- ~~⚠️ fix ts path import in client~~
 
 ## Could be good
 
