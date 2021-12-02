@@ -34,7 +34,7 @@ export function Header() {
                   department: user.department,
                 }}
               />
-              <Span>{user.username}</Span>
+              {/* <Span>{user.username}</Span> */}
             </Anchor>
           ) : (
             <Anchor variant={{ color: 'base' }} to="/login">

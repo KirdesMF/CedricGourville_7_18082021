@@ -7,6 +7,7 @@ export const heading = recipe({
   base: {
     color: vars.colors['on-base-high-contrast'],
     lineHeight: 1.1,
+    wordBreak: 'break-word',
   },
   variants: {
     hidden: {

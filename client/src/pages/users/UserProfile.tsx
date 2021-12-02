@@ -49,40 +49,34 @@ export function UserProfile() {
           </Anchor>
         </div>
 
-        <section className={styles.section}>
-          <Heading as="h2" variant={{ hidden: true }}>
+        <section className={styles.articles}>
+          <Heading as="h3" variant={{ hidden: true }}>
             Info
           </Heading>
-
-          <div className={styles.articles}>
-            {user && (
-              <article className={styles.article}>
-                <span className={styles.avatar}>
-                  <Avatar
-                    variant={{ size: 'large' }}
-                    user={{ avatar: user.avatar, department: user.department }}
-                  />
-                  {user?.username}
-                </span>
-              </article>
-            )}
-
+          {user && (
             <article className={styles.article}>
-              <div className={styles.list}>
-                <p className={styles.item}>{user?.firstName || notProvided}</p>
-                <hr className={styles.hr} />
-                <p className={styles.item}>{user?.lastName || notProvided}</p>
-                <hr className={styles.hr} />
-                <p className={styles.item}>{user?.bio || notProvided}</p>
-                <hr className={styles.hr} />
-                <p className={styles.item}>{user?.department}</p>
-              </div>
+              <span className={styles.avatar}>
+                <Avatar
+                  variant={{ size: 'large' }}
+                  user={{ avatar: user.avatar, department: user.department }}
+                />
+                {user?.username}
+              </span>
             </article>
-          </div>
+          )}
+
+          <article className={styles.article}>
+            <div className={styles.list}>
+              <p className={styles.item}>{user?.firstName || notProvided}</p>
+              <p className={styles.item}>{user?.lastName || notProvided}</p>
+              <p className={styles.item}>{user?.bio || notProvided}</p>
+              <p className={styles.item}>{user?.department}</p>
+            </div>
+          </article>
         </section>
 
         {isCurrentUser && (
-          <div className={styles.buttons}>
+          <section className={styles.buttons}>
             <Button variant={{ primary: true }} onClick={handleEditing}>
               Edit profile
             </Button>
@@ -92,46 +86,42 @@ export function UserProfile() {
             <Button variant={{ primary: true }} onClick={handleUnregister}>
               Unregister
             </Button>
-          </div>
+          </section>
         )}
 
         {isEditing && <FormProfile setIsEditing={setIsEditing} />}
 
-        <hr className={styles.hr} />
-
-        <section className={styles.section}>
-          <Heading as="h2" variant={{ hidden: true }}>
+        <section className={styles.articles}>
+          <Heading as="h3" variant={{ hidden: true }}>
             Network
           </Heading>
 
-          <div className={styles.articles}>
-            <article className={styles.article}>
-              <span>
-                <Icon name="HeartIcon" variant={{ size: 'large' }} />
-                {user?.likes?.length}
-              </span>
-            </article>
+          <article className={styles.article}>
+            <span>
+              <Icon name="HeartIcon" variant={{ size: 'large' }} />
+              {user?.likes?.length}
+            </span>
+          </article>
 
-            <article className={styles.article}>
-              <span>
-                <Icon name="ArchiveIcon" variant={{ size: 'large' }} />
-                {user?.posts?.length}
-              </span>
-            </article>
+          <article className={styles.article}>
+            <span>
+              <Icon name="ArchiveIcon" variant={{ size: 'large' }} />
+              {user?.posts?.length}
+            </span>
+          </article>
 
-            <article className={styles.article}>
-              <span>
-                <Icon name="ChatBubbleIcon" variant={{ size: 'large' }} />
-                {user?.comments?.length}
-              </span>
-            </article>
+          <article className={styles.article}>
+            <span>
+              <Icon name="ChatBubbleIcon" variant={{ size: 'large' }} />
+              {user?.comments?.length}
+            </span>
+          </article>
 
-            <article className={styles.article}>
-              <span>
-                <Icon name="Groupomania" variant={{ size: 'large' }} />
-              </span>
-            </article>
-          </div>
+          <article className={styles.article}>
+            <span>
+              <Icon name="Groupomania" variant={{ size: 'large' }} />
+            </span>
+          </article>
         </section>
       </div>
     </main>

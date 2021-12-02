@@ -16,6 +16,7 @@ const properties = defineProperties({
     justifyContent: ['space-between', 'flex-start', 'flex-end', 'center'],
     placeItems: ['center'],
     flex: [1],
+    flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
     gap: vars.spaces,
     borderRadius: vars.radius,
     fontSize: vars.fonts.sizes,

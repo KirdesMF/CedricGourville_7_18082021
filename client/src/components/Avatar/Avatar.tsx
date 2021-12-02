@@ -71,7 +71,11 @@ export function Avatar({ user, variant, className }: AvatarProps) {
 
   return (
     <div className={cls}>
-      <img className={styles.imgAvatar} src={user.avatar} alt="Avatar profil" />
+      <img
+        className={styles.imgAvatar}
+        src={user.avatar}
+        alt="Avatar of current user"
+      />
     </div>
   );
 }

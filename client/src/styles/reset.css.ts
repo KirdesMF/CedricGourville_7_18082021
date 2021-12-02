@@ -70,7 +70,7 @@ globalStyle('body', {
 globalStyle('#root', {
   minHeight: '100vh',
   display: 'grid',
-  gridTemplateRows: 'min-content auto min-content',
+  gridTemplateRows: 'min-content 1fr min-content',
 });
 
 globalStyle(':root.dark', { colorScheme: 'dark' });

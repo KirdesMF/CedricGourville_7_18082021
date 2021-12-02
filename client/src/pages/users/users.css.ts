@@ -7,26 +7,29 @@ export const main = utilities({
   paddingInline: 'lg',
 });
 
-export const inner = utilities({
-  display: 'grid',
-  gap: 'lg',
-  padding: '2xl',
-  width: 'lg',
-  marginInline: 'auto',
-});
+export const inner = style([
+  utilities({
+    display: 'flex',
+    gap: 'lg',
+    padding: '2xl',
+    width: 'lg',
+    marginInline: 'auto',
+    flexDirection: 'column',
+  }),
+]);
 
 export const heading = style([
   utilities({
     display: 'flex',
-
     gap: 'md',
     alignItems: 'baseline',
   }),
 ]);
 
 export const section = utilities({
-  display: 'grid',
+  display: 'flex',
   gap: 'md',
+  flexDirection: 'column',
 });
 
 export const buttons = utilities({
@@ -38,10 +41,11 @@ export const articles = style([
   utilities({
     display: 'grid',
     gap: 'md',
+    color: 'base12',
   }),
   {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 20rem), 1fr))',
-    height: '20rem',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(20rem, 1fr))',
+    gridAutoRows: '20rem',
   },
 ]);
 
@@ -80,4 +84,5 @@ export const item = style([
 export const hr = style({
   height: '0.5px',
   width: '100%',
+  display: 'flex',
 });

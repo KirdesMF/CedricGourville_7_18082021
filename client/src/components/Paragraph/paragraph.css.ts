@@ -6,7 +6,7 @@ export const base = style([
   {
     fontVariationSettings: vars.fonts.variations.thin,
     color: vars.colors['on-base-high-contrast'],
-    width: 'min(100%, 45ch)',
+    wordBreak: 'break-all',
   },
 ]);
 
