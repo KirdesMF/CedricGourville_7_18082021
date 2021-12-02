@@ -13,12 +13,16 @@ you can find all dependencies in package.json
 - react-query
 - react-router-dom
 - socket.io
+- vanilla-exctract-css
+- framer-motion
 
 ### Server
 
 - bcrypt
 - cookie-parser
 - cors
+- hpp
+- helmet
 - express
 - multer
 - prisma
