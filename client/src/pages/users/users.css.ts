@@ -11,7 +11,7 @@ export const inner = style([
   utilities({
     display: 'flex',
     gap: 'lg',
-    padding: '2xl',
+
     width: 'lg',
     marginInline: 'auto',
     flexDirection: 'column',
@@ -44,7 +44,7 @@ export const articles = style([
     color: 'base12',
   }),
   {
-    gridTemplateColumns: 'repeat(auto-fill, minmax(20rem, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(20rem, 1fr))',
     gridAutoRows: '20rem',
   },
 ]);
@@ -55,7 +55,7 @@ export const article = style([
     placeItems: 'center',
     background: 'primary3',
     borderRadius: 'md',
-    padding: 'lg',
+    padding: 'xl',
   }),
   { boxShadow: `0 0 5px ${vars.colors.shadow}` },
 ]);

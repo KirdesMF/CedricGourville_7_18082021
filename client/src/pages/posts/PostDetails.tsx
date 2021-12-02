@@ -1,12 +1,13 @@
 import { useParams } from 'react-router';
-import { Post } from '../../components/Post/Post';
-import { usePostId } from '../../api/post.api';
-import { useCurrentUser } from '../../api/user.api';
+import { Post } from '@app/components/Post/Post';
+import { usePostId } from '@app/api/post.api';
+import { useCurrentUser } from '@app/api/user.api';
 import * as styles from './posts.css';
-import { Heading } from '../../components/Heading/Heading';
-import { Anchor } from '../../components/Anchor/Anchor';
-import { Icon } from '../../components/Icon/Icon';
+import { Heading } from '@app/components/Heading/Heading';
+import { Anchor } from '@app/components/Anchor/Anchor';
+import { Icon } from '@app/components/Icon/Icon';
 import { Helmet } from 'react-helmet-async';
+import { Separator } from '@app/components/Separator/Separator';
 
 export function PostDetails() {
   const { postId } = useParams();
@@ -31,6 +32,8 @@ export function PostDetails() {
               <Icon name="ChevronRightIcon" />
             </Anchor>
           </div>
+
+          <Separator />
           {data && (
             <Post details post={data!} currentUser={current!} delay={1} />
           )}

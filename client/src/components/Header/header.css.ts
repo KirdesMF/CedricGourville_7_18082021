@@ -7,7 +7,7 @@ export const header = style([
   utilities({
     position: 'sticky',
     paddingBlock: 'lg',
-    paddingInline: 'md',
+    paddingInline: 'lg',
   }),
   {
     zIndex: 1,

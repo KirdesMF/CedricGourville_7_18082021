@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
+import { Separator } from '../../components/Separator/Separator';
 import {
   useCurrentUser,
   useLogOutUser,
@@ -85,10 +86,17 @@ export function UserProfile() {
 
           <article className={styles.article}>
             <div className={styles.list}>
-              <p className={styles.item}>{user?.firstName || notProvided}</p>
-              <p className={styles.item}>{user?.lastName || notProvided}</p>
-              <p className={styles.item}>{user?.bio || notProvided}</p>
-              <p className={styles.item}>{user?.department}</p>
+              <p className={styles.item}>
+                firstname : {user?.firstName || notProvided}
+              </p>
+              <Separator />
+              <p className={styles.item}>
+                lastname : {user?.lastName || notProvided}
+              </p>
+              <Separator />
+              <p className={styles.item}>bio : {user?.bio || notProvided}</p>
+              <Separator />
+              <p className={styles.item}>department : {user?.department}</p>
             </div>
           </article>
         </section>

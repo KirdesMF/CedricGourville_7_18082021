@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Separator } from '../../components/Separator/Separator';
 import { usePosts } from '../../api/post.api';
 import { useCurrentUser } from '../../api/user.api';
 import { FormPost } from '../../components/forms/FormPost';
@@ -30,6 +31,8 @@ export function AllPosts() {
           </Heading>
 
           <FormPost />
+
+          <Separator />
 
           <AnimatePresence>
             <motion.div className={styles.feed}>

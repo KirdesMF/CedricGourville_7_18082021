@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@server/types": ["../server/node_modules/@prisma/client"]
+      "@server/types": ["../server/node_modules/@prisma/client"],
+      "@app/*": ["src/*"]
     },
     "target": "esnext",
     "lib": ["DOM", "DOM.Iterable", "esnext"],
