@@ -20,6 +20,13 @@ export const inner = style([
   },
 ]);
 
+export const icon = style([
+  utilities({
+    color: 'secondary2',
+  }),
+  { gridArea: 'middle' },
+]);
+
 const rotate = keyframes({
   to: {
     transform: 'rotate(1turn) translate(10vmax) rotate(-1turn)',
@@ -28,8 +35,8 @@ const rotate = keyframes({
 
 const base = style({
   gridArea: 'middle',
-  height: '3rem',
-  width: '3rem',
+  height: '5vmax',
+  width: '5vmax',
   borderRadius: '50%',
   animation: `${rotate} 1s infinite linear`,
   transform: `rotate(0) translate(10vmax) rotate(0)`,

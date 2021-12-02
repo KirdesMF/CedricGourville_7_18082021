@@ -1,15 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { Loading } from '../components/Loading/Loading';
-import { useCurrentUser } from '../api/user.api';
-import { Home } from '../pages/home/Home';
-import { Login } from '../pages/login/Login';
-import { Page404 } from '../pages/Page404';
-import { AllPosts } from '../pages/posts/AllPosts';
-import { Register } from '../pages/register/Register';
-import { UserProfile } from '../pages/users/UserProfile';
-import { Users } from '../pages/users/Users';
-import { PostDetails } from '../pages/posts/PostDetails';
-import { Dashboard } from '../pages/admin/Dashboard';
+import { Loading } from '@app/components/Loading/Loading';
+import { useCurrentUser } from '@app/api/user.api';
+import { Home } from '@app/pages/home/Home';
+import { Login } from '@app/pages/login/Login';
+import { Page404 } from '@app/pages/Page404';
+import { AllPosts } from '@app/pages/posts/AllPosts';
+import { Register } from '@app/pages/register/Register';
+import { UserProfile } from '@app/pages/users/UserProfile';
+import { PostDetails } from '@app/pages/posts/PostDetails';
+import { Dashboard } from '@app/pages/admin/Dashboard';
 
 type RequiredAuthProps = {
   children: JSX.Element;
@@ -57,7 +56,6 @@ export function AppRouter() {
       </Route>
 
       {/** users */}
-
       <Route
         path="/users/:userId"
         element={

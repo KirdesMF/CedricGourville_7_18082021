@@ -20,6 +20,10 @@ export const icon = recipe({
         width: '3rem',
         height: '3rem',
       },
+      big: {
+        width: '25vmax',
+        height: '25vmax',
+      },
     },
   },
 });

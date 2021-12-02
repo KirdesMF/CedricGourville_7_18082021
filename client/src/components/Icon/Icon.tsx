@@ -9,12 +9,14 @@ import {
   ChatBubbleIcon,
   GitHubLogoIcon,
   ChevronRightIcon,
+  ChevronLeftIcon,
   Pencil1Icon,
   PaperPlaneIcon,
   ImageIcon,
   DotsVerticalIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
+import { cx } from '@app/utils/classname.utils';
 
 const HeartIcon = forwardRef<SVGSVGElement>((props, ref) => {
   return (
@@ -136,14 +138,19 @@ const icons = {
   FlagIcon,
   ArchiveIcon,
   GroupUsersIcon,
+  ChevronLeftIcon,
 };
 
 type IconProps = {
   name: keyof typeof icons;
   variant?: IconVariants;
-};
+} & JSX.IntrinsicElements['svg'];
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
   const Component = icons[props.name];
-  return <Component ref={ref} className={styles.icon(props.variant)} />;
+
+  const cls = props.className
+    ? cx([props.className, styles.icon(props.variant)])
+    : styles.icon(props.variant);
+  return <Component ref={ref} className={cls} />;
 });
