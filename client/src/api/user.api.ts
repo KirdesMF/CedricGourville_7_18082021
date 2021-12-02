@@ -19,7 +19,7 @@ export function useCurrentUser() {
 
   return useQuery(['user'], () => Fetch.get<TCurrentUser>('user'), {
     staleTime: convertHoursToMilliseconds(1),
-    retry: convertHoursToMilliseconds(1),
+    retry: false,
     onError: () => {
       navigate('/login');
     },

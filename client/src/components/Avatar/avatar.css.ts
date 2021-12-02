@@ -20,6 +20,10 @@ export const avatar = recipe({
         width: '2.5rem',
         height: '2.5rem',
       },
+      large: {
+        width: '5rem',
+        height: '5rem',
+      },
     },
     radius: {
       full: utilities({ borderRadius: 'full' }),

@@ -1,4 +1,5 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
+import { srOnly } from '../../styles/helpers.css';
 import { utilities } from '../../styles/utilities.css';
 import { vars } from '../../styles/vars.css';
 
@@ -8,6 +9,9 @@ export const heading = recipe({
     lineHeight: 1.1,
   },
   variants: {
+    hidden: {
+      true: srOnly,
+    },
     transform: {
       uppercase: { textTransform: 'uppercase' },
     },

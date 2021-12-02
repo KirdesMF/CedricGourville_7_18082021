@@ -1,9 +1,6 @@
 import { recipe, RecipeVariants } from '@vanilla-extract/recipes';
 
 export const icon = recipe({
-  base: {
-    fill: 'currentcolor',
-  },
   variants: {
     size: {
       xs: {
@@ -18,6 +15,10 @@ export const icon = recipe({
       medium: {
         width: '1.5rem',
         height: '1.5rem',
+      },
+      large: {
+        width: '3rem',
+        height: '3rem',
       },
     },
   },

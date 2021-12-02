@@ -32,12 +32,13 @@ export function UserProfile() {
 
   const isCurrentUser = currentUser?.id === user?.id;
 
+  console.log(user);
+
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
         <div className={styles.heading}>
           <Heading variant={{ fontSize: 'xl', weight: 'bold' }}>
-            Profile{' '}
             <Span variant={{ size: 'lg', gradient: true }}>
               {user?.username}
             </Span>
@@ -48,50 +49,35 @@ export function UserProfile() {
           </Anchor>
         </div>
 
-        {user && (
-          <Avatar user={{ avatar: user.avatar, department: user.department }} />
-        )}
-
         <section className={styles.section}>
-          <Heading variant={{ fontSize: 'md', weight: 'thin' }} as="h2">
+          <Heading as="h2" variant={{ hidden: true }}>
             Info
           </Heading>
 
-          <div>
-            <p>Username: {user?.username || notProvided}</p>
-            <p>Firstname: {user?.firstName || notProvided}</p>
-            <p>Lastname: {user?.lastName || notProvided}</p>
-            <p>Bio: {user?.bio || notProvided}</p>
-            <p>Department: {user?.department}</p>
-          </div>
-        </section>
+          <div className={styles.articles}>
+            {user && (
+              <article className={styles.article}>
+                <span className={styles.avatar}>
+                  <Avatar
+                    variant={{ size: 'large' }}
+                    user={{ avatar: user.avatar, department: user.department }}
+                  />
+                  {user?.username}
+                </span>
+              </article>
+            )}
 
-        <section className={styles.section}>
-          <Heading variant={{ fontSize: 'md', weight: 'thin' }} as="h2">
-            Network
-          </Heading>
-
-          <div>
-            <div>
-              <Icon name="HeartIcon" />
-              <ul>
-                {user?.likes?.map((like) => (
-                  <li key={like.id}>{like.postId}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <Icon name="ArchiveIcon" />
-              <ul>
-                {user?.posts?.map((post) => (
-                  <li key={post.id}>{post.title}</li>
-                ))}
-              </ul>
-            </div>
-            <p>
-              <Icon name="ChatBubbleIcon" />
-              {user?.comments?.length}
-            </p>
+            <article className={styles.article}>
+              <div className={styles.list}>
+                <p className={styles.item}>{user?.firstName || notProvided}</p>
+                <hr className={styles.hr} />
+                <p className={styles.item}>{user?.lastName || notProvided}</p>
+                <hr className={styles.hr} />
+                <p className={styles.item}>{user?.bio || notProvided}</p>
+                <hr className={styles.hr} />
+                <p className={styles.item}>{user?.department}</p>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -110,6 +96,43 @@ export function UserProfile() {
         )}
 
         {isEditing && <FormProfile setIsEditing={setIsEditing} />}
+
+        <hr className={styles.hr} />
+
+        <section className={styles.section}>
+          <Heading as="h2" variant={{ hidden: true }}>
+            Network
+          </Heading>
+
+          <div className={styles.articles}>
+            <article className={styles.article}>
+              <span>
+                <Icon name="HeartIcon" variant={{ size: 'large' }} />
+                {user?.likes?.length}
+              </span>
+            </article>
+
+            <article className={styles.article}>
+              <span>
+                <Icon name="ArchiveIcon" variant={{ size: 'large' }} />
+                {user?.posts?.length}
+              </span>
+            </article>
+
+            <article className={styles.article}>
+              <span>
+                <Icon name="ChatBubbleIcon" variant={{ size: 'large' }} />
+                {user?.comments?.length}
+              </span>
+            </article>
+
+            <article className={styles.article}>
+              <span>
+                <Icon name="Groupomania" variant={{ size: 'large' }} />
+              </span>
+            </article>
+          </div>
+        </section>
       </div>
     </main>
   );

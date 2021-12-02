@@ -1,4 +1,5 @@
-import { globalStyle, style } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
+import { vars } from '../../styles/vars.css';
 import { utilities } from '../../styles/utilities.css';
 
 export const main = utilities({
@@ -23,19 +24,60 @@ export const heading = style([
   }),
 ]);
 
-export const wrapperSections = utilities({
-  display: 'flex',
-  gap: 'lg',
-});
-
 export const section = utilities({
   display: 'grid',
   gap: 'md',
 });
 
-globalStyle(`${wrapperSections} > *`, { flex: 1 });
-
 export const buttons = utilities({
   display: 'flex',
   gap: 'md',
+});
+
+export const articles = style([
+  utilities({
+    display: 'grid',
+    gap: 'md',
+  }),
+  {
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 20rem), 1fr))',
+    height: '20rem',
+  },
+]);
+
+export const article = style([
+  utilities({
+    display: 'grid',
+    placeItems: 'center',
+    background: 'primary3',
+    borderRadius: 'md',
+    padding: 'lg',
+  }),
+  { boxShadow: `0 0 5px ${vars.colors.shadow}` },
+]);
+
+export const avatar = utilities({
+  display: 'grid',
+  placeItems: 'center',
+  gap: 'md',
+});
+
+export const list = style([
+  utilities({
+    display: 'grid',
+    gap: 'xs',
+  }),
+]);
+
+export const item = style([
+  {
+    selectors: {
+      [`&:not(:last-child)`]: {},
+    },
+  },
+]);
+
+export const hr = style({
+  height: '0.5px',
+  width: '100%',
 });
