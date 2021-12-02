@@ -33,8 +33,6 @@ export function UserProfile() {
 
   const isCurrentUser = currentUser?.id === user?.id;
 
-  console.log(user);
-
   return (
     <main className={styles.main}>
       <div className={styles.inner}>
@@ -109,6 +107,9 @@ export function UserProfile() {
           </Heading>
 
           <article className={styles.article}>
+            <Heading variant={{ weight: 'thin' }} as="h3">
+              Posts liked
+            </Heading>
             <span>
               <Icon name="HeartIcon" variant={{ size: 'large' }} />
               {user?.likes?.length}
@@ -116,6 +117,9 @@ export function UserProfile() {
           </article>
 
           <article className={styles.article}>
+            <Heading variant={{ weight: 'thin' }} as="h3">
+              Posts created
+            </Heading>
             <span>
               <Icon name="ArchiveIcon" variant={{ size: 'large' }} />
               {user?.posts?.length}
@@ -123,6 +127,9 @@ export function UserProfile() {
           </article>
 
           <article className={styles.article}>
+            <Heading variant={{ weight: 'thin' }} as="h3">
+              Comments
+            </Heading>
             <span>
               <Icon name="ChatBubbleIcon" variant={{ size: 'large' }} />
               {user?.comments?.length}

@@ -48,9 +48,12 @@ export function FormPost() {
         : form.append(key, value as string);
     });
 
+    console.log(data);
     mutate(form);
     reset();
     setSrcPreview(null);
+
+    //TODO: send post to socket server
     socket.emit('new-post');
   };
 

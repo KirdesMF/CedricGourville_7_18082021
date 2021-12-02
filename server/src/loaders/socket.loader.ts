@@ -21,8 +21,8 @@ function init(server: HttpServer) {
       socket.broadcast.emit('new-comment', postId);
     });
 
-    socket.on('new-post', () => {
-      socket.broadcast.emit('new-post');
+    socket.on('new-post', (postId) => {
+      socket.broadcast.emit('new-post', postId);
     });
   });
 }

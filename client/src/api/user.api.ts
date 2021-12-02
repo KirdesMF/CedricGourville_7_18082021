@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { TError } from '../types';
 import { Fetch } from '../utils/fetcher.utils';
-import { convertHoursToMilliseconds } from '../utils/utils';
 import type { Comment, Like, Post, User } from '@server/types';
 import toast from 'react-hot-toast';
 
@@ -18,7 +17,6 @@ export function useCurrentUser() {
   const navigate = useNavigate();
 
   return useQuery(['user'], () => Fetch.get<TCurrentUser>('user'), {
-    staleTime: convertHoursToMilliseconds(1),
     retry: false,
     onError: () => {
       navigate('/login');
@@ -153,7 +151,7 @@ export function useUpdateUserDepartment() {
     (body) => Fetch.patch('user/edit/department', body),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('user');
+        queryClient.resetQueries('user');
         queryClient.resetQueries('users');
         toast.success('User department updated');
       },

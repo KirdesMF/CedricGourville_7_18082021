@@ -8,7 +8,6 @@ import { Footer } from './components/Footer/Footer';
 import { Doodle } from './components/Doodle/Doodle';
 import { AppRouter } from './routes/router';
 import { HelmetProvider } from 'react-helmet-async';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import toast from 'react-hot-toast';
 import { Toaster } from './components/Toaster/Toaster';
 
@@ -21,7 +20,6 @@ const queryClient = new QueryClient({
       if (query.state.data !== undefined) {
         if (error instanceof Error) {
           toast.error(error.message);
-          console.log(query);
         }
       }
     },
@@ -44,13 +42,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    socket.on('new-comment', (postId) => {
+    socket.on('new-comment', () => {
       alert('new comment');
-      console.log(postId);
     });
 
-    socket.on('new-post', () => {
+    socket.on('new-post', (data) => {
       alert('new post');
+      console.log(data);
     });
   }, [socket]);
 
@@ -63,7 +61,6 @@ export default function App() {
         <Footer />
         <Toaster />
       </HelmetProvider>
-      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

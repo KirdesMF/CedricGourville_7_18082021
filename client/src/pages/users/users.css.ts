@@ -53,11 +53,12 @@ export const article = style([
   utilities({
     display: 'grid',
     placeItems: 'center',
+    gap: 'md',
     background: 'primary3',
     borderRadius: 'md',
     padding: 'xl',
   }),
-  { boxShadow: `0 0 5px ${vars.colors.shadow}` },
+  { boxShadow: `0 0 5px ${vars.colors.shadow}`, placeContent: 'center' },
 ]);
 
 export const avatar = utilities({
