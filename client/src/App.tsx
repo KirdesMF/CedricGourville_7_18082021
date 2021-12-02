@@ -9,7 +9,8 @@ import { Doodle } from './components/Doodle/Doodle';
 import { AppRouter } from './routes/router';
 import { HelmetProvider } from 'react-helmet-async';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { Toaster } from './components/Toaster/Toaster';
 
 const queryClient = new QueryClient({
   defaultOptions: {
