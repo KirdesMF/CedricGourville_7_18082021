@@ -134,6 +134,10 @@ You can run the following command to shutdown the containers:
 
 ## TODO
 
+### User
+
+- Remove only avatar
+
 ### Post
 
 - Edit a post
