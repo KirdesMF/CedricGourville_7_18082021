@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePosts } from '../../api/post.api';
 import { useCurrentUser } from '../../api/user.api';
@@ -34,12 +35,10 @@ export function AllPosts() {
             <motion.div className={styles.feed}>
               {posts?.map((post, idx) => {
                 return (
-                  <Post
-                    key={post.id}
-                    delay={idx}
-                    post={post}
-                    currentUser={currentUser!}
-                  />
+                  <Fragment key={post.id}>
+                    <Post delay={idx} post={post} currentUser={currentUser!} />
+                    <hr className={styles.hr} />
+                  </Fragment>
                 );
               })}
             </motion.div>

@@ -49,6 +49,24 @@ export function UserProfile() {
           </Anchor>
         </div>
 
+        {isCurrentUser && (
+          <section className={styles.buttons}>
+            <Button variant={{ primary: true }} onClick={handleEditing}>
+              Edit profile
+            </Button>
+            <Button variant={{ primary: true }} onClick={handleLogout}>
+              Log out
+            </Button>
+            <Button variant={{ primary: true }} onClick={handleUnregister}>
+              Unregister
+            </Button>
+          </section>
+        )}
+
+        {isEditing && <FormProfile setIsEditing={setIsEditing} />}
+
+        <hr className={styles.hr} />
+
         <section className={styles.articles}>
           <Heading as="h3" variant={{ hidden: true }}>
             Info
@@ -75,21 +93,7 @@ export function UserProfile() {
           </article>
         </section>
 
-        {isCurrentUser && (
-          <section className={styles.buttons}>
-            <Button variant={{ primary: true }} onClick={handleEditing}>
-              Edit profile
-            </Button>
-            <Button variant={{ primary: true }} onClick={handleLogout}>
-              Log out
-            </Button>
-            <Button variant={{ primary: true }} onClick={handleUnregister}>
-              Unregister
-            </Button>
-          </section>
-        )}
-
-        {isEditing && <FormProfile setIsEditing={setIsEditing} />}
+        <hr className={styles.hr} />
 
         <section className={styles.articles}>
           <Heading as="h3" variant={{ hidden: true }}>

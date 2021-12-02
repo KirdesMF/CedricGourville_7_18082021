@@ -126,7 +126,7 @@ export const td = style({
   },
 });
 
-globalStyle(`${td} > p`, {
+globalStyle(`${td} > :is(p, a)`, {
   width: 'calc(30%)',
   textOverflow: 'ellipsis',
   overflow: 'hidden',

@@ -115,7 +115,15 @@ export function Post(props: PostProps) {
         </Heading>
         <Paragraph variant={{ size: 'sm' }}>{content}</Paragraph>
 
-        {media && <img className={styles.img} src={media} alt="" />}
+        {media && (
+          <figure className={styles.figure}>
+            <img
+              className={styles.img}
+              src={media}
+              alt={`${title} - Alt text need to be improve`}
+            />
+          </figure>
+        )}
       </Anchor>
     );
   };

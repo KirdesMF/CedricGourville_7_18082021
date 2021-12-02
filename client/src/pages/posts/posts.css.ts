@@ -32,3 +32,11 @@ export const heading = style([
     alignItems: 'baseline',
   }),
 ]);
+
+export const hr = style({
+  height: '0.5px',
+  width: '100%',
+  display: 'flex',
+  border: 'none',
+  borderBottom: `0.1px dashed ${vars.colors.secondary9}`,
+});

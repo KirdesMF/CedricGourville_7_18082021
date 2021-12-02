@@ -13,7 +13,7 @@ export const article = style([
     borderRadius: 'xs',
   }),
   {
-    gridTemplateColumns: '48px 1fr',
+    gridTemplateColumns: '48px 1fr 48px',
     columnGap: vars.spaces.sm,
   },
 ]);
@@ -79,7 +79,6 @@ export const buttons = style([
 export const figure = style([
   {
     overflow: 'hidden',
-    width: 'max-content',
   },
 ]);
 
@@ -89,6 +88,11 @@ export const img = style({
   borderRadius: 'inherit',
   filter: `grayscale(50%)`,
   transition: `filter 500ms ease-in-out, transform 500ms ease`,
+
+  ':hover': {
+    filter: `grayscale(0%)`,
+    transform: 'scale(1.05)',
+  },
 });
 
 export const avatars = style([

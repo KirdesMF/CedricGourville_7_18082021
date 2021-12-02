@@ -39,6 +39,7 @@ export function Dashboard() {
                   <th colSpan={1}>last connex</th>
                 </tr>
               </thead>
+
               {newUsers?.map((user) => (
                 <tbody className={styles.tbody} key={user.id}>
                   <tr>
@@ -49,8 +50,10 @@ export function Dashboard() {
                         </Anchor>
                       </div>
                     </td>
-                    <td className={styles.border} data-label="Email">
-                      <span className={styles.td}>{user.email}</span>
+                    <td className={styles.border}>
+                      <div data-label="Email" className={styles.td}>
+                        <p>{user.email}</p>
+                      </div>
                     </td>
                     <td className={styles.border}>
                       <span data-label="Department" className={styles.td}>

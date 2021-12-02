@@ -8,6 +8,7 @@ export const baseAnchor = style([
   {
     textUnderlineOffset: vars.spaces.xs,
     appearance: 'none',
+    wordBreak: 'break-all',
   },
 ]);
 

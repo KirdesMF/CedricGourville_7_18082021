@@ -118,8 +118,9 @@ You can run the following command to shutdown the containers:
 - deploy
 - socket
 - ⚠️ fix ts path import in client
+- give user permission to add alt text to images
 
-## COULD BE COOL
+## Could be good
 
 - lazy loading posts
 - add a chat

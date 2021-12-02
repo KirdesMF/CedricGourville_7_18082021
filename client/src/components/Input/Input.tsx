@@ -61,7 +61,6 @@ export function BasicInput({
 export function FileInput<TFields>(props: TCustomInput<TFields>) {
   const { label, register, name, options, errors, ...rest } = props;
 
-  console.log(errors);
   return (
     <>
       <label
