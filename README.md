@@ -81,9 +81,11 @@ you can also manually seed the database with the following command, once evertyh
 
 from docker CLI in `api-host` container:
 
-`npx prisma seed`
+`npx prisma db seed`
 
 from you IDE, you'll' have to toggle the `host` in the `.env` file before running the command.
+
+⚠️ If in docker, you'll have to rebuild the image before running the command.
 
 Once the seed is done, you can start the front application in the browser [http://localhost:3000](http://localhost:3000/)
 and you'll have new user and post (see `server/prisma/seed.ts`)
